@@ -1,0 +1,17 @@
+<app-top-bar></app-top-bar>
+<br>
+<br>
+<div class="container">
+    <div *ngFor="let servicio of Servicios; let i = index" [ngClass]="servicio.clase">
+        <div class="card-body text-center">
+            <br>
+            <br>
+            <h1>{{ servicio.nombre}}</h1>
+            <br>
+            <br>
+        </div>
+    </div>
+    <!-- <p *ngFor="let servicio of Servicios; let i = index">Hola amigos de youtube {{ i }}
+    </p> -->
+    <br>
+</div>

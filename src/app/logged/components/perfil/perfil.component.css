@@ -1,0 +1,33 @@
+.borde {
+    border: 1px solid red;
+}
+
+.action-color {
+    color: #a30013;
+}
+
+.fondo {
+    background-color: white;
+}
+
+.caja {
+    font-size: larger;
+}
+
+.caja:focus {
+    outline: none;
+}
+
+.card-login {
+    border: none;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.10), 0 2px 10px 0 rgba(0, 0, 0, 0.10);
+}
+
+.foto-perfil {
+    width: 10em;
+    height: 10em;
+    padding: .5em;
+    /* border: 1px solid red; */
+    border-radius: 5em;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.10), 0 2px 10px 0 rgba(0, 0, 0, 0.10);
+}

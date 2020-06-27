@@ -1,0 +1,59 @@
+<app-top-bar></app-top-bar>
+<br>
+<br>
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header fondo text-center">
+            <img [src]="FotoPerfil" class="foto-perfil" [alt]="FotoPerfilAlt">
+        </div>
+        <div class="card-body">
+            <div class="row m-1">
+                <div class="col-md-2 align-self-center">
+                    Nombre
+                </div>
+                <div class="col-md-10">
+                    <input #nameInput type="text" [ngClass]="Editando ? 'form-control caja' : 'form-control-plaintext caja'" id="name" aria-describedby="name" [value]="Nombre + ' ' + Apellido" placeholder="Nombre" [readOnly]="!Editando">
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-2 align-self-center">
+                    Correo electrónico
+                </div>
+                <div class="col-md-10">
+                    <input #emailInput type="email" [ngClass]="Editando ? 'form-control caja' : 'form-control-plaintext caja'" id="email" aria-describedby="email" [value]="Email" placeholder=" Correo electrónico" [readOnly]="!Editando">
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-2 align-self-center">
+                    Teléfono
+                </div>
+                <div class="col-md-10">
+                    <input type="text" [ngClass]="Editando ? 'form-control caja' : 'form-control-plaintext caja'" id="telefono" aria-describedby="telefono" [value]="Telefono" placeholder="Teléfono" [readOnly]="!Editando">
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-2 align-self-center">
+                    Contraseña
+                </div>
+                <div class="col-md-5">
+                    <input type="password" class="form-control-plaintext caja" id="password" aria-describedby="password" readonly value="password" placeholder="Contraseña">
+                </div>
+                <div class="col-md-5">
+                    <input type="password" class="form-control-plaintext caja invisible" id="confirmPassword" aria-describedby="confirmPassword" readonly placeholder="Confirmar contraseña">
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-6"></div>
+                <div class="col-md-3 m-2">
+                    <button [ngClass]="Editando ? 'btn btn-light btn-block' : 'btn btn-light btn-block invisible'" (click)="guardar()"><i class="fas fa-check action-color"></i> Guardar cambios</button>
+                </div>
+                <div class="col-md-2 m-2">
+                    <button class="btn btn-light btn-block" (click)="editar()"><i class="fas fa-pencil-alt action-color"></i> Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
