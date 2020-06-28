@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicioService } from 'src/app/services/servicio.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-screen',
@@ -11,13 +11,18 @@ export class MainScreenComponent implements OnInit {
 
     Servicios: any = [];
 
-    constructor(private _serviciosService: ServicioService) {
+    constructor(private _serviciosService: ServicioService, private router: Router) {
         
      }
 
     ngOnInit() {     
         this.Servicios = this._serviciosService.getServicios();
       
+    }
+
+    redirect (ruta) {
+        console.log(ruta);
+        this.router.navigate([ruta]);
     }
 
 }

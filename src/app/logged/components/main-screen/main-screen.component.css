@@ -6,26 +6,21 @@
 }
 
 .background-1 {
-    background: rgb(26, 93, 164);
-    background: linear-gradient(0deg, rgba(26, 93, 164, 1) 0%, rgba(49, 120, 204, 1) 100%);
+    background-color: #3178CC;
 }
 
 .background-2 {
-    background: rgb(215, 85, 48);
-    background: linear-gradient(0deg, rgba(215, 85, 48, 1) 0%, rgba(247, 126, 99, 1) 100%);
+    background-color: #F77E63;
 }
 
 .background-3 {
-    background: rgb(222, 66, 58);
-    background: linear-gradient(0deg, rgba(222, 66, 58, 1) 0%, rgba(249, 98, 93, 1) 100%);
+    background-color: #F9625D;
 }
 
 .background-4 {
-    background: rgb(61, 142, 58);
-    background: linear-gradient(0deg, rgba(61, 142, 58, 1) 0%, rgba(95, 191, 94, 1) 100%);
+    background-color: #5FBF5E;
 }
 
 .background-5 {
-    background: rgb(140, 58, 142);
-    background: linear-gradient(0deg, rgba(140, 58, 142, 1) 0%, rgba(197, 5, 217, 1) 100%);
+    background-color: #C505D9;
 }

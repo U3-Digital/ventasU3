@@ -2,7 +2,7 @@
 <br>
 <br>
 <div class="container">
-    <div *ngFor="let servicio of Servicios; let i = index" [ngClass]="servicio.clase">
+    <div *ngFor="let servicio of Servicios; let i = index" [ngClass]="servicio.clase" (click)="redirect(servicio.link)">
         <div class="card-body text-center">
             <br>
             <br>

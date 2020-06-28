@@ -37,7 +37,7 @@ import { Injectable } from "@angular/core";
         }
 
         constructor () {
-            console.log("Services: Servicio - Listo para usarse");
+            console.log("Services: Servicios - Listo para usarse");
         }
 
     }

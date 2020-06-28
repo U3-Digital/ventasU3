@@ -9,6 +9,7 @@ import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { AgregarComponent } from './components/agregar/agregar.component';
 import { ServicioService } from '../services/servicio.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { CategoriasService } from '../services/categorias.service';
 
 @NgModule({
   declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, CatalogoComponent, AgregarComponent, TopBarComponent],
@@ -17,7 +18,8 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
     LoggedRoutingModule
   ],
   providers: [
-      ServicioService
+      ServicioService,
+      CategoriasService
   ]
 })
 export class LoggedModule { }
