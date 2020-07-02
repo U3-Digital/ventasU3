@@ -1,0 +1,44 @@
+.categorias-container {
+    display: flex;
+    overflow-x: auto;
+}
+
+.categorias {
+    flex: 0 0 35%;
+    margin: 2em 0em 2em 2em;
+    border: none;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.05), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+    color: white;
+    border-radius: 1em;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.ganancias {
+    background-color: #5FBF5E;
+}
+
+.pedidos {
+    background-color: #3178CC;
+}
+
+.adeudos {
+    background-color: #F9625D;
+}
+
+.clientes {
+    background-color: #C505D9;
+}
+
+.abarca {
+    width: 100%;
+}
+
+.activo {
+    background-color: #a30013;
+}
+
+.activo.focus,
+.activo:focus {
+    background-color: white
+}

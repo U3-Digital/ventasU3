@@ -1,0 +1,27 @@
+<router-outlet></router-outlet>
+<nav class="nav">
+    <a [routerLink]="['inicio']" class="nav__link" routerLinkActive="active">
+        <span class="nav-icon">
+            <i class="fas fa-chart-pie"></i>
+          </span>
+        <span class="nav__text">Inicio</span>
+    </a>
+    <a [routerLink]="['catalogo']" class="nav__link" routerLinkActive="active">
+        <span class="nav-icon">
+            <i class="fas fa-list"></i>
+          </span>
+        <span class="nav__text">Catálogo</span>
+    </a>
+    <a [routerLink]="['resumen']" href="logged/resumen" class="nav__link" routerLinkActive="active">
+        <span class="nav-icon">
+            <i class="fas fa-chart-bar"></i>
+          </span>
+        <span class="nav__text">Resumen</span>
+    </a>
+    <a [routerLink]="['perfil']" href="logged/perfil" class="nav__link" routerLinkActive="active">
+        <span class="nav-icon">
+            <i class="fas fa-user"></i>
+          </span>
+        <span class="nav__text">Perfil</span>
+    </a>
+</nav>

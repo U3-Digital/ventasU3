@@ -1,0 +1,19 @@
+.card-login {
+    max-width: 25rem;
+    border: none;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.10), 0 2px 10px 0 rgba(0, 0, 0, 0.10);
+}
+
+.fondo {
+    background-color: white;
+}
+
+.button-login {
+    width: 100%;
+    /* background-color: red; */
+    border: none;
+}
+
+.borde {
+    border: 1px solid red;
+}
