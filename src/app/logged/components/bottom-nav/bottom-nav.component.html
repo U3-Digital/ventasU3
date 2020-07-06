@@ -1,26 +1,33 @@
+<app-top-bar></app-top-bar>
 <router-outlet></router-outlet>
 <nav class="nav">
     <a [routerLink]="['inicio']" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-chart-pie"></i>
+            <i class="fas fa-chart-pie" routerLinkActive="nav-icon-active"></i>
           </span>
         <span class="nav__text">Inicio</span>
     </a>
     <a [routerLink]="['catalogo']" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-list"></i>
+            <i class="fas fa-list" routerLinkActive="nav-icon-active"></i>
           </span>
-        <span class="nav__text">Catálogo</span>
+        <span class="nav__text">Catálogos</span>
+    </a>
+    <a [routerLink]="['agregar']" href="logged/agregar" class="nav__link" routerLinkActive="active">
+        <span class="nav-icon">
+            <i class="fas fa-plus-circle" routerLinkActive="nav-icon-active"></i>
+          </span>
+        <span class="nav__text">Agregar</span>
     </a>
     <a [routerLink]="['resumen']" href="logged/resumen" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-chart-bar"></i>
+            <i class="fas fa-chart-bar" routerLinkActive="nav-icon-active"></i>
           </span>
         <span class="nav__text">Resumen</span>
     </a>
     <a [routerLink]="['perfil']" href="logged/perfil" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-user"></i>
+            <i class="fas fa-user" routerLinkActive="nav-icon-active"></i>
           </span>
         <span class="nav__text">Perfil</span>
     </a>

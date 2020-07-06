@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatalogoComponent implements OnInit {
 
-  constructor() { }
+    opciones: string[] = ['Andrea', 'Avon', 'Mary-Kay', 'Betterware', 'Herbalife :v'];
 
-  ngOnInit() {
-  }
+    constructor() { }
+
+    ngOnInit() {
+
+    }
+
+    isLast(index) {
+        if (index === this.opciones.length - 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

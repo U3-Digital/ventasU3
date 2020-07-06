@@ -1,4 +1,36 @@
-<app-top-bar></app-top-bar>
-<br>
-<br>
-<p>catalogo works!</p>
+<div class="row h-100 background" style="margin: auto;">
+    <div class="col-md-12 text-center">
+        <app-dropdown [opciones]="opciones" [titulo]="'Seleccionar'"></app-dropdown>
+        <div class="card card-catalogo animate__animated animate__fadeInUp animate__faster">
+            <div class="card-header fondo text-center border-0">
+                <h3 class="title">Productos</h3>
+            </div>
+            <div class="card-body">
+                <table class="table tabla table-borderless" style="display: block;">
+
+                    <tr class="header">
+                        <th class="codigo">Código</th>
+                        <th class="nombre">Nombre</th>
+                        <th class="precio">Precio</th>
+                        <th class="agregar">+</th>
+                    </tr>
+
+
+                    <tr *ngFor="let opcion of opciones; let i = index" class="fila" [ngClass]="isLast(i) ? '': 'divider'">
+                        <td class="codigo">1</td>
+                        <td class="nombre">Cosa</td>
+                        <td class="precio">$1.00</td>
+                        <td class="agregar">
+                            <label class="checkbox-label">
+                                <input type="checkbox">
+                                <span class="checkbox-custom rectangular"></span>
+                            </label>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

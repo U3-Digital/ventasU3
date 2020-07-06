@@ -7,7 +7,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 })
 export class PerfilComponent implements OnInit, AfterViewInit {
 
-    FotoPerfil = "https://images.assetsdelivery.com/compings_v2/solargaria/solargaria1707/solargaria170700111.jpg";
+    FotoPerfil = "https://www.westernunion.com/content/dam/wu/jm/responsive/send-money-in-person-from-jamaica-resp.png";
     FotoPerfilAlt = "Foto de perfil";
     Nombre = "Juanita";
     Apellido = "Perez";
@@ -27,6 +27,7 @@ export class PerfilComponent implements OnInit, AfterViewInit {
     }
 
     editar () {
+        console.log(this.nameInput);
         this.Editando = !this.Editando;
     }
 

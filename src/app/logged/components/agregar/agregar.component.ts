@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgregarComponent implements OnInit {
 
-  constructor() { }
+    opciones: String[] = ['Pedido', 'Cliente'];
+    childClicked: string;
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    recibirChildClicked($event) {
+    this.childClicked = $event;
+    }
+
+    showForm(nombre) {
+        return nombre === this.childClicked;
+    }
 
 }

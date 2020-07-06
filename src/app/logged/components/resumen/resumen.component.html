@@ -1,38 +1,54 @@
-<app-top-bar></app-top-bar>
+<!-- <app-top-bar></app-top-bar> -->
 <br>
 <br>
 <br>
-<br>
-<div class="container">
+<div class="row h-100 text-center background animtated fadeInDown fast" style="margin: auto;">
 
-    <div class="categorias-container">
-        <div *ngFor="let categoria of Categorias; let i = index" [ngClass]="categoria.clase">
-            <div class="card-body text-center">
-                <br> {{ categoria.nombre }}<br><br>
+    <div class="col-md-12">
+        <h4 style="color: #061058">Seleccione una categoría</h4>
+        <div class="categorias-container justify-content-center align-items-center">
+            <div *ngFor="let categoria of Categorias; let i = index" [ngClass]="categoria.clase">
+                {{ categoria.nombre }}
             </div>
         </div>
-
+        <div class="card">
+            <div class="card-header fondo">
+                <div class="btn-group btn-group-toggle abarca" data-toggle="buttons" role="group">
+                    <label class="btn btn-light">
+                              <input type="radio" name="options" id="option1"> Último mes
+                            </label>
+                    <label class="btn btn-light">
+                              <input type="radio" name="options" id="option2"> De: - A: -
+                            </label>
+                </div>
+            </div>
+            <div class="card-body card-columns">
+                <div class="hola">
+                    <canvas id="cosa" class="">{{ chart }}</canvas>
+                </div>
+                <div class="hola">
+                    <canvas id="cosa2" class="">{{ chart }}</canvas>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
     <br>
-    <div class="row">
-        <div class="col-md-4">
-
-        </div>
-        <div class="col-md-4 text-center">
-            <div class="btn-group btn-group-toggle abarca" data-toggle="buttons" role="group">
-                <label class="btn btn-light">
-                  <input type="radio" name="options" id="option1"> Último mes
-                </label>
-                <label class="btn btn-light">
-                  <input type="radio" name="options" id="option2"> De: - A: -
-                </label>
-            </div>
-        </div>
-        <div class="col-md-4">
-
-        </div>
-    </div>
-
-
-
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 </div>

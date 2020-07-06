@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="card card-login mx-auto">
+        <div class="card-header fondo text-center">
+            <h3>Ingreso</h3>
+        </div>
+        <div class="card-body">
+
+            <form [formGroup]="formaLogin" (ngSubmit)="submit()">
+                <div class="col_full">
+                    <label for="login-form-username">Correo electrónico:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="email" class="form-control" placeholder="Correo electrónico" formControlName="email" [class.is-invalid]="correoNoValido">
+                    </div>
+                    <small *ngIf="correoNoValido" class="text-danger">Ingrese un correo electrónico válido</small>
+                </div>
+                <br>
+                <div class="col_full">
+                    <label for="login-form-password">Contraseña:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Contraseña" formControlName="password" [class.is-invalid]="passwordNoValida">
+                    </div>
+                    <small *ngIf="passwordNoValida" class="text-danger">Ingrese una contraseña válida</small>
+                </div>
+
+                <div class="text-center">
+                    <br>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-secondary button-login" type="submit">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<pre>
+    Estado: {{formaLogin.valid}}
+    <br>
+    Status: {{formaLogin.status}}
+</pre>
+
+<pre>
+    {{formaLogin.value | json}}
+</pre>

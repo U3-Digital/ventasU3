@@ -10,12 +10,16 @@ import { AgregarComponent } from './components/agregar/agregar.component';
 import { ServicioService } from '../services/servicio.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { CategoriasService } from '../services/categorias.service';
-
+import { DropdownComponent } from './components/controls/dropdown/dropdown.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AgregarPedidoComponent } from './components/agregar/components/agregar-pedido/agregar-pedido.component';
+import { AgregarClienteComponent } from './components/agregar/components/agregar-cliente/agregar-cliente.component';
 @NgModule({
-  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, CatalogoComponent, AgregarComponent, TopBarComponent],
+  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, CatalogoComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent],
   imports: [
     CommonModule,
-    LoggedRoutingModule
+    LoggedRoutingModule,
+    FontAwesomeModule
   ],
   providers: [
       ServicioService,

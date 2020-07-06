@@ -7,22 +7,22 @@ import { Injectable } from "@angular/core";
             {
                 nombre: "Ganancias",
                 nombreQuery: "",
-                clase: "card categorias ganancias"
+                clase: "chip"
             },
             {
                 nombre: "Pedidos",
                 nombreQuery: "",
-                clase: "card categorias pedidos"
+                clase: "chip"
             },
             {
                 nombre: "Adeudos",
                 nombreQuery: "",
-                clase: "card categorias adeudos"
+                clase: "chip"
             },
             {
                 nombre: "Clientes",
                 nombreQuery: "",
-                clase: "card categorias clientes"
+                clase: "chip"
             }
         ];
 

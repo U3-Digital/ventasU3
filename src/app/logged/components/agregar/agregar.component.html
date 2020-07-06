@@ -1,1 +1,7 @@
-<p>agregar works!</p>
+<div class="row h-100 background" style="margin:auto">
+    <div class="col-md-12 text-center">
+        <app-dropdown [opciones]="opciones" [titulo]="'Seleccionar'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
+        <app-agregar-cliente *ngIf="showForm('Cliente')"></app-agregar-cliente>
+        <app-agregar-pedido *ngIf="showForm('Pedido')"></app-agregar-pedido>
+    </div>
+</div>

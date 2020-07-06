@@ -6,27 +6,27 @@ import { Injectable } from "@angular/core";
         private servicios: Servicio[] = [
             {
                 nombre: "Clientes",
-                clase: "card card-servicio mx-auto mt-5 background-1",
+                clase: "card card-servicio animate__animated animate__fadeInDown animate__faster",
                 link: "logged/clientes"
             },
             {
                 nombre: "Pedidos",
-                clase: "card card-servicio mx-auto mt-5 background-2",
+                clase: "card card-servicio animate__animated animate__fadeInDown animate__faster animate__delay-1s",
                 link: "logged/pedidos"
             },
             {
                 nombre: "Catálogos",
-                clase: "card card-servicio mx-auto mt-5 background-3",
+                clase: "card card-servicio animate__animated animate__fadeInDown animate__faster animate__delay-2s",
                 link: "logged/catalogo"
             },
             {
                 nombre: "Resumen",
-                clase: "card card-servicio mx-auto mt-5 background-4",
+                clase: "card card-servicio animate__animated animate__fadeInDown animate__faster animate__delay-3s",
                 link: "logged/resumen"
             },
             {
                 nombre: "Perfil",
-                clase: "card card-servicio mx-auto mt-5 mb-5 background-5",
+                clase: "card card-servicio animate__animated animate__fadeInDown animate__faster animate__delay-4s",
                 link: "logged/perfil"
             }
             

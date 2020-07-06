@@ -1,17 +1,14 @@
-<app-top-bar></app-top-bar>
-<br>
-<br>
-<div class="container">
-    <div *ngFor="let servicio of Servicios; let i = index" [ngClass]="servicio.clase" (click)="redirect(servicio.link)">
-        <div class="card-body text-center">
-            <br>
-            <br>
-            <h1>{{ servicio.nombre}}</h1>
-            <br>
-            <br>
+<div class="row h-100 background" style="margin: auto;">
+    <div class="col-md-12 my-auto mt-5 sombra">
+        <div class="card-columns">
+            <div *ngFor="let servicio of Servicios; let i = index" [ngClass]="servicio.clase" (click)="redirect(servicio.link)">
+
+                <div class="card-body  text-center">
+                    <br>
+                    <h1 class="title-text">{{ servicio.nombre}}</h1>
+                    <br>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- <p *ngFor="let servicio of Servicios; let i = index">Hola amigos de youtube {{ i }}
-    </p> -->
-    <br>
 </div>
