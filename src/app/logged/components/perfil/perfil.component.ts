@@ -19,8 +19,8 @@ export class PerfilComponent implements OnInit, AfterViewInit {
 
     formaPerfil: FormGroup;
 
-    @ViewChild('nameInput', null) nameInput;
-    @ViewChild('botonGuardar', null) botonGuardar;
+    @ViewChild('nameInput', {}) nameInput;
+    @ViewChild('botonGuardar', {}) botonGuardar;
 
     constructor(private formBuilder: FormBuilder) {
     }

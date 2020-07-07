@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MainScreenComponent } from './components/main-screen/main-screen.component';
 import { LoggedRoutingModule } from './logged-routing.module';
@@ -11,7 +12,7 @@ import { ServicioService } from '../services/servicio.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { CategoriasService } from '../services/categorias.service';
 import { DropdownComponent } from './components/controls/dropdown/dropdown.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AgregarPedidoComponent } from './components/agregar/components/agregar-pedido/agregar-pedido.component';
 import { AgregarClienteComponent } from './components/agregar/components/agregar-cliente/agregar-cliente.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     LoggedRoutingModule,
-    FontAwesomeModule,
+    // FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule
   ],
