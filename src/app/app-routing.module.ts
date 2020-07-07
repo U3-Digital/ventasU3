@@ -5,15 +5,15 @@ const routes: Routes = [
 
     {
         path: '',
-        loadChildren: './not-logged/not-logged.module#NotLoggedModule'
+        loadChildren: () => import('./not-logged/not-logged.module').then(m => m.NotLoggedModule)
     },
     {
         path: 'logged',
-        loadChildren: './logged/logged.module#LoggedModule'
+        loadChildren: () => import('./logged/logged.module').then(m => m.LoggedModule)
     },
     { 
         path: 'admin',
-        loadChildren: './administrador/administrador.module#AdministradorModule'
+        loadChildren: () => import('./administrador/administrador.module').then(m => m.AdministradorModule)
     }
 
 ];
