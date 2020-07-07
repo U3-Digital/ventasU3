@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
@@ -12,27 +13,59 @@ export class PerfilComponent implements OnInit, AfterViewInit {
     Nombre = "Juanita";
     Apellido = "Perez";
     Email = "juanita.perez@gmail.com";
-    Telefono = "625-123-1234";
+    Telefono = "6251231234";
     Editando = false;
+    Cambiado = false;
+
+    formaPerfil: FormGroup;
+
     @ViewChild('nameInput', null) nameInput;
+    @ViewChild('botonGuardar', null) botonGuardar;
 
-    constructor() { }
+    constructor(private formBuilder: FormBuilder) {
+    }
 
-    ngOnInit() {
-      
+    ngOnInit() {    
+        this.crearFormulario();
+        this.onChanges();
     }
 
     ngAfterViewInit() {
-        
+        this.botonGuardar.nativeElement.disabled = true;
     }
 
-    editar () {
-        console.log(this.nameInput);
+    onChanges(): void {
+        this.formaPerfil.valueChanges.subscribe(
+            (val) => {
+                this.botonGuardar.nativeElement.disabled = false;
+            }
+        );
+    }
+
+    crearFormulario(): void {
+        this.formaPerfil = this.formBuilder.group({
+            nombre: [this.Nombre, [Validators.required]],
+            email: [this.Email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+            telefono: [this.Telefono, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+            password: [''],
+            confirmarPasword: ['']
+        });
+    }
+
+   
+
+    editar(): void {
+        console.log(this.formaPerfil.value);
         this.Editando = !this.Editando;
+
+        if (this.Editando === false) {
+            this.botonGuardar.nativeElement.disabled = true;
+        }
     }
 
-    guardar () {
+    guardar(): void {
         this.Editando = false;
+        this.botonGuardar.nativeElement.disabled = true;
     }
-
+  
 }

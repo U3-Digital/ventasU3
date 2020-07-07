@@ -14,12 +14,19 @@ import { DropdownComponent } from './components/controls/dropdown/dropdown.compo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AgregarPedidoComponent } from './components/agregar/components/agregar-pedido/agregar-pedido.component';
 import { AgregarClienteComponent } from './components/agregar/components/agregar-cliente/agregar-cliente.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, CatalogoComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent],
   imports: [
     CommonModule,
     LoggedRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
       ServicioService,
