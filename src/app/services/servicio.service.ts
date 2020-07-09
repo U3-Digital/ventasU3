@@ -17,7 +17,7 @@ import { Injectable } from "@angular/core";
             {
                 nombre: "Catálogos",
                 clase: "card card-servicio animate__animated animate__fadeInDown animate__faster animate__delay-2s",
-                link: "logged/catalogo"
+                link: "logged/catalogos"
             },
             {
                 nombre: "Resumen",

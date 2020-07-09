@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { AdminModel } from '../../../models/admin.model';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+// import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-login',
@@ -11,12 +14,16 @@ export class AdminLoginComponent implements OnInit {
 
     formaLogin: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {
+    admin: AdminModel;
+    showModal: boolean = false;
+
+    constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router) {
 
         this.crearFormulario();
     }
 
     ngOnInit() {
+        this.admin = new AdminModel();
     }
 
     get correoNoValido () {
@@ -35,12 +42,25 @@ export class AdminLoginComponent implements OnInit {
     }
 
     submit () {
-        console.log(this.formaLogin.valid);
-
+        this.showModal = false;
         if (this.formaLogin.invalid) {
             return Object.values(this.formaLogin.controls).forEach((control) => {
                 control.markAsTouched();
             })
+        } else {
+
+            this.admin.email = this.formaLogin.value.email;
+            this.admin.password = this.formaLogin.value.password;
+
+            this.auth.loginAdmin(this.admin).subscribe(
+                (respuesta) => {
+                    this.router.navigateByUrl('/admin/inicio');
+                }, (error) => {
+                    // console.log(error.error.err.message);
+                    this.showModal = true;
+                 }
+                
+            );
         }
 
     }

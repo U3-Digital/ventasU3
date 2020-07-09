@@ -1,7 +1,7 @@
 <div id="dropdown" class="dropdown animate__animated animate__zoomIn animate__faster" #dropdown>
     <button id="dropdown-button" #dropdownButton (click)="showContent()" class="dropdown-button">
         {{ titulo }}
-        <!-- <fa-icon [icon]="faChevronDown" style="float: right;"></fa-icon> -->
+        <fa-icon [icon]="faChevronDown" style="float: right;"></fa-icon>
     </button>
     <div #dropdownContent id="dropdown-options" [ngClass]="showing ? claseShowing : clase">
         <div (click)="sendChildClicked(i)" *ngFor="let opcion of opciones; let i = index" [ngClass]="isLast(i) ? 'last' : ''">{{ opcion }}</div>

@@ -3,31 +3,31 @@
 <nav class="nav">
     <a [routerLink]="['inicio']" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-chart-pie" routerLinkActive="nav-icon-active"></i>
+            <fa-icon [icon]="iconInicio" routerLinkActive="nav-icon-active"></fa-icon>
           </span>
         <span class="nav__text">Inicio</span>
     </a>
-    <a [routerLink]="['catalogo']" class="nav__link" routerLinkActive="active">
+    <a [routerLink]="['catalogos']" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-list" routerLinkActive="nav-icon-active"></i>
+            <fa-icon [icon]="iconCatalogos" routerLinkActive="nav-icon-active"></fa-icon>
           </span>
         <span class="nav__text">Catálogos</span>
     </a>
     <a [routerLink]="['agregar']" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-plus-circle" routerLinkActive="nav-icon-active"></i>
+            <fa-icon [icon]="iconAgregar" routerLinkActive="nav-icon-active"></fa-icon>
           </span>
         <span class="nav__text">Agregar</span>
     </a>
     <a [routerLink]="['resumen']" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-chart-bar" routerLinkActive="nav-icon-active"></i>
+            <fa-icon [icon]="iconResumen" routerLinkActive="nav-icon-active"></fa-icon>
           </span>
         <span class="nav__text">Resumen</span>
     </a>
     <a [routerLink]="['perfil']" class="nav__link" routerLinkActive="active">
         <span class="nav-icon">
-            <i class="fas fa-user" routerLinkActive="nav-icon-active"></i>
+            <fa-icon [icon]="iconPerfil" routerLinkActive="nav-icon-active"></fa-icon>
           </span>
         <span class="nav__text">Perfil</span>
     </a>

@@ -26,7 +26,7 @@ const routes: Routes = [
                 component: ResumenComponent
             },
             {
-                path: 'catalogo',
+                path: 'catalogos',
                 component: CatalogoComponent
             },
             {

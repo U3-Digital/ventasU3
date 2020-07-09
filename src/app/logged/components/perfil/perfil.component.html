@@ -55,7 +55,7 @@
                     <div class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-5s">
                         <div class="col-md-6"></div>
                         <div class="col-md-3">
-                            <button #botonGuardar class="btn boton btn-block" (click)="guardar()"><i class="fas fa-check" style="color: white"></i> Guardar</button>
+                            <button [swal]="['Oops!', 'This is not implemented yet :/', 'warning']" #botonGuardar class="btn boton btn-block" (click)="guardar()"><i class="fas fa-check" style="color: white"></i> Guardar</button>
                         </div>
                         <div class="col-md-3">
                             <button #botonEditar type="button" class="btn boton btn-block" (click)="editar()"><i class="fas fa-pencil-alt" style="color: white"></i> Editar</button>

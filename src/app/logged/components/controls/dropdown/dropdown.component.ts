@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
-// import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
@@ -14,7 +14,7 @@ export class DropdownComponent implements OnInit {
 
     @Output() childClickedEvent = new EventEmitter<String>();
     
-    // faChevronDown = faChevronDown;
+    faChevronDown = faChevronDown;
     showing = false;
     clase = 'dropdown-content';
     claseShowing = 'dropdown-content show';

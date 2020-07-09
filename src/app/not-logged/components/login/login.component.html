@@ -4,28 +4,26 @@
             <h2 class="title ">Ingresar</h2>
         </div>
         <div class="card-body ">
-            <form id="login-form " name="login-form ">
-
+            <form [formGroup]="formaLoginUsuario" (ngSubmit)="submit()">
                 <div class="col_full ">
                     <label for="login-form-username ">Correo electrónico:</label>
                     <div class="input-group mb-3 ">
-                        <input type="email " class="form-control cajaTexto " required="true ">
+                        <input type="email " class="form-control cajaTexto" formControlName="email">
                     </div>
                 </div>
                 <div class="col_full ">
                     <label for="login-form-password ">Contraseña:</label>
                     <div class="input-group mb-3 ">
-                        <input type="password " class="form-control cajaTexto " required="true ">
+                        <input type="password " class="form-control cajaTexto" formControlName="password" required="true ">
                     </div>
                 </div>
-
                 <div class="text-center ">
-
                 </div>
                 <div class="text-center ">
                     <button class="btn btn-primary button-login ">Entrar</button>
                 </div>
             </form>
+            {{formaLoginUsuario.status}} <br>{{formaLoginUsuario.value.email}}
         </div>
     </div>
 </div>
