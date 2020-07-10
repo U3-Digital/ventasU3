@@ -12,7 +12,7 @@ export class DropdownComponent implements OnInit {
     @Input() opciones: string[];
     @Input() titulo: string;
 
-    @Output() childClickedEvent = new EventEmitter<String>();
+    @Output() childClickedEvent = new EventEmitter<string>();
     
     faChevronDown = faChevronDown;
     showing = false;

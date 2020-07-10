@@ -24,7 +24,7 @@
     border-radius: 32px;
     color: #061058;
     background-color: #EEEEEE;
-    transition: .3s;
+    transition: .2s;
 }
 
 .cajaTexto:focus {
@@ -47,7 +47,8 @@
     background-color: #0000AF;
     border: none;
     border-radius: 32px;
-    transition-duration: .3s;
+    transition-duration: .2s;
+    outline: none;
 }
 
 .button-login:hover {
@@ -56,4 +57,12 @@
 
 .borde {
     border: 1px solid red;
+}
+
+.invisible {
+    visibility: visible;
+}
+
+.visible {
+    visibility: visible;
 }

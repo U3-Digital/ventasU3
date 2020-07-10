@@ -8,14 +8,15 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class PerfilComponent implements OnInit, AfterViewInit {
 
-    FotoPerfil = "https://www.westernunion.com/content/dam/wu/jm/responsive/send-money-in-person-from-jamaica-resp.png";
-    FotoPerfilAlt = "Foto de perfil";
-    Nombre = "Juanita";
-    Apellido = "Perez";
-    Email = "juanita.perez@gmail.com";
-    Telefono = "6251231234";
+    FotoPerfil = 'https://www.westernunion.com/content/dam/wu/jm/responsive/send-money-in-person-from-jamaica-resp.png';
+    FotoPerfilAlt = 'Foto de perfil';
+    Nombre = '';
+    Email = '';
+    Telefono = '';
     Editando = false;
     Cambiado = false;
+    usuario:any;
+
 
     formaPerfil: FormGroup;
 
@@ -23,11 +24,18 @@ export class PerfilComponent implements OnInit, AfterViewInit {
     @ViewChild('botonGuardar', {}) botonGuardar;
 
     constructor(private formBuilder: FormBuilder) {
+        this.usuario = JSON.parse(localStorage.getItem('info-usuario'));
+        this.Nombre = this.usuario.nombre;
+        this.Email = this.usuario.email;
+        this.Telefono = '6251231234';
+        
     }
 
     ngOnInit() {    
         this.crearFormulario();
         this.onChanges();
+
+        
     }
 
     ngAfterViewInit() {

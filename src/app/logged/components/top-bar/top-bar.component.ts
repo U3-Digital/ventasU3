@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-bar',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
 
-  constructor() { }
+    logoutIcon = faSignOutAlt;
 
-  ngOnInit() {
-  }
+    nombre: string = '';
+    usuario: any;
+
+    constructor(private auth: AuthService, private router: Router) { 
+
+        this.usuario = JSON.parse(localStorage.getItem('info-usuario'));
+        this.nombre = this.usuario.nombre;
+    }
+
+    ngOnInit() {
+    }
+
+    logout () {
+        this.auth.logout();
+        this.router.navigateByUrl('');
+    }
 
 }

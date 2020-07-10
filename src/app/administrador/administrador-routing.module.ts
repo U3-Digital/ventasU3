@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
-import { AuthGuard } from '../guards/auth.guard';
+import { AuthAdminGuard } from '../guards/auth-admin.guard';
 const routes: Routes = [
     {
         path: '',
@@ -12,7 +12,7 @@ const routes: Routes = [
     {
         path: 'inicio',
         component: InicioComponent,
-        canActivate: [ AuthGuard ]
+        canActivate: [ AuthAdminGuard ]
     }, 
     {
         path: '**',

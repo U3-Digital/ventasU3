@@ -16,9 +16,13 @@ import { AgregarPedidoComponent } from './components/agregar/components/agregar-
 import { AgregarClienteComponent } from './components/agregar/components/agregar-cliente/agregar-cliente.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ModalComponent } from './components/controls/modal/modal.component';
+import { AgregarCatalogoComponent } from './components/agregar/components/agregar-catalogo/agregar-catalogo.component';
+import { AgregarProductoComponent } from './components/agregar/components/agregar-producto/agregar-producto.component';
+
 
 @NgModule({
-  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, CatalogoComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent],
+  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, CatalogoComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent, ModalComponent, AgregarCatalogoComponent, AgregarProductoComponent],
   imports: [
     CommonModule,
     LoggedRoutingModule,

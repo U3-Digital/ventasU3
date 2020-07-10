@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { CatalogosService } from '../../../services/catalogos.service'; 
+import { CatalogoModel } from '../../../models/catalogo.model';
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.component.html',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatalogoComponent implements OnInit {
 
-    opciones: string[] = ['Andrea', 'Avon', 'Mary-Kay', 'Betterware', 'Herbalife :v'];
+    catalogos: CatalogoModel[] = [];
+    opciones: string[] = [];
 
-    constructor() { }
+    constructor(private catalogoService: CatalogosService) {
+        this.catalogoService.getCatalogos().subscribe(
+            (respuesta) => {
+
+                respuesta['catalogos'].forEach(catalogo => {
+                    this.catalogos.push(catalogo);
+                });
+
+                this.catalogos.forEach(catalogo => {
+                    this.opciones.push(catalogo.nombre);
+                })
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
 
     ngOnInit() {
 

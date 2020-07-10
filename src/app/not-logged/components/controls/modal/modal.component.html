@@ -1,0 +1,10 @@
+<div #modal class="modal" [ngClass]="showing? 'showing': 'not-showing'">
+    <div id="modal-content" class="modal-content animate__animated animate__zoomIn animate__faster">
+        <fa-icon #close [icon]="closeIcon" class="close"></fa-icon>
+        <fa-icon #image [icon]="errorIcon" class="image error"></fa-icon>
+        <br>
+        <br>
+        <p class="message">{{ message }}</p>
+        <button class="btn btn-secondary button-login" (click)="dismiss()">Aceptar</button>
+    </div>
+</div>

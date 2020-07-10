@@ -6,12 +6,14 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ResumenComponent } from './components/resumen/resumen.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { AgregarComponent } from './components/agregar/agregar.component';
+import { AuthUserGuard } from '../guards/auth-user.guard';
 
 const routes: Routes = [
 
     {
         path: '',
         component: BottomNavComponent,
+        canActivate: [AuthUserGuard],
         children: [
             {
                 path: 'inicio',
@@ -34,6 +36,10 @@ const routes: Routes = [
                 component: AgregarComponent
             }
         ]
+    },
+    {
+        path: '**',
+        redirectTo: 'inicio'
     }
 
 ];

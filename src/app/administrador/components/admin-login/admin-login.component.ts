@@ -54,14 +54,37 @@ export class AdminLoginComponent implements OnInit {
 
             this.auth.loginAdmin(this.admin).subscribe(
                 (respuesta) => {
-                    this.router.navigateByUrl('/admin/inicio');
+
+                    if (respuesta['usuarioDB'].role === 'USER_ROLE') {
+                        this.showModal = true;
+                        localStorage.removeItem('token');
+                    } else {
+                        this.saveUserInfo(respuesta['usuarioDB']);
+                        this.router.navigateByUrl('/admin/inicio');
+                    }
+
+                    
                 }, (error) => {
-                    // console.log(error.error.err.message);
                     this.showModal = true;
                  }
                 
             );
         }
+
+    }
+
+    saveUserInfo (info: any) {
+        
+        let usuario = {
+            id : info._id,
+            email : info.email,
+            nombre : info.nombre,
+            role : info.role,
+            estado : info.estado,
+            google : info.google,
+        };
+
+        localStorage.setItem('info-usuario', JSON.stringify(usuario));
 
     }
 

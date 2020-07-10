@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AdminModel } from '../models/admin.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+
+import { AdminModel } from '../models/admin.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,7 @@ export class AuthService {
 
     logout () {
         localStorage.removeItem('token');
+        localStorage.removeItem('info-usuario');
     }
 
     loginAdmin (admin: AdminModel) {
@@ -44,7 +47,23 @@ export class AuthService {
                 return respuesta;
             })
         );
+    }
 
+    login (user: UserModel) {
+
+        const body = {
+            ...user
+        }
+
+        return this.http.post(
+            `${this.url}/login`,
+            body
+        ).pipe(
+            map( (respuesta) => {
+                this.guardarToken(respuesta['token']);
+                return respuesta;
+            })
+        );
     }
 
     private guardarToken (idToken: string) {
@@ -63,6 +82,6 @@ export class AuthService {
     }
 
     isAuthenticated (): boolean {
-        return this.userToken.length === 315;
+        return this.userToken.length > 20;
     }
 }

@@ -1,29 +1,32 @@
 <div class="row h-100 background" style="margin: auto">
+    <app-modal [message]="'El correo o la contraseña son incorrectos'" [showing]="showModal"></app-modal>
     <div class="card card-login mx-auto my-auto animate__animated animate__fadeIn animate__faster">
-        <div class=" card-header fondo text-center border-0 ">
-            <h2 class="title ">Ingresar</h2>
+        <div class="card-header fondo text-center border-0">
+            <h2 class="title">Ingresar</h2>
         </div>
-        <div class="card-body ">
+        <div class="card-body">
             <form [formGroup]="formaLoginUsuario" (ngSubmit)="submit()">
-                <div class="col_full ">
-                    <label for="login-form-username ">Correo electrónico:</label>
-                    <div class="input-group mb-3 ">
-                        <input type="email " class="form-control cajaTexto" formControlName="email">
+                <div class="col_full">
+                    <label for="login-form-username">Correo electrónico:</label>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control cajaTexto" formControlName="email" [class.is-invalid]="correoNoValido">
                     </div>
+                    <small class="text-danger" [ngClass]="correoNoValido ? 'visible' : 'invisible'">Ingrese un correo electrónico válido</small>
                 </div>
-                <div class="col_full ">
-                    <label for="login-form-password ">Contraseña:</label>
-                    <div class="input-group mb-3 ">
-                        <input type="password " class="form-control cajaTexto" formControlName="password" required="true ">
+                <div class="col_full">
+                    <label for="login-form-password">Contraseña:</label>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control cajaTexto" formControlName="password" required="true" [class.is-invalid]="passwordNoValida">
                     </div>
+                    <small class="text-danger" [ngClass]="passwordNoValida ? 'visible' : 'invisible'">Ingrese una contraseña válida</small>
                 </div>
-                <div class="text-center ">
+                <div class="text-center">
+                    <br>
                 </div>
-                <div class="text-center ">
-                    <button class="btn btn-primary button-login ">Entrar</button>
+                <div class="text-center">
+                    <button class="btn btn-primary button-login" type="submit">Entrar</button>
                 </div>
             </form>
-            {{formaLoginUsuario.status}} <br>{{formaLoginUsuario.value.email}}
         </div>
     </div>
 </div>

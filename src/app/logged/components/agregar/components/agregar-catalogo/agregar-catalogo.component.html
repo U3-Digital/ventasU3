@@ -1,0 +1,31 @@
+<div class="card card-cliente animate__animated animate__fadeInUp animate__faster">
+    <div class="card-header fondo">
+        <h3 class="title">Registrar catálogo</h3>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="formaCatalogo" (ngSubmit)="sendSubmit()">
+            <div class="row m-1">
+                <div class="col-md-4 align-self-center">
+                    Nombre :
+                </div>
+                <div class="col-md-8">
+                    <input #nombreCatalogo type="text" class="form-control cajaTexto" id="nombreCatalogo" aria-describedby="nombreCatalogo" formControlName="nombre" [class.is-invalid]="nombreNoValido">
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-4 align-self-center">
+                    Porcentaje de ganancia :
+                </div>
+                <div class="col-md-8">
+                    <input #gananciaCatalogo type="text" class="form-control cajaTexto" id="gananciaCatalogo" aria-describedby="gananciaCatalogo" formControlName="ganancia" [class.is-invalid]="gananciaNoValida">
+                </div>
+            </div>
+            <br>
+            <div class="row m-1">
+                <div class="col-md-12 text-center">
+                    <button class="btn boton btn-block" type="submit">Aceptar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

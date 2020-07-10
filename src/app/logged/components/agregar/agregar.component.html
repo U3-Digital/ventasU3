@@ -1,7 +1,10 @@
 <div class="row h-100 background" style="margin:auto">
+    <app-modal [message]="mensajeCatalogoModal" [showing]="showCatalogoModal" [icon]="icon" [type]="tipoCatalogo"></app-modal>
     <div class="col-md-12 text-center">
         <app-dropdown [opciones]="opciones" [titulo]="'Seleccionar'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
         <app-agregar-cliente *ngIf="showForm('Cliente')"></app-agregar-cliente>
         <app-agregar-pedido *ngIf="showForm('Pedido')"></app-agregar-pedido>
+        <app-agregar-catalogo *ngIf="showForm('Catálogo')" (catalogoClickedEvent)="recibirCatalogoEvent($event)"></app-agregar-catalogo>
+        <app-agregar-producto *ngIf="showForm('Producto')"></app-agregar-producto>
     </div>
 </div>

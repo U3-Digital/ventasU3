@@ -12,7 +12,7 @@
                             Nombre
                         </div>
                         <div class="col-md-8">
-                            <input #nameInput autocomplete="username" type="text" class="form-control" [ngClass]="Editando ? 'cajaTexto' : 'cajaTextoPlano'" id="nameInput" aria-describedby="name" [value]="Nombre + ' ' + Apellido" formControlName="nombre" [readOnly]="!Editando">
+                            <input #nameInput autocomplete="username" type="text" class="form-control" [ngClass]="Editando ? 'cajaTexto' : 'cajaTextoPlano'" id="nameInput" aria-describedby="name" [value]="Nombre" formControlName="nombre" [readOnly]="!Editando">
                         </div>
                     </div>
                     <hr align="left" class="divider">
