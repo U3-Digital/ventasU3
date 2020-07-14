@@ -7,6 +7,9 @@ const path = require('path');
 const app = express();
 
 const bodyParser = require('body-parser');
+// const bcrypt = require('bcrypt');
+
+// console.log(bcrypt.hashSync('1234', 10));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

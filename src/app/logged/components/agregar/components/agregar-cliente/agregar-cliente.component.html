@@ -1,4 +1,44 @@
 <div class="card card-cliente animate__animated animate__fadeInUp animate__faster">
-    <div class="card-header">Registrar cliente</div>
-    <div class="card-body">Cuerpo</div>
+    <div class="card-header fondo">
+        <h3 class="title">Registrar cliente</h3>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="formaCliente" (ngSubmit)="sendSubmit()">
+            <div class="row m-1">
+                <div class="col-md-2 align-self-center">
+                    Nombre(s):
+                </div>
+                <div class="col-md-4">
+                    <input #nombresCliente type="text" class="form-control cajaTexto" id="nombresCliente" aria-describedby="nombresCliente" formControlName="nombres" [class.is-invalid]="nombresNoValidos">
+                </div>
+                <div class="col-md-2 align-self-center">
+                    Apellidos:
+                </div>
+                <div class="col-md-4">
+                    <input #apellidosCliente type="text" class="form-control cajaTexto" id="apellidosCliente" aria-describedby="apellidosCliente" formControlName="apellidos" [class.is-invalid]="apellidosNoValidos">
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-2 align-self-center">
+                    Teléfono:
+                </div>
+                <div class="col-md-4">
+                    <input #telefonoCliente type="text" class="form-control cajaTexto" id="telefonoCliente" aria-describedby="telefonoCliente" formControlName="telefono" [class.is-invalid]="telefonoNoValido">
+                </div>
+
+                <div class="col-md-2 align-self-center">
+                    Correo electrónico:
+                </div>
+                <div class="col-md-4">
+                    <input #emailCliente type="text" class="form-control cajaTexto" id="emailCliente" aria-describedby="emailCliente" formControlName="email" [class.is-invalid]="emailNoValido">
+                </div>
+            </div>
+            <br>
+            <div class="row m-1">
+                <div class="col-md-12 text-center">
+                    <button class="btn boton btn-block" type="submit">Aceptar</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

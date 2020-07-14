@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,  HostListener} from '@angular/core';
+import { Component, OnInit, Input,  HostListener, ViewChild, ElementRef} from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,6 +16,8 @@ export class ModalComponent implements OnInit {
     @Input() showing: boolean = false;
     @Input() icon: any;
     @Input() type: string;
+
+    @ViewChild('modalContent', {}) modal: ElementRef;
 
     // @Input() onDismiss: ;
 
@@ -35,7 +37,9 @@ export class ModalComponent implements OnInit {
     @HostListener('document:click', ['$event']) 
     onDocumentClick(event: MouseEvent) {
         
-        if ((event.target != document.getElementById('modal-content'))) {
+        if (event.target === this.modal.nativeElement) {
+            
+        } else {
             this.showing = false;
         }
     }

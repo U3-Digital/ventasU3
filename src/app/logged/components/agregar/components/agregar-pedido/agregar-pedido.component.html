@@ -1,4 +1,30 @@
-<div class="card card-pedido animate__animated animate__fadeInUp animate__faster">
-    <div class="card-header">Registrar pedido</div>
-    <div class="card-body">Cuerpo</div>
+<div class="row">
+    <div class="col-md-3">
+        <app-dropdown id="clientes" [id]="'clientes'" [opciones]="opcionesClientes" [datos]="clientes" [titulo]="'Seleccionar cliente'"></app-dropdown>
+    </div>
+    <div class="col-md-3">
+        <app-dropdown [sombra]="false" [opciones]="opcionesCatalogos" [datos]="catalogos" [titulo]="'Seleccionar catálogo'" (childClickedEvent)="recibirCatalogo($event)"></app-dropdown>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-borderless tabla animate__animated animate__fadeInUp animate__faster" style="display: block;">
+            <tr class="header">
+                <th class="codigo">Código</th>
+                <th class="nombre">Nombre</th>
+                <th class="precio">Precio</th>
+                <th class="cantidad">Cantidad</th>
+            </tr>
+
+            <tr *ngFor="let producto of productos; let i = index" class="fila divider">
+                <td class="codigo">{{producto.codigoProducto}}</td>
+                <td class="nombre">{{producto.nombreProducto}}</td>
+                <td class="precio">{{producto.precioProducto}}</td>
+                <td class="cantidad">{{producto.cantidadProducto}}</td>
+            </tr>
+            <tr class="fila-add" style="height: 3em;" (click)="sendShouldShow()">
+                <td style="display: inline-block; width: 100%;">
+                    <fa-icon [icon]="addIcon" class="add"></fa-icon>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

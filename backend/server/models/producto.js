@@ -7,7 +7,7 @@ var productoSchema = new Schema({
     idCatalogoProducto: { type: String, required: [true, 'El catalogo es necesario'] },
     precioProducto: { type: Number, required: [true, 'El precio es necesario'] },
     cantidadProducto: { type: Number, required: [true, 'La cantidad es necesaria'] },
-    entregadoProducto: { type: Boolean, default: false }
+    statusProducto: { type: String, default: 'Pendiente' }
 });
 
 module.exports = mongoose.model('Producto', productoSchema);

@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-let {verificaToken} = require('../middlewares/autenticacion.js');
+let { verificaToken } = require('../middlewares/autenticacion.js');
 let app = express();
 let Cliente = require('../models/cliente.js');
 
@@ -22,26 +22,28 @@ let Cliente = require('../models/cliente.js');
 // ========================================
 // Crear nuevo Cliente
 // ========================================
-app.post('/cliente', verificaToken, (req, res)=>{
-// Regresar la nueva categoria
-// req.usuario._id
-	let body = req.body;
+app.post('/cliente', verificaToken, (req, res) => {
+    // Regresar la nueva categoria
+    // req.usuario._id
+    let body = req.body;
 
-	let cliente = new Cliente({
-		nombre: body.nombre,
+    let cliente = new Cliente({
+        nombres: body.nombres,
         apellidos: body.apellidos,
-		email: body.email,
-		password: bcrypt.hashSync(body.password, 10),
-		usuario: req.usuario._id
-	});
+        telefono: body.telefono,
+        email: body.email,
+        adeuda: body.adeuda,
+        compras: body.compras,
+        vendedor: body.vendedor
+    });
 
-	cliente.save((err, clienteDB) =>{
-		if (err) {
-                return res.status(500).json({
-                    ok: false,
-                    err
-                });
-            }
+    cliente.save((err, clienteDB) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
 
         if (!clienteDB) {
             return res.status(400).json({
@@ -51,14 +53,34 @@ app.post('/cliente', verificaToken, (req, res)=>{
         }
 
         res.json({
-        	ok:true,
-        	cliente: clienteDB
+            ok: true,
+            cliente: clienteDB
         });
 
 
-	});
+    });
 
 
+});
+
+app.get('/cliente/:idVendedor', verificaToken, (req, res) => {
+
+    let idVendedor = req.params.idVendedor;
+
+    Cliente.find({ vendedor: idVendedor }, '', )
+        .exec((err, clientes) => {
+            if (err) {
+                return res.status(404).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                clientes
+            });
+        });
 });
 
 

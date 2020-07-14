@@ -1,10 +1,14 @@
-<div class="row h-100 background" style="margin:auto">
-    <app-modal [message]="mensajeCatalogoModal" [showing]="showCatalogoModal" [icon]="icon" [type]="tipoCatalogo"></app-modal>
-    <div class="col-md-12 text-center">
-        <app-dropdown [opciones]="opciones" [titulo]="'Seleccionar'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
-        <app-agregar-cliente *ngIf="showForm('Cliente')"></app-agregar-cliente>
-        <app-agregar-pedido *ngIf="showForm('Pedido')"></app-agregar-pedido>
-        <app-agregar-catalogo *ngIf="showForm('Catálogo')" (catalogoClickedEvent)="recibirCatalogoEvent($event)"></app-agregar-catalogo>
-        <app-agregar-producto *ngIf="showForm('Producto')"></app-agregar-producto>
+<div class="row h-100 background" style="margin:auto; position: relative;">
+    <app-agregar-producto [showing]="showAddProduct" [catalogo]="catalogoSeleccionado" (productoClickedEvent)="recibirProductoAdded($event)"></app-agregar-producto>
+    <app-modal [message]="mensajeModal" [showing]="showModal" [icon]="icon" [type]="tipoModal"></app-modal>
+    <div class="col-md-12 text-center mt-3">
+        <app-dropdown [sombra]="true" [opciones]="opciones" [datos]="opciones" [titulo]="'Seleccionar'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
     </div>
+
+    <div class="col-md-12 text-center abajo">
+        <app-agregar-cliente *ngIf="showForm('Cliente')" (clienteClickedEvent)="recibirClienteEvent($event)"></app-agregar-cliente>
+        <app-agregar-pedido *ngIf="showForm('Pedido')" (shouldShow)="recibirShowProduct($event)" (catalogo)="recibirCatalogo($event)" [productos]="productos"></app-agregar-pedido>
+        <app-agregar-catalogo *ngIf="showForm('Catálogo')" (catalogoClickedEvent)="recibirCatalogoEvent($event)"></app-agregar-catalogo>
+    </div>
+
 </div>

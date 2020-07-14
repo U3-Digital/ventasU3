@@ -13,7 +13,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 export class BottomNavComponent implements OnInit {
 
     iconInicio = faHome;
-    iconCatalogos = faList;
+    iconPedidos = faList;
     iconAgregar = faPlusCircle;
     iconResumen =  faChartBar;
     iconPerfil = faUser;

@@ -33,8 +33,6 @@ export class AgregarCatalogoComponent implements OnInit {
         });
     }
 
-    
-
     sendSubmit () {
 
         this.catalogoClickedEvent.emit(this.formaCatalogo);

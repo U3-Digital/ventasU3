@@ -1,10 +1,47 @@
-<div class="card card-producto animate__animated animate__fadeInUp animate__faster">
-    <div class="card-header fondo">
-        <h3 class="title">Registrar producto</h3>
-    </div>
-    <div class="card-body">
+<div id="addProducto" class="modal" [ngClass]="showing? 'showing' : 'not-showing'">
+    <app-modal [message]="mensajeModal" [showing]="showModal" [icon]="icon" [type]="tipoModal"></app-modal>
+    <div id="addProductoCard" class="card card-producto animate__animated animate__fadeInUp animate__faster">
+        <div class="card-header fondo text-center">
+            <h3 class="title">Registrar producto</h3>
+        </div>
+        <div class="card-body">
 
-
-
+            <form [formGroup]="formaProducto" (ngSubmit)="submit()">
+                <div class="row m-1">
+                    <div class="col-md-2 align-self-center">
+                        Código:
+                    </div>
+                    <div class="col-md-4">
+                        <input #codigoProducto type="text" class="form-control cajaTexto" id="codigoProducto" aria-describedby="codigoProducto" formControlName="codigoProducto" [class.is-invalid]="codigoNoValido">
+                    </div>
+                    <div class="col-md-2 align-self-center">
+                        Nombre:
+                    </div>
+                    <div class="col-md-4">
+                        <input #nombreProducto type="text" class="form-control cajaTexto" id="nombreProducto" aria-describedby="nombreProducto" formControlName="nombreProducto" [class.is-invalid]="nombreNoValido">
+                    </div>
+                </div>
+                <div class="row m-1">
+                    <div class="col-md-2 align-self-center">
+                        Cantidad:
+                    </div>
+                    <div class="col-md-4 align-self-center">
+                        <input #cantidadProducto type="text" class="form-control cajaTexto" id="cantidadProducto" aria-describedby="cantidadProducto" formControlName="cantidadProducto" [class.is-invalid]="cantidadNoValida">
+                    </div>
+                    <div class="col-md-2 align-self-center">
+                        Precio:
+                    </div>
+                    <div class="col-md-4 align-self-center">
+                        <input #precioProducto type="text" class="form-control cajaTexto" id="precioProducto" aria-describedby="precioProducto" formControlName="precioProducto" [class.is-invalid]="precioNoValido">
+                    </div>
+                </div>
+                <br>
+                <div class="row m-1">
+                    <div class="col-md-12 text-center">
+                        <button id="botonAddProducto" class="btn boton btn-block" type="submit">Aceptar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

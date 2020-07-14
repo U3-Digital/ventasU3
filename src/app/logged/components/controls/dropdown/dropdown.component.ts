@@ -1,18 +1,23 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css']
 })
-export class DropdownComponent implements OnInit {
+export class DropdownComponent implements OnInit, OnChanges {
+
+    @ViewChild('dropdownButton', {}) dropdownButton: ElementRef;
 
     @ViewChild('dropdownContent', {}) dropdownContent: ElementRef;
 
+    @Input() id:string;
     @Input() opciones: string[];
+    @Input() datos: any[];
     @Input() titulo: string;
+    @Input() sombra: boolean;
 
-    @Output() childClickedEvent = new EventEmitter<string>();
+    @Output() childClickedEvent = new EventEmitter<any>();
     
     faChevronDown = faChevronDown;
     showing = false;
@@ -22,20 +27,29 @@ export class DropdownComponent implements OnInit {
     constructor() {       
     }
 
-    sendChildClicked(index) {
-        let opcion = this.titulo = this.opciones[index];
-        this.childClickedEvent.emit(opcion);
+    ngOnInit() {
+
     }
 
-    ngOnInit() {
+    ngOnChanges(changes: SimpleChanges): void {
+        
+    }
+
+    sendChildClicked(index) {
+        let opcion = this.titulo = this.opciones[index];
+        this.childClickedEvent.emit(this.datos[index]);
     }
 
     showContent() {
-        if (this.showing == true ) {
-            this.showing = false;
-        } else {
-            this.showing = true;
-        }
+        this.showing = !this.showing;
+        // console.log('sas');
+        // if (this.showing == true ) {
+        //     console.log('heu');
+        //     this.showing = false;
+        // } else {
+        //     console.log('asa');
+        //     this.showing = true;
+        // }
     }
 
 
@@ -50,8 +64,10 @@ export class DropdownComponent implements OnInit {
     @HostListener('document:click', ['$event']) 
     onDocumentClick(event: MouseEvent) {
         
-        if ((event.target == document.getElementById('dropdown-button'))) {
-            
+        // console.log(document.getElementById('dropdown-button'));
+
+        if (event.target === this.dropdownButton.nativeElement) {
+            // console.log('hola');
         } else {
             this.showing = false;
         }

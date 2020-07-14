@@ -8,7 +8,7 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class PerfilComponent implements OnInit, AfterViewInit {
 
-    FotoPerfil = 'https://www.westernunion.com/content/dam/wu/jm/responsive/send-money-in-person-from-jamaica-resp.png';
+    FotoPerfil = '../../../assets/img/default.jpg';
     FotoPerfilAlt = 'Foto de perfil';
     Nombre = '';
     Email = '';

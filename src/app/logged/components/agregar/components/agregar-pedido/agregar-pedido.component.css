@@ -1,0 +1,154 @@
+.card-pedido {
+    color: #061058;
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 32px;
+    border: none;
+    z-index: 0;
+    max-width: 50em;
+    display: block;
+    max-height: 35em;
+    margin: auto;
+    filter: drop-shadow(0px 40px 64px rgba(6, 16, 88, 0.3));
+}
+
+.title {
+    font-weight: 600;
+    color: #DCF8FF;
+}
+
+.fondo {
+    border-radius: 32px 32px 0 0;
+    background-color: #0000AF;
+}
+
+.cajaTexto {
+    outline: none;
+    box-shadow: none !important;
+    border-width: 0px 0px 2px 0px !important;
+    border-style: solid;
+    border-color: rgba(0, 0, 175, 0) !important;
+    border-radius: 32px;
+    color: #061058;
+    background-color: #EEEEEE;
+    transition: .2s;
+}
+
+.cajaTexto:focus {
+    background-color: #DDDDDD;
+}
+
+.borde {
+    border: 1px solid red;
+}
+
+.boton {
+    font-weight: 600;
+    color: white;
+    background-color: #0000AF;
+    border: none;
+    border-radius: 32px;
+    transition-duration: .3s;
+}
+
+.boton:hover {
+    box-shadow: 0px 10px 64px 0px rgba(6, 16, 88, 0.3);
+}
+
+.tabla {
+    font-family: 'Poppins', sans-serif;
+    color: #061058;
+    max-height: 20em;
+    border-radius: 1em;
+    overflow: auto;
+}
+
+.header {
+    background-color: #0000AF;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    color: white;
+    font-weight: 500;
+    border-color: rgba(180, 183, 204, 0.4);
+}
+
+.fila {
+    background-color: white;
+    transition-duration: .2s;
+}
+
+.fila:hover {
+    background-color: #DDDDDD;
+}
+
+.fila-add {
+    background-color: white;
+}
+
+.add {
+    border-radius: 4em;
+    padding: 0.5em;
+    transition-duration: .2s;
+    cursor: pointer;
+}
+
+.add:hover {
+    background-color: #DDDDDD;
+}
+
+.divider {
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgba(180, 183, 204, 0.4);
+}
+
+tr {
+    display: block;
+}
+
+th {
+    display: inline-block;
+}
+
+.codigo {
+    display: inline-block;
+    width: 30%;
+}
+
+.nombre {
+    display: inline-block;
+    width: 30%;
+}
+
+.precio {
+    display: inline-block;
+    width: 30%;
+}
+
+.cantidad {
+    display: inline-block;
+    width: 10%;
+}
+
+@media(min-width: 720px) {
+    .boton {
+        margin: auto;
+        max-width: 20em;
+    }
+    .codigo {
+        display: inline-block;
+        width: 10%;
+    }
+    .nombre {
+        display: inline-block;
+        width: 40%;
+    }
+    .precio {
+        display: inline-block;
+        width: 30%;
+    }
+    .cantidad {
+        display: inline-block;
+        width: 10%;
+    }
+}

@@ -1,6 +1,6 @@
 <div class="row h-100 background" style="margin: auto;">
     <div class="col-md-12 text-center">
-        <app-dropdown [opciones]="opciones" [titulo]="'Seleccionar'"></app-dropdown>
+        <app-dropdown [sombra]="true" [datos]="catalogos" [opciones]="opciones" [titulo]="'Seleccionar'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
         <div class="card card-catalogo animate__animated animate__fadeInUp animate__faster">
             <div class="card-header fondo text-center border-0">
                 <h3 class="title">Productos</h3>
@@ -16,10 +16,10 @@
                     </tr>
 
 
-                    <tr *ngFor="let opcion of opciones; let i = index" class="fila" [ngClass]="isLast(i) ? '': 'divider'">
-                        <td class="codigo">1</td>
-                        <td class="nombre">Cosa</td>
-                        <td class="precio">$1.00</td>
+                    <tr *ngFor="let producto of productos; let i = index" class="fila" [ngClass]="isLast(i) ? '': 'divider'">
+                        <td class="codigo">{{ producto.codigoProducto }}</td>
+                        <td class="nombre">{{ producto.nombreProducto }}</td>
+                        <td class="precio">{{ producto.precioProducto }}</td>
                         <td class="agregar">
                             <label class="checkbox-label">
                                 <input type="checkbox">

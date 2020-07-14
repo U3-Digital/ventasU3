@@ -13,8 +13,6 @@ export class CatalogosService {
 
     }
 
-    
-
     getCatalogos () {
 
         const httpOptions = {
@@ -37,7 +35,7 @@ export class CatalogosService {
               'Content-Type':  'application/json',
               'token': localStorage.getItem('token')
             })
-          };
+        };
 
 
         return this.http.post(`${this.url}/catalogo`, body, httpOptions);

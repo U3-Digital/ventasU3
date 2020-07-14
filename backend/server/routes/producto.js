@@ -3,6 +3,48 @@ let { verificaToken } = require('../middlewares/autenticacion');
 let app = express();
 let Producto = require('../models/producto');
 
+app.get('/productos/:idCatalogo', verificaToken, (req, res) => {
+
+    let id = req.params.idCatalogo;
+
+    Producto.find({ idCatalogoProducto: id }, '')
+        .exec((err, productos) => {
+            if (err) {
+                return res.status(404).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                productos
+            });
+
+        });
+
+});
+
+app.get('/productospendientes/:idCatalogo', verificaToken, (req, res) => {
+
+    let id = req.params.idCatalogo;
+
+    Producto.find({ idCatalogoProducto: id, statusProducto: 'Pendiente' }, '')
+        .exec((err, productos) => {
+            if (err) {
+                return res.status(404).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                productos
+            });
+        });
+});
+
 app.post('/producto', verificaToken, (req, res) => {
 
     let body = req.body;
@@ -37,5 +79,7 @@ app.post('/producto', verificaToken, (req, res) => {
 
     });
 });
+
+
 
 module.exports = app;
