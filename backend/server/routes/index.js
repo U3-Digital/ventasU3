@@ -12,6 +12,7 @@ app.use(require('./catalogo'));
 app.use(require('./cliente'));
 app.use(require('./vendedor'));
 app.use(require('./producto'));
+app.use(require('./pedido'));
 //app.use(require('./venta'));
 
 

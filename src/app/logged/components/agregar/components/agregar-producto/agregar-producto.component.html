@@ -1,5 +1,5 @@
 <div id="addProducto" class="modal" [ngClass]="showing? 'showing' : 'not-showing'">
-    <app-modal [message]="mensajeModal" [showing]="showModal" [icon]="icon" [type]="tipoModal"></app-modal>
+    <app-modal [message]="mensajeModal" [showing]="showModal" [icon]="icon" [type]="tipoModal" (onDismiss)="dialogDismiss($event)"></app-modal>
     <div id="addProductoCard" class="card card-producto animate__animated animate__fadeInUp animate__faster">
         <div class="card-header fondo text-center">
             <h3 class="title">Registrar producto</h3>

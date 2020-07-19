@@ -1,0 +1,29 @@
+<div class="card card-abono animate__animated animate__fadeInUp animate__faster">
+    <div class="card-header fondo">
+        <h3 class="title">Abono</h3>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="formaAbono" (ngSubmit)="submit()">
+            <div class="row">
+                <div class="col-md-12">
+                    <app-dropdown [opciones]="opcionesClientes" [datos]="datosClientes" [sombra]="true" [titulo]="'Seleccionar cliente'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
+                </div>
+            </div>
+            <br>
+            <div class="row m-1">
+                <div class="col-md-4  align-self-center">
+                    Cantidad:
+                </div>
+                <div class="col-md-8 align-self-center">
+                    <input #abono type="text" class="form-control cajaTexto" id="abono" aria-describedby="abono" formControlName="cantidad" [class.is-invalid]="isCantidadValid">
+                </div>
+            </div>
+            <br>
+            <div class="row m-1">
+                <div class="col-md-12 text-center">
+                    <button class="btn boton btn-block" type="submit">Aceptar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

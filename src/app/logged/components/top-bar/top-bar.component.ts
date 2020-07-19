@@ -14,11 +14,13 @@ export class TopBarComponent implements OnInit {
 
     nombre: string = '';
     usuario: any;
+    fotoPerfil: string;
 
     constructor(private auth: AuthService, private router: Router) { 
 
         this.usuario = JSON.parse(localStorage.getItem('info-usuario'));
         this.nombre = this.usuario.nombre;
+        this.fotoPerfil = this.usuario.img;
     }
 
     ngOnInit() {

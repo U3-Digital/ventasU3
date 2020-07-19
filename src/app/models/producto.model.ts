@@ -1,7 +1,8 @@
 export class ProductoModel {
-    codigoProducto: string;
-    nombreProducto: string;
-    precioProducto: number;
-    cantidadProducto: number;
-    idCatalogoProducto: string;
+    codigoProducto: String;
+    nombreProducto: String;
+    idCatalogoProducto: String;
+    precioProducto: Number;
+    cantidadProducto: Number;
+    
 }

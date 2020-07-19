@@ -7,6 +7,7 @@ import { ResumenComponent } from './components/resumen/resumen.component';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { AgregarComponent } from './components/agregar/agregar.component';
 import { AuthUserGuard } from '../guards/auth-user.guard';
+import { ClientesComponent } from './components/clientes/clientes.component';
 
 const routes: Routes = [
 
@@ -34,6 +35,10 @@ const routes: Routes = [
             {
                 path: 'agregar',
                 component: AgregarComponent
+            },
+            {
+                path: 'clientes',
+                component: ClientesComponent
             }
         ]
     },

@@ -61,8 +61,8 @@ export class AgregarProductoComponent implements OnInit {
         this.formaProducto = this.formBuilder.group({
             codigoProducto: ['', Validators.required],
             nombreProducto: ['', Validators.required],
-            cantidadProducto: ['', Validators.required],
-            precioProducto: ['', Validators.required]
+            cantidadProducto: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+            precioProducto: ['', [Validators.required, Validators.pattern('^[0-9]+(.[0-9]+)?$')]]
         });
     }
 
@@ -114,5 +114,9 @@ export class AgregarProductoComponent implements OnInit {
         this.cajaNombreProducto.nativeElement.value = '';
         this.cajaCantidadProducto.nativeElement.value = '';
         this.cajaPrecioProducto.nativeElement.value = '';
+    }
+
+    dialogDismiss($event) {
+        this.showModal = false;
     }
 }

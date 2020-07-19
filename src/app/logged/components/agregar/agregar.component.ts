@@ -16,7 +16,9 @@ import { createHostListener } from '@angular/compiler/src/core';
 })
 export class AgregarComponent implements OnInit {
 
-    opciones: String[] = ['Pedido', 'Cliente', 'Catálogo'];
+    
+
+    opciones: String[] = ['Pedido', 'Cliente', 'Catálogo', 'Abono'];
     childClicked: string;
     icon = faCheck;
 
@@ -32,7 +34,6 @@ export class AgregarComponent implements OnInit {
 
     constructor(private catalogoService: CatalogosService, private clientesService: ClientesService, private productosService: ProductoService) { 
 
-    
     }
 
     ngOnInit() {
@@ -41,33 +42,10 @@ export class AgregarComponent implements OnInit {
     recibirProductoAdded($event: ProductoModel) {
         this.showAddProduct = false;
         this.productos.push($event);
-        // this.productosService.getProductosPendientes($event).subscribe(
-        //     (respuesta) => {
-        //         respuesta['productos'].forEach(producto => {
-                    
-        //             this.productos.push(producto);
-        //         });
-        //     }, 
-        //     (error) => {
-        //         console.log(error);
-        //     }
-        // )
     }
 
     recibirCatalogo($event: string) {
-        // this.productos = [];
-        // this.productosService.getProductosPendientes($event).subscribe(
-        //     (respuesta) => {
-        //         respuesta['productos'].forEach(producto => {
-                    
-        //             this.productos.push(producto);
-        //         });
-        //     }, 
-        //     (error) => {
-        //         console.log(error);
-        //     }
-        // )
-
+        this.productos = [];
         this.catalogoSeleccionado = $event;
     }
 
@@ -173,5 +151,61 @@ export class AgregarComponent implements OnInit {
                 }
             );
         }
+    }
+
+    recibirSubmitPedido($event:any) {
+        this.showModal = false;
+        if ($event.ok === true) {
+            this.productos = [];
+
+
+            const info = {
+                idCliente: $event.idCliente,
+                compras: $event.total,
+                adeuda: $event.total
+            }
+
+            this.clientesService.updateComprasAdeudaCliente(info)
+            .subscribe( 
+                (respuesta) => {
+
+                    this.showModal = true;
+                    this.tipoModal = 'success';
+                    this.icon = faCheck;
+                    this.mensajeModal = '¡Pedido añadido exitosamente!';
+
+                    // console.log(respuesta);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+
+            
+
+        } else {
+            this.showModal = true;
+            this.tipoModal = 'error';
+            this.icon = faExclamationTriangle;
+            this.mensajeModal = 'Complete todos los campos para continuar';
+        }
+        console.log(this.showModal);
+    }
+
+    recibirAbonoSubmit($event) {
+        this.showModal = false;
+
+            this.showModal = true;
+            this.tipoModal = $event.tipo;
+            if (this.tipoModal === 'error') {
+                this.icon = faExclamationTriangle;
+            } else {
+                this.icon = faCheck;
+            }
+            this.mensajeModal = $event.mensaje;
+    }
+
+    dialogDismiss($event) {
+        this.showModal = false;
     }
 }

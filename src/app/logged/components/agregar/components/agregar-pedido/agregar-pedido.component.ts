@@ -1,15 +1,18 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, DoCheck } from '@angular/core';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'; 
 
 import { CatalogosService } from 'src/app/services/catalogos.service';
 import { ClientesService } from 'src/app/services/clientes.service';
+import { PedidosService } from 'src/app/services/pedidos.service'; 
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { PedidoModel } from 'src/app/models/pedido.model';
 
 @Component({
   selector: 'app-agregar-pedido',
   templateUrl: './agregar-pedido.component.html',
   styleUrls: ['./agregar-pedido.component.css']
 })
-export class AgregarPedidoComponent implements OnInit {
+export class AgregarPedidoComponent implements OnInit, DoCheck {
 
     addIcon = faPlusCircle;
 
@@ -26,10 +29,14 @@ export class AgregarPedidoComponent implements OnInit {
     opcionesCatalogos: any[] = [];
 
     @Input() productos: any[] = [];
-
+    @Output() onSubmitClicked = new EventEmitter<any>();
     isShowing: boolean;
 
-    constructor(private catalogoService: CatalogosService, private clienteService: ClientesService) {
+    total = 0.0;
+
+    catalogoActual: string;
+    clienteActual: string;
+    constructor(private catalogoService: CatalogosService, private clienteService: ClientesService, private pedidosService: PedidosService ,private formBuilder: FormBuilder) {
 
         this.catalogoService.getCatalogos().subscribe(
             (respuesta) => {
@@ -65,16 +72,42 @@ export class AgregarPedidoComponent implements OnInit {
         );
 
     }
+    ngDoCheck(): void {
+
+        if (this.productos.length != 0) {
+            this.calcularTotal();
+        }
+    }
 
     ngOnInit() {
     }
     
+    calcularTotal() {
+        this.total = 0;
+        this.productos.forEach(producto => {
+            let totalProducto = producto.precioProducto * producto.cantidadProducto;
+            this.total += totalProducto;
+        })
+
+        // this.formaPedido.value.total = this.total;
+    }
+
     sendShouldShow() {
         this.shouldShow.emit(true);
         this.isShowing = true;
     }
     
+    recibirCliente($event) {
+        this.clienteActual = $event._id;
+        // this.formaPedido.value.idCliente = this.clienteActual;
+    }
+
     recibirCatalogo($event) {
+        // console.log('recibiendo el catalogo');
+        this.catalogoActual = $event._id;
+
+        // this.formaPedido.value.idCatalogo = this.catalogoActual;
+        // this.productos = [];
         this.catalogo.emit($event._id);
     }
 
@@ -85,6 +118,46 @@ export class AgregarPedidoComponent implements OnInit {
             return false;
         }
     }  
+
+    submit() {
+
+            // console.log(this.productos);
+
+            if ((this.catalogoActual) && (this.clienteActual) && (this.productos.length > 0) && (this.total > 0)) {
+                let pedido = new PedidoModel();
+                pedido.idClientePedido = this.clienteActual;
+                pedido.idVendedorPedido = JSON.parse(localStorage.getItem('info-usuario')).id;
+                pedido.idCatalogoPedido = this.catalogoActual;
+                pedido.productosPedido = this.productos;
+                pedido.totalPedido = this.total;
+
+                this.pedidosService.newPedido(pedido).subscribe(
+                    (respuesta) => {
+                        console.log(respuesta);
+                        this.onSubmitClicked.emit({
+                            ok: true,
+                            idCliente: this.clienteActual,
+                            respuesta,
+                            total: this.total
+                        });
+                        this.total = 0;
+                    },
+                    (error) => {
+                        this.onSubmitClicked.emit({
+                            ok:false
+                        });
+                        console.log(error);
+                    }
+                );
+            } else {
+                this.onSubmitClicked.emit({
+                    ok: false
+                })
+            }
+        
+        // console.log(this.formaPedido.value);
+        // console.log(this.formaPedido.valid);
+    }
 
     @HostListener('document:click', ['$event']) 
     onDocumentClick(event: MouseEvent) {

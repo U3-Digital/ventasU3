@@ -1,14 +1,15 @@
 <div class="row h-100 background" style="margin:auto; position: relative;">
     <app-agregar-producto [showing]="showAddProduct" [catalogo]="catalogoSeleccionado" (productoClickedEvent)="recibirProductoAdded($event)"></app-agregar-producto>
-    <app-modal [message]="mensajeModal" [showing]="showModal" [icon]="icon" [type]="tipoModal"></app-modal>
+    <app-modal [message]="mensajeModal" [showing]="showModal" [icon]="icon" [type]="tipoModal" (onDismiss)="dialogDismiss($event)"></app-modal>
     <div class="col-md-12 text-center mt-3">
         <app-dropdown [sombra]="true" [opciones]="opciones" [datos]="opciones" [titulo]="'Seleccionar'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
     </div>
 
     <div class="col-md-12 text-center abajo">
         <app-agregar-cliente *ngIf="showForm('Cliente')" (clienteClickedEvent)="recibirClienteEvent($event)"></app-agregar-cliente>
-        <app-agregar-pedido *ngIf="showForm('Pedido')" (shouldShow)="recibirShowProduct($event)" (catalogo)="recibirCatalogo($event)" [productos]="productos"></app-agregar-pedido>
+        <app-agregar-pedido *ngIf="showForm('Pedido')" (shouldShow)="recibirShowProduct($event)" (catalogo)="recibirCatalogo($event)" [productos]="productos" (onSubmitClicked)="recibirSubmitPedido($event)"></app-agregar-pedido>
         <app-agregar-catalogo *ngIf="showForm('Catálogo')" (catalogoClickedEvent)="recibirCatalogoEvent($event)"></app-agregar-catalogo>
+        <app-agregar-abonos *ngIf="showForm('Abono')" (submitClicked)="recibirAbonoSubmit($event)"></app-agregar-abonos>
     </div>
 
 </div>

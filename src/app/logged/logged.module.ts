@@ -19,10 +19,12 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ModalComponent } from './components/controls/modal/modal.component';
 import { AgregarCatalogoComponent } from './components/agregar/components/agregar-catalogo/agregar-catalogo.component';
 import { AgregarProductoComponent } from './components/agregar/components/agregar-producto/agregar-producto.component';
+import { ClientesComponent } from './components/clientes/clientes.component';
+import { AgregarAbonosComponent } from './components/agregar/components/agregar-abonos/agregar-abonos.component';
 
 
 @NgModule({
-  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, PedidosComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent, ModalComponent, AgregarCatalogoComponent, AgregarProductoComponent],
+  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, PedidosComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent, ModalComponent, AgregarCatalogoComponent, AgregarProductoComponent, ClientesComponent, AgregarAbonosComponent],
   imports: [
     CommonModule,
     LoggedRoutingModule,

@@ -48,7 +48,6 @@ app.get('/productospendientes/:idCatalogo', verificaToken, (req, res) => {
 app.post('/producto', verificaToken, (req, res) => {
 
     let body = req.body;
-
     let producto = new Producto({
         codigoProducto: body.codigo,
         nombreProducto: body.nombre,

@@ -12,6 +12,10 @@
     filter: drop-shadow(0px 40px 64px rgba(6, 16, 88, 0.3));
 }
 
+.borde {
+    border: 1px solid red;
+}
+
 .title {
     font-weight: 600;
     color: #DCF8FF;
@@ -58,7 +62,7 @@
 .tabla {
     font-family: 'Poppins', sans-serif;
     color: #061058;
-    max-height: 20em;
+    max-height: 16em;
     border-radius: 1em;
     overflow: auto;
 }
@@ -67,9 +71,26 @@
     background-color: #0000AF;
     border-width: 0px 0px 1px 0px;
     border-style: solid;
-    color: white;
-    font-weight: 500;
     border-color: rgba(180, 183, 204, 0.4);
+}
+
+.boton {
+    font-weight: 600;
+    color: white;
+    background-color: #0000AF;
+    border: none;
+    border-radius: 32px;
+    transition-duration: .3s;
+}
+
+.boton:hover {
+    box-shadow: 0px 10px 64px 0px rgba(6, 16, 88, 0.3);
+}
+
+.total {
+    color: #061058;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
 }
 
 .fila {
@@ -81,19 +102,11 @@
     background-color: #DDDDDD;
 }
 
-.fila-add {
-    background-color: white;
-}
-
 .add {
     border-radius: 4em;
     padding: 0.5em;
     transition-duration: .2s;
     cursor: pointer;
-}
-
-.add:hover {
-    background-color: #DDDDDD;
 }
 
 .divider {
@@ -111,23 +124,27 @@ th {
 }
 
 .codigo {
+    font-weight: 500;
     display: inline-block;
-    width: 30%;
+    width: 20%;
 }
 
 .nombre {
+    font-weight: 500;
     display: inline-block;
-    width: 30%;
+    width: 35%;
 }
 
 .precio {
+    font-weight: 500;
     display: inline-block;
-    width: 30%;
+    width: 20%;
 }
 
 .cantidad {
+    font-weight: 500;
     display: inline-block;
-    width: 10%;
+    width: 25%;
 }
 
 @media(min-width: 720px) {
@@ -137,7 +154,7 @@ th {
     }
     .codigo {
         display: inline-block;
-        width: 10%;
+        width: 20%;
     }
     .nombre {
         display: inline-block;
@@ -145,10 +162,10 @@ th {
     }
     .precio {
         display: inline-block;
-        width: 30%;
+        width: 20%;
     }
     .cantidad {
         display: inline-block;
-        width: 10%;
+        width: 20%;
     }
 }

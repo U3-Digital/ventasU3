@@ -8,13 +8,13 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class PerfilComponent implements OnInit, AfterViewInit {
 
-    FotoPerfil = '../../../assets/img/default.jpg';
-    FotoPerfilAlt = 'Foto de perfil';
-    Nombre = '';
-    Email = '';
-    Telefono = '';
-    Editando = false;
-    Cambiado = false;
+    fotoPerfil: string;
+    fotoPerfilAlt = 'Foto de perfil';
+    nombre = '';
+    email = '';
+    telefono = '';
+    editando = false;
+    cambiado = false;
     usuario:any;
 
 
@@ -25,10 +25,13 @@ export class PerfilComponent implements OnInit, AfterViewInit {
 
     constructor(private formBuilder: FormBuilder) {
         this.usuario = JSON.parse(localStorage.getItem('info-usuario'));
-        this.Nombre = this.usuario.nombre;
-        this.Email = this.usuario.email;
-        this.Telefono = '6251231234';
-        
+
+        console.log(this.usuario);
+
+        this.nombre = this.usuario.nombre;
+        this.email = this.usuario.email;
+        this.telefono = '6251231234';
+        this.fotoPerfil = this.usuario.img;
     }
 
     ngOnInit() {    
@@ -44,7 +47,7 @@ export class PerfilComponent implements OnInit, AfterViewInit {
 
     onChanges(): void {
         this.formaPerfil.valueChanges.subscribe(
-            (val) => {
+            () => {
                 this.botonGuardar.nativeElement.disabled = false;
             }
         );
@@ -52,9 +55,9 @@ export class PerfilComponent implements OnInit, AfterViewInit {
 
     crearFormulario(): void {
         this.formaPerfil = this.formBuilder.group({
-            nombre: [this.Nombre, [Validators.required]],
-            email: [this.Email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-            telefono: [this.Telefono, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+            nombre: [this.nombre, [Validators.required]],
+            email: [this.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+            telefono: [this.telefono, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             password: [''],
             confirmarPasword: ['']
         });
@@ -64,15 +67,15 @@ export class PerfilComponent implements OnInit, AfterViewInit {
 
     editar(): void {
         console.log(this.formaPerfil.value);
-        this.Editando = !this.Editando;
+        this.editando = !this.editando;
 
-        if (this.Editando === false) {
+        if (this.editando === false) {
             this.botonGuardar.nativeElement.disabled = true;
         }
     }
 
     guardar(): void {
-        this.Editando = false;
+        this.editando = false;
         this.botonGuardar.nativeElement.disabled = true;
     }
   

@@ -81,6 +81,7 @@ export class LoginComponent implements OnInit {
             role : info.role,
             estado : info.estado,
             google : info.google,
+            img : info.img
         };
 
         localStorage.setItem('info-usuario', JSON.stringify(usuario));

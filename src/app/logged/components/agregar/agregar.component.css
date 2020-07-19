@@ -5,6 +5,19 @@
     background: linear-gradient(0deg, rgba(202, 217, 243, 1) 0%, rgba(234, 242, 255, 1) 100%);
 }
 
+.borde {
+    border: 1px solid red;
+}
+
+@media (min-width: 720px) {
+    .background {
+        padding-top: 55px;
+        padding-bottom: 90px;
+        background: rgb(202, 217, 243);
+        background: linear-gradient(0deg, rgba(202, 217, 243, 1) 0%, rgba(234, 242, 255, 1) 100%);
+    }
+}
+
 .abajo {
     position: relative;
     z-index: 0;

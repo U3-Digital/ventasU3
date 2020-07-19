@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,  HostListener, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Input,  HostListener, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,30 +18,35 @@ export class ModalComponent implements OnInit {
     @Input() type: string;
 
     @ViewChild('modalContent', {}) modal: ElementRef;
+    @ViewChild('close', {}) cerrar: ElementRef;
 
-    // @Input() onDismiss: ;
-
-    constructor() { }
+    @Output() onDismiss = new EventEmitter<any>();
+ 
+    constructor() { 
+        // console.log(this.cerrar);
+        // this.cerrar.nativeElement.onclick = this.close();
+    }
 
     ngOnInit(): void {
     }
 
     dismiss() {
-        this.showing = false;
+        this.onDismiss.emit('');
+
     }
 
     close () {
-        this.showing = false;
+        this.onDismiss.emit('');
     }
 
-    @HostListener('document:click', ['$event']) 
-    onDocumentClick(event: MouseEvent) {
+    // @HostListener('document:click', ['$event']) 
+    // onDocumentClick(event: MouseEvent) {
         
-        if (event.target === this.modal.nativeElement) {
+    //     if (event.target === this.modal.nativeElement) {
             
-        } else {
-            this.showing = false;
-        }
-    }
+    //     } else {
+    //         this.showing = false;
+    //     }
+    // }
 
 }

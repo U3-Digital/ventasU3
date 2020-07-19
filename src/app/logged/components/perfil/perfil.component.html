@@ -2,17 +2,16 @@
     <div class="col-md-12 my-auto mt-5">
         <div class="card card-perfil mx-auto my-auto borde">
             <div class="card-header fondo text-center border-0">
-                <img [src]="FotoPerfil" class="foto-perfil animate__animated animate__zoomIn animate__faster" [alt]="FotoPerfilAlt">
+                <img [src]="fotoPerfil" class="foto-perfil animate__animated animate__zoomIn animate__faster" [alt]="fotoPerfilAlt">
             </div>
             <div class="card-body">
-                {{formaPerfil.status}}
                 <form [formGroup]="formaPerfil" (ngSubmit)="guardar()" autocomplete="on">
                     <div class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-1s">
                         <div class="col-md-4 align-self-center">
                             Nombre
                         </div>
                         <div class="col-md-8">
-                            <input #nameInput autocomplete="username" type="text" class="form-control" [ngClass]="Editando ? 'cajaTexto' : 'cajaTextoPlano'" id="nameInput" aria-describedby="name" [value]="Nombre" formControlName="nombre" [readOnly]="!Editando">
+                            <input #nameInput autocomplete="username" type="text" class="form-control" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="nameInput" aria-describedby="name" [value]="nombre" formControlName="nombre" [readOnly]="!editando">
                         </div>
                     </div>
                     <hr align="left" class="divider">
@@ -21,7 +20,7 @@
                             Correo electrónico
                         </div>
                         <div class="col-md-8">
-                            <input #emailInput type="email" class="form-control" [ngClass]="Editando ? 'cajaTexto' : 'cajaTextoPlano'" id="email" aria-describedby="email" [value]="Email" formControlName="email" [readOnly]="!Editando">
+                            <input #emailInput type="email" class="form-control" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="email" aria-describedby="email" [value]="email" formControlName="email" [readOnly]="!editando">
                         </div>
                     </div>
                     <hr align="left" class="divider">
@@ -30,11 +29,11 @@
                             Teléfono
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" autocomplete="tel-national" [ngClass]="Editando ? 'cajaTexto' : 'cajaTextoPlano'" id="telefono" aria-describedby="telefono" [value]="Telefono" formControlName="telefono" [readOnly]="!Editando">
+                            <input type="text" class="form-control" autocomplete="tel-national" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="telefono" aria-describedby="telefono" [value]="telefono" formControlName="telefono" [readOnly]="!editando">
                         </div>
                     </div>
                     <hr align="left" class="divider">
-                    <div *ngIf="Editando" class="row m-1 animate__animated animate__fadeInDown animate__faster">
+                    <div *ngIf="editando" class="row m-1 animate__animated animate__fadeInDown animate__faster">
                         <div class="col-md-4 align-self-center">
                             Cambiar contraseña
                         </div>
@@ -42,8 +41,8 @@
                             <input type="password" autocomplete="new-password" class="form-control cajaTexto" id="password" aria-describedby="password" value="">
                         </div>
                     </div>
-                    <hr *ngIf="Editando" align="left" class="divider">
-                    <div *ngIf="Editando" class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-2s">
+                    <hr *ngIf="editando" align="left" class="divider">
+                    <div *ngIf="editando" class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-2s">
                         <div class="col-md-4 align-self-center">
                             Confirmar contraseña
                         </div>

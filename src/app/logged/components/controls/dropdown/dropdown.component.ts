@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css']
 })
-export class DropdownComponent implements OnInit, OnChanges {
+export class DropdownComponent implements OnInit {
 
     @ViewChild('dropdownButton', {}) dropdownButton: ElementRef;
 
@@ -24,15 +25,13 @@ export class DropdownComponent implements OnInit, OnChanges {
     clase = 'dropdown-content';
     claseShowing = 'dropdown-content show';
 
+    
+
     constructor() {       
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
 
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        
     }
 
     sendChildClicked(index) {

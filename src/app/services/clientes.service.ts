@@ -43,4 +43,39 @@ export class ClientesService {
 
         return this.http.post(`${this.url}/cliente`, body, httpOptions);
     }
+
+    updateComprasAdeudaCliente (info: any) {
+
+        const body = {
+            comprasCliente: info.compras,
+            adeudaCliente: info.adeuda,
+        };
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            })
+        };
+
+        return this.http.put(`${this.url}/cliente/${info.idCliente}`, body, httpOptions);
+
+    }
+
+    updateAdeudoCliente (info: any) {
+
+        const body = {
+            adeudaCliente: info.adeuda
+        }
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            })
+        };
+
+        return this.http.put(`${this.url}/clienteadeuda/${info.idCliente}`, body, httpOptions);
+
+    }
 }

@@ -1,0 +1,28 @@
+<div class="row h-100 background" style="margin: auto;">
+    <div class="col-md-12 text-center">
+        <app-dropdown [datos]="clientesDatos" [opciones]="clientesOpciones" [sombra]="true" [titulo]="'Seleccionar cliente'" (childClickedEvent)="recibirClienteClicked($event)"></app-dropdown>
+        <div class="card card-cliente mx-auto animate__animated animate__fadeInUp animate__faster">
+            <div class="card-header fondo text-center border-0">
+                <h5 class="title">{{ nombreCliente }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Teléfono: {{ telefonoCliente }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Correo: {{ emailCliente }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Compras: {{ comprasCliente }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Adeudo: {{ adeudoCliente }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

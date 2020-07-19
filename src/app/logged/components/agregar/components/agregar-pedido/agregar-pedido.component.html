@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-3">
-        <app-dropdown id="clientes" [id]="'clientes'" [opciones]="opcionesClientes" [datos]="clientes" [titulo]="'Seleccionar cliente'"></app-dropdown>
+        <app-dropdown id="clientes" [id]="'clientes'" [opciones]="opcionesClientes" [datos]="clientes" [titulo]="'Seleccionar cliente'" (childClickedEvent)="recibirCliente($event)"></app-dropdown>
     </div>
     <div class="col-md-3">
         <app-dropdown [sombra]="false" [opciones]="opcionesCatalogos" [datos]="catalogos" [titulo]="'Seleccionar catálogo'" (childClickedEvent)="recibirCatalogo($event)"></app-dropdown>
@@ -8,10 +8,10 @@
     <div class="col-md-6">
         <table class="table table-borderless tabla animate__animated animate__fadeInUp animate__faster" style="display: block;">
             <tr class="header">
-                <th class="codigo">Código</th>
-                <th class="nombre">Nombre</th>
-                <th class="precio">Precio</th>
-                <th class="cantidad">Cantidad</th>
+                <th class="codigo" style="color: white;">Código</th>
+                <th class="nombre" style="color: white;">Nombre</th>
+                <th class="precio" style="color: white;">Precio</th>
+                <th class="cantidad" style="color: white;">Cantidad</th>
             </tr>
 
             <tr *ngFor="let producto of productos; let i = index" class="fila divider">
@@ -20,11 +20,19 @@
                 <td class="precio">{{producto.precioProducto}}</td>
                 <td class="cantidad">{{producto.cantidadProducto}}</td>
             </tr>
-            <tr class="fila-add" style="height: 3em;" (click)="sendShouldShow()">
+            <tr class="fila" style="height: 3em;" (click)="sendShouldShow()">
                 <td style="display: inline-block; width: 100%;">
                     <fa-icon [icon]="addIcon" class="add"></fa-icon>
                 </td>
             </tr>
         </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 animate__animated animate__fadeInUp animate__faster">
+        <p class="total">Total: ${{total}}</p>
+    </div>
+    <div class="col-md-6 animate__animated animate__fadeInUp animate__faster">
+        <button class="btn btn-block boton" (click)="submit()">Aceptar</button>
     </div>
 </div>

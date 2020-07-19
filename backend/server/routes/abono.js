@@ -73,8 +73,7 @@ app.post('/abono', verificaToken, (req, res) => {
     let abono = new Abono({
         cliente: body.cliente,
         vendedor: body.vendedor,
-        cantidad: body.cantidad,
-        usuario: req.usuario._id
+        cantidad: body.cantidad
     });
 
 
