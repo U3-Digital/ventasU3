@@ -1,0 +1,7 @@
+<div #topbar class="topbar">
+    <img #btnTopbar class="btn-topbar" [src]="sidebarIcon">
+    <div class="info">
+        <p class="nombre">{{ nombre }}</p>
+        <fa-icon class="logout" [icon]="logoutIcon" (click)="logout()"></fa-icon>
+    </div>
+</div>

@@ -19,7 +19,8 @@ var pedidoSchema = new Schema({
         cantidadProducto: String,
         statusProducto: String
     }],
-    totalPedido: { type: Number, required: [true, 'El total es necesario'] }
+    totalPedido: { type: Number, required: [true, 'El total es necesario'] },
+    status: { type: String, default: 'Pendiente' }
 });
 
 module.exports = mongoose.model('Pedido', pedidoSchema);

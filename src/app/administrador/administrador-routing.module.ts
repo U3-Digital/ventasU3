@@ -1,6 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { InicioComponent } from './components/inicio/inicio.component';
+import { SidebarComponent } from './components/logged/sidebar/sidebar.component';
+import { InicioComponent } from './components/logged/children/inicio/inicio.component';
+import { UsuariosComponent } from './components/logged/children/usuarios/usuarios.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AuthAdminGuard } from '../guards/auth-admin.guard';
 const routes: Routes = [
@@ -10,9 +12,19 @@ const routes: Routes = [
 
     }, 
     {
-        path: 'inicio',
-        component: InicioComponent,
-        canActivate: [ AuthAdminGuard ]
+        path: 'logged',
+        component: SidebarComponent,
+        canActivate: [ AuthAdminGuard ],
+        children: [
+            {
+                path: 'inicio',
+                component: InicioComponent
+            },
+            {
+                path: 'usuarios',
+                component: UsuariosComponent
+            }
+        ]
     }, 
     {
         path: '**',

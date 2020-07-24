@@ -4,7 +4,7 @@
         <h4 style="color: #061058">Seleccione una categoría</h4>
         <br>
         <div class="categorias-container justify-content-center align-items-center">
-            <div *ngFor="let categoria of Categorias; let i = index" [ngClass]="categoria.clase">
+            <div *ngFor="let categoria of Categorias; let i = index" [ngClass]="categoria.clase" (click)="setSeleccion(categoria.nombre)">
                 {{ categoria.nombre }}
             </div>
         </div>

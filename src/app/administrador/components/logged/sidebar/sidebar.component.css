@@ -1,0 +1,59 @@
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: .2s;
+    -webkit-transition: 0.2s;
+    padding-top: 4em;
+    box-shadow: 0px 20px 64px -1px rgba(6, 16, 88, 0.17);
+}
+
+.sidebar a {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    padding: 0.5em 0.5em 0.5em 2em;
+    color: #061058;
+    display: block;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    /* background-color: black; */
+    color: #00009F;
+    box-shadow: inset 15em 0 0 0.1px #F2F6FE;
+}
+
+.active {
+    color: #00009F;
+    box-shadow: inset 15em 0 0 0.1px #F2F6FE;
+}
+
+.boton_cerrar {
+    outline: none;
+    border: none;
+    color: #061058;
+    background-color: rgba(0, 0, 0, 0.0);
+    position: absolute;
+    top: 1em;
+    font-size: 1em;
+    right: 1em;
+}
+
+.footer {
+    white-space: nowrap;
+    color: #061058;
+    padding: 0.5em 0.5em 0.5em 2em;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    position: absolute;
+    bottom: 0;
+}

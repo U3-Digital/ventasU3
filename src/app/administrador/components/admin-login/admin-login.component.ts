@@ -16,6 +16,7 @@ export class AdminLoginComponent implements OnInit {
 
     admin: AdminModel;
     showModal: boolean = false;
+    tipoModal: string;
 
     constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router) {
 
@@ -60,17 +61,23 @@ export class AdminLoginComponent implements OnInit {
                         localStorage.removeItem('token');
                     } else {
                         this.saveUserInfo(respuesta['usuarioDB']);
-                        this.router.navigateByUrl('/admin/inicio');
+                        this.router.navigateByUrl('/admin/logged/inicio');
                     }
 
                     
                 }, (error) => {
                     this.showModal = true;
+                    this.tipoModal = 'error';
                  }
                 
             );
         }
 
+    }
+
+    dissmiss($event) {
+        this.showModal = false;
+        this.tipoModal = 'error';
     }
 
     saveUserInfo (info: any) {

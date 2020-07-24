@@ -1,0 +1,168 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    color: #061058;
+}
+
+.background {
+    background-color: #eeeeff;
+    padding-bottom: 1000px;
+}
+
+.borde {
+    border: 1px solid red;
+}
+
+.cajaTexto {
+    outline: none;
+    box-shadow: none !important;
+    border-width: 0px 0px 2px 0px !important;
+    border-style: solid;
+    border-color: rgba(0, 0, 175, 0) !important;
+    border-radius: 32px;
+    color: #061058;
+    background-color: #EEEEEE;
+    transition: .2s;
+}
+
+.cajaTexto:focus {
+    background-color: #DDDDDD;
+}
+
+.card-usuario {
+    border: none;
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 0px 20px 64px -1px rgba(6, 16, 88, 0.1);
+}
+
+.boton-toggle {
+    width: 8em;
+    background-color: #EfEfEf;
+    outline: none !important;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    cursor: pointer;
+}
+
+.boton-toggle:active,
+.boton-toggle:focus {
+    background-color: #d0d0d0;
+}
+
+.boton-toggle:hover {
+    background-color: #dddddd;
+}
+
+.izq {
+    border-radius: 2em 0em 0em 2em;
+}
+
+.der {
+    border-radius: 0em 2em 2em 0em;
+}
+
+.active {
+    color: #061058;
+    background-color: #d0d0d0;
+}
+
+input[type="radio"] {
+    -webkit-appearance: none;
+}
+
+.boton-aceptar {
+    color: white;
+    font-weight: 600;
+    width: 50%;
+    background-color: #0000AF;
+    border: none;
+    border-radius: 32px;
+    transition-duration: .2s;
+    outline: none;
+    max-width: 25em;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.boton-aceptar:hover {
+    box-shadow: 0px 10px 64px 0px rgba(6, 16, 88, 0.3);
+}
+
+.tabla {
+    font-family: 'Poppins', sans-serif;
+    color: #061058;
+    max-height: 20em !important;
+    overflow: auto;
+}
+
+tr {
+    display: block;
+}
+
+th {
+    display: inline-block;
+}
+
+td {
+    display: inline-block;
+}
+
+.header {
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgba(180, 183, 204, 0.4);
+}
+
+.nombre {
+    width: 30% !important;
+    font-weight: 500;
+}
+
+.email {
+    font-weight: 500;
+    width: 30%;
+}
+
+.rol {
+    font-weight: 500;
+    width: 20%;
+}
+
+.acciones {
+    font-weight: 500;
+    width: 20%;
+}
+
+.boton-tabla {
+    border: none;
+    outline: none;
+    margin-left: 1em;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.editar {
+    padding-left: .4em;
+    padding-right: 0.2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    border-radius: 1em;
+}
+
+.editar:hover {
+    background-color: #EEEEEE;
+    color: #0000AF;
+}
+
+.borrar {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+.borrar:hover {
+    color: #FF0000;
+}
+
+.fila {
+    background-color: white;
+}

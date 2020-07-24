@@ -1,0 +1,12 @@
+<div #sidebar class="sidebar">
+    <button class="boton_cerrar" (click)="cerrarSideBar()"><fa-icon [icon]="iconCerrar"></fa-icon></button>
+    <a [routerLink]="['inicio']" routerLinkActive="active">Inicio</a>
+    <a [routerLink]="['usuarios']" routerLinkActive="active">Usuarios</a>
+    <div class="footer">
+        <p>U3 Digital © 2020</p>
+    </div>
+</div>
+
+<app-topbar (click)="abrirSideBar()" #cosa></app-topbar>
+
+<router-outlet></router-outlet>

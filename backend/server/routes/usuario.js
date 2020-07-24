@@ -96,6 +96,62 @@ app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) 
 
 });
 
+app.put('/usuarios/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
+
+    let id = req.params.id;
+    let body = req.body;
+
+    Usuario.findById(id, (err, usuarioDB) => {
+
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                err: {
+                    message: 'El usuario no fue encontrado'
+                }
+            });
+        }
+
+        let nuevoEmail = body.email;
+        let nuevoNombre = body.nombre;
+        let nuevoRole = body.role;
+
+        if (body.password) {
+            usuarioDB.nombre = nuevoNombre;
+            usuarioDB.email = nuevoEmail;
+            usuarioDB.role = nuevoRole;
+            usuarioDB.password = bcrypt.hashSync(body.password, 10);
+
+        } else {
+            usuarioDB.nombre = nuevoNombre;
+            usuarioDB.email = nuevoEmail;
+            usuarioDB.role = nuevoRole;
+        }
+
+        usuarioDB.save((err, usuarioGuardado) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                usuarioGuardado
+            });
+        });
+
+    });
+
+});
 
 
 app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
