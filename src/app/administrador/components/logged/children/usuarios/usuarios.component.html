@@ -1,6 +1,6 @@
 <div class="row h-100 background" style="margin: auto;">
 
-    <app-modal [message]="mensaje" [showing]="showModal" [type]="tipoModal" (onDismiss)="dialogDismiss($event)"></app-modal>
+    <app-modal [icon]="iconoModal" [message]="mensaje" [showing]="showModal" [type]="tipoModal" (ondismiss)="dialogDismiss($event)"></app-modal>
 
 
     <div class="col-md-12 mt-5">
@@ -12,13 +12,13 @@
                             Nombre:
                         </div>
                         <div class="col-md-4">
-                            <input #cajaNombre type="text" name="nombre" class="form-control cajaTexto" formControlName="nombre">
+                            <input #cajaNombre type="text" name="nombre" class="form-control cajaTexto" formControlName="nombre" [class.is-invalid]="nombreNoValido">
                         </div>
                         <div class="col-md-2 align-self-center">
                             Correo electrónico:
                         </div>
                         <div class="col-md-4">
-                            <input #cajaEmail type="email" name="email" class="form-control cajaTexto" autocomplete="email" formControlName="email">
+                            <input #cajaEmail type="email" name="email" class="form-control cajaTexto" autocomplete="email" formControlName="email" [class.is-invalid]="emailNoValido">
                         </div>
                     </div>
                     <br>
@@ -27,23 +27,23 @@
                             Contraseña:
                         </div>
                         <div class="col-md-4">
-                            <input #cajaPassword type="password" name="password" class="form-control cajaTexto" autocomplete="new-password" formControlName="password">
+                            <input #cajaPassword type="password" name="password" class="form-control cajaTexto" autocomplete="new-password" formControlName="password" [class.is-invalid]="passwordNoValida">
                         </div>
                         <div class="col-md-2 align-self-center">
                             Confirmar contraseña:
                         </div>
                         <div class="col-md-4">
-                            <input #cajaConfirmarPassword type="password" name="confirmar-password" class="form-control cajaTexto" autocomplete="new-password" formControlName="confirmPassword">
+                            <input #cajaConfirmarPassword type="password" name="confirmar-password" class="form-control cajaTexto" autocomplete="new-password" formControlName="confirmPassword" [class.is-invalid]="confirmarPasswordNoValida">
                         </div>
                     </div>
                     <br>
                     <div class="row m-1 text-center">
                         <div class="col-md-12">
                             <label class="btn boton-toggle izq" [ngClass]="role? 'active' : ''">
-                                <input type="radio" value="User" name="role" formControlName="role" (change)="cambio(true)">User
+                                <input type="radio" value="USER_ROLE" name="role" formControlName="role" (change)="cambio(true)">User
                             </label>
                             <label class="btn boton-toggle der" [ngClass]="role? '' : 'active'">
-                                <input type="radio" value="Admin" name="role" formControlName="role" (change)="cambio(false)">Admin
+                                <input type="radio" value="ADMIN_ROLE" name="role" formControlName="role" (change)="cambio(false)">Admin
                             </label>
 
                         </div>
@@ -73,7 +73,7 @@
                         <td class="rol">{{usuario.role}}</td>
                         <td class="acciones">
                             <fa-icon class="boton-tabla editar" [icon]="iconoEditar" (click)="editar(i)"></fa-icon>
-                            <fa-icon class="boton-tabla borrar" [icon]="iconoBorrar"></fa-icon>
+                            <fa-icon class="boton-tabla borrar" [icon]="iconoBorrar" (click)="borrar(i)"></fa-icon>
                         </td>
                     </tr>
 

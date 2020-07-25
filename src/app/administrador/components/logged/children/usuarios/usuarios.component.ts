@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-
+import { faEdit, faTrash, faCheck, faExclamationTriangle, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { UsuarioModel } from 'src/app/models/usuario.model';
@@ -23,13 +21,14 @@ export class UsuariosComponent implements OnInit {
 
     formaUsuario: FormGroup;
     value: any;
-    role: boolean = true;
+    role = true;
 
-    editando: boolean = false;
+    editando = false;
 
     mensaje: string;
     showModal: boolean;
     tipoModal: string;
+    iconoModal: IconDefinition;
 
     // Childs
     @ViewChild('cajaNombre', {}) cajaNombre: ElementRef;
@@ -39,20 +38,11 @@ export class UsuariosComponent implements OnInit {
 
     constructor(private usuariosService: UsuariosService, private formBuilder: FormBuilder) {
 
-        this.usuariosService.getUsuarios()
-        .subscribe(
-            (respuesta) => {
-                respuesta['usuarios'].forEach(usuario => {
-                    this.usuarios.push(usuario);
-                });
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-
+        this.recargarUsuarios();
+        console.log(this.usuarios);
         this.crearFormulario();
         console.log(this.formaUsuario.value);
+        this.iconoModal = faExclamationTriangle;
 
     }
 
@@ -62,10 +52,10 @@ export class UsuariosComponent implements OnInit {
     crearFormulario() {
         this.formaUsuario = this.formBuilder.group({
             nombre: ['', Validators.required],
-            email: ['',[ Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+            email: ['', [ Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
             password: ['', [Validators.required, Validators.minLength(8)]],
             confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
-            role: ['User', Validators.required]
+            role: ['USER_ROLE', Validators.required]
         });
     }
 
@@ -90,41 +80,67 @@ export class UsuariosComponent implements OnInit {
 
         this.formaUsuario.value.nombre = this.usuarioActual.nombre;
         this.formaUsuario.value.email = this.usuarioActual.email;
-        
+        console.log(this.formaUsuario.value);
     }
 
-    setUsuarioActual (index) {
+    borrar(index: number) {
+
+        const usuarioBorrar = this.usuarios[index];
+
+        this.usuariosService.deleteUsuario(usuarioBorrar._id).subscribe(
+            (respuesta) => {
+                this.iconoModal = faCheck;
+                this.showModal = true;
+                this.tipoModal = 'success';
+                this.mensaje = 'Usuario borrado exitosamente';
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    setUsuarioActual(index) {
         this.usuarioActual = this.usuarios[index];
     }
 
     limpiar() {
-        // this.cajaNombre.nativeElement.value = '';
-        // this.cajaEmail.nativeElement.value = '';
-        // this.cajaPassword.nativeElement.value = '';
-        // this.cajaConfirmarPassword.nativeElement.value = '';
 
-        this.formaUsuario.reset()
+        this.formaUsuario.reset();
     }
 
     submit() {
-
         this.showModal = false;
 
         if (this.editando === true) {
 
             if (this.formaUsuario.value.password) {
-                
                 if (this.formaUsuario.value.password === this.formaUsuario.value.confirmPassword) {
                     console.log('bien');
 
+                    const usuarioActualizado = {
+                        _id: this.usuarioActual._id,
+                        nombre: this.cajaNombre.nativeElement.value,
+                        email: this.cajaEmail.nativeElement.value,
+                        password: this.cajaPassword.nativeElement.value,
+                        role: this.formaUsuario.value.role
+                    };
 
-                    this.usuariosService.updateUsuario(this.usuarioActual).subscribe(
+
+                    this.usuariosService.updateUsuario(usuarioActualizado).subscribe(
                         (respuesta) => {
-                            console.log(respuesta);
+                            this.iconoModal = faCheck;
+                            this.showModal = true;
+                            this.tipoModal = 'success';
+                            this.mensaje = 'Usuario actualizado exitosamente';
+                            this.limpiar();
+                            this.recargarUsuarios();
                         },
                         (error) => {
-                            console.log(error);
-                        }  
+                            this.showModal = true;
+                            this.tipoModal = 'error';
+                            this.mensaje = 'No se pudo actualizar el usuario';
+                        }
                     );
 
                     this.limpiar();
@@ -134,51 +150,68 @@ export class UsuariosComponent implements OnInit {
                     this.tipoModal = 'error';
                     this.mensaje = 'Las contraseñas deben coincidir';
                 }
+            } else {
+
+                const usuarioActualizado = {
+                    _id: this.usuarioActual._id,
+                    nombre: this.cajaNombre.nativeElement.value,
+                    email: this.cajaEmail.nativeElement.value,
+                    role: this.formaUsuario.value.role
+                };
+
+                this.usuariosService.updateUsuario(usuarioActualizado).subscribe(
+                    (respuesta: any) => {
+                        this.showModal = true;
+                        this.tipoModal = 'success';
+                        this.mensaje = 'Usuario actualizado exitosamente';
+                        this.limpiar();
+                        this.recargarUsuarios();
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
             }
 
         } else {
             if (this.formaUsuario.valid === true) {
 
                 if (this.formaUsuario.value.password === this.formaUsuario.value.confirmPassword) {
-    
                     this.usuarioActual.nombre = this.formaUsuario.value.nombre;
                     this.usuarioActual.email = this.formaUsuario.value.email;
                     this.usuarioActual.password = this.formaUsuario.value.password;
-    
+
                     let rol: string;
-    
+
                     if (this.role === true) {
                         rol = 'USER_ROLE';
                     } else {
                         rol = 'ADMIN_ROLE';
                     }
-    
+
                     this.usuarioActual.role = rol;
-    
-                     
-                        this.usuariosService.newUsuario(this.usuarioActual).subscribe(
-                            (respuesta) => {
+
+                    this.usuariosService.newUsuario(this.usuarioActual).subscribe(
+                            (respuesta: any) => {
                                 this.limpiar();
-                                this.usuarios.push(respuesta['usuario']);
+                                this.usuarios.push(respuesta.usuario);
                                 this.tipoModal = 'success';
                                 this.mensaje = '¡Usuario agregado exitosamente!';
                                 this.showModal = true;
-                            }, 
+                            },
                             (error) => {
                                 console.log(error);
                             }
-                        )
-                    
-    
-                    
+                        );
+
                 }
-    
+
                 this.showModal = true;
                 this.tipoModal = 'error';
                 this.mensaje = 'Las contraseñas deben coincidir';
                 // this.showModal = true;
                 // this.mensaje = 'Usuario añadido exitosamente';
-    
+
             } else {
                 this.showModal = true;
                 this.tipoModal = 'error';
@@ -191,6 +224,41 @@ export class UsuariosComponent implements OnInit {
 
     cambio(isUsuario: boolean) {
         this.role = isUsuario;
-        
+
     }
+
+    recargarUsuarios() {
+        this.usuarioActual = new UsuarioModel();
+        this.usuarios = [];
+
+        this.usuariosService.getUsuarios()
+        .subscribe(
+            (respuesta: any) => {
+                respuesta.usuarios.forEach((usuario: any) => {
+                    this.usuarios.push(usuario);
+                });
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+
+    }
+
+    get nombreNoValido() {
+        return this.formaUsuario.get('nombre').invalid && this.formaUsuario.get('nombre').touched;
+    }
+
+    get emailNoValido() {
+        return this.formaUsuario.get('email').invalid && this.formaUsuario.get('email').touched;
+    }
+
+    get passwordNoValida() {
+        return this.formaUsuario.get('password').invalid && this.formaUsuario.get('password').touched;
+    }
+
+    get confirmarPasswordNoValida() {
+        return this.formaUsuario.get('confirmPassword').invalid && this.formaUsuario.get('confirmPassword').touched;
+    }
+
 }

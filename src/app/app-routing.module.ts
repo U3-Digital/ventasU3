@@ -11,10 +11,11 @@ const routes: Routes = [
         path: 'logged',
         loadChildren: () => import('./logged/logged.module').then(m => m.LoggedModule)
     },
-    { 
+    {
         path: 'admin',
         loadChildren: () => import('./administrador/administrador.module').then(m => m.AdministradorModule)
-    }, {
+    },
+    {
         path: '**',
         redirectTo: ''
     }

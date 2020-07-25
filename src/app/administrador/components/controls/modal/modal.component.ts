@@ -1,5 +1,5 @@
 import { Component, OnInit, Input,  HostListener, Output, EventEmitter} from '@angular/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,15 +11,13 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 export class ModalComponent implements OnInit {
 
     closeIcon = faTimes;
-    errorIcon = faExclamationTriangle;
+    @Input() icon: IconDefinition;
 
     @Input() message: string;
-    @Input() showing: boolean = false;
+    @Input() showing = false;
     @Input() type: string;
 
-    @Output() onDismiss = new EventEmitter<any>();
-
-    // @Input() onDismiss: ;
+    @Output() ondismiss = new EventEmitter<any>();
 
     constructor() { }
 
@@ -27,19 +25,11 @@ export class ModalComponent implements OnInit {
     }
 
     dismiss() {
-        this.onDismiss.emit('');
+        this.ondismiss.emit('');
     }
 
-    close () {
-        this.onDismiss.emit('');
+    close() {
+        this.ondismiss.emit('');
     }
-
-    // @HostListener('document:click', ['$event']) 
-    // onDocumentClick(event: MouseEvent) {
-        
-    //     if ((event.target != document.getElementById('modal-content'))) {
-    //         this.showing = false;
-    //     }
-    // }
 
 }

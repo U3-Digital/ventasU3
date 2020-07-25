@@ -17,23 +17,6 @@ export class PedidosComponent implements OnInit {
     productos: ProductoModel[] = [];
 
     constructor(private catalogoService: CatalogosService, private productoService: ProductoService) {
-        this.catalogoService.getCatalogos().subscribe(
-            (respuesta) => {
-
-                respuesta['catalogos'].forEach(catalogo => {
-                    this.catalogos.push(catalogo);
-                });
-
-                this.catalogos.forEach(catalogo => {
-                    this.opciones.push(catalogo.nombre);
-                })
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
-
-        
     }
 
     ngOnInit() {
@@ -41,24 +24,6 @@ export class PedidosComponent implements OnInit {
     }
 
     recibirChildClicked($event) {
-        console.log($event);
-        // console.log('hola');
-
-        this.productoService.getProductos($event._id).subscribe(
-
-            (respuesta) => {
-
-                this.productos = [];
-
-                respuesta['productos'].forEach(producto => {
-                    this.productos.push(producto);
-                });
-                console.log(this.productos);
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
 
     }
 

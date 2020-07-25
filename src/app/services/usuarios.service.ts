@@ -17,7 +17,7 @@ export class UsuariosService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 
@@ -29,7 +29,7 @@ export class UsuariosService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 
@@ -49,21 +49,31 @@ export class UsuariosService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 
         const body = {
             nombre: campos.nombre,
             email: campos.email,
-            password: campos.password
-        }
+            password: campos.password,
+            role: campos.role
+        };
 
-        return this.http.put(`${this.url}/usuarios/${campos.id}`, body, httpOptions);
+        return this.http.put(`${this.url}/usuarios/${campos._id}`, body, httpOptions);
 
     }
 
-    deleteUsuario() {
+    deleteUsuario(idUsuario: string) {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json',
+                token: localStorage.getItem('token')
+            })
+        };
+
+        return this.http.delete(`${this.url}/usuario/${idUsuario}`,  httpOptions);
 
     }
 

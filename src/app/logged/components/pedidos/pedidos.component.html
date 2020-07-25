@@ -1,34 +1,37 @@
 <div class="row h-100 background" style="margin: auto;">
     <div class="col-md-12 text-center">
-        <app-dropdown [sombra]="true" [datos]="catalogos" [opciones]="opciones" [titulo]="'Seleccionar'" (childClickedEvent)="recibirChildClicked($event)"></app-dropdown>
-        <div class="card card-catalogo animate__animated animate__fadeInUp animate__faster">
-            <div class="card-header fondo text-center border-0">
-                <h3 class="title">Productos</h3>
+        <div class="row m-4">
+            <div class="col-md-4">
             </div>
-            <div class="card-body">
-                <table class="table tabla table-borderless" style="display: block;">
+            <div class="col-md-4">
+                <label class="btn boton-toggle izq">
+                    <input type="radio" value="USER_ROLE" name="role">Pendientes
+                </label>
+                <label class="btn boton-toggle der">
+                    <input type="radio" value="ADMIN_ROLE" name="role">Completados
+                </label>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 borde">
+        <div class="row borde">
+            <div class="col-md-3">
+                <app-dropdown [sombra]="true" [titulo]="'Seleccionar cliente'"></app-dropdown>
+            </div>
+            <div class="col-md-3">
+                <app-dropdown [sombra]="true" [titulo]="'Seleccionar pedido'"></app-dropdown>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
 
-                    <tr class="header">
-                        <th class="codigo">Código</th>
-                        <th class="nombre">Nombre</th>
-                        <th class="precio">Precio</th>
-                        <th class="agregar">+</th>
-                    </tr>
-
-
-                    <tr *ngFor="let producto of productos; let i = index" class="fila" [ngClass]="isLast(i) ? '': 'divider'">
-                        <td class="codigo">{{ producto.codigoProducto }}</td>
-                        <td class="nombre">{{ producto.nombreProducto }}</td>
-                        <td class="precio">{{ producto.precioProducto }}</td>
-                        <td class="agregar">
-                            <label class="checkbox-label">
-                                <input type="checkbox">
-                                <span class="checkbox-custom rectangular"></span>
-                            </label>
-                        </td>
-                    </tr>
-                </table>
+                    </div>
+                    <div class="card-body"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
