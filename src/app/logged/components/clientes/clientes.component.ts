@@ -15,17 +15,16 @@ export class ClientesComponent implements OnInit {
     emailCliente: string;
     adeudoCliente: number;
     comprasCliente: number;
-    nombreCliente: string = 'Cliente';
+    nombreCliente = 'Cliente';
 
     constructor(private clientesService: ClientesService) {
-        let idVendedor = JSON.parse(localStorage.getItem('info-usuario')).id;
+        const idVendedor = JSON.parse(localStorage.getItem('info-usuario')).id;
         clientesService.getClientes(idVendedor)
         .subscribe(
-            (respuesta) => {
-                
-                respuesta['clientes'].forEach( cliente => {
+            (respuesta: any) => {
+                respuesta.clientes.forEach( cliente => {
                     this.clientesDatos.push(cliente);
-                    let nombreCliente = `${cliente.nombres.split(' ', 2)[0]} ${cliente.apellidos}` 
+                    const nombreCliente = `${cliente.nombres.split(' ', 2)[0]} ${cliente.apellidos}` 
                     this.clientesOpciones.push(nombreCliente);
 
                 });

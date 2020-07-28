@@ -76,4 +76,35 @@ app.get('/pedidos/:idVendedor', verificaToken, (req, res) => {
 
 });
 
+app.get('/pedidos/portipo/:tipo', verificaToken, (req, res) => {
+
+    let tipo = req.params.tipo;
+    let idVendedor = req.body.idVendedor;
+    Pedido.find({ idVendedorPedido: idVendedor, status: tipo }).exec(
+        (err, pedidos) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            if (!pedidos) {
+                return res.status(404).json({
+                    ok: false,
+                    error: {
+                        message: 'No se encontraron pedidos'
+                    }
+                });
+            }
+
+            res.json({
+                ok: true,
+                pedidos
+            });
+        }
+    );
+
+});
+
 module.exports = app;

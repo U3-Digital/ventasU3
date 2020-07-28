@@ -3,35 +3,48 @@
         <div class="row m-4">
             <div class="col-md-4">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 boton-container">
                 <label class="btn boton-toggle izq">
-                    <input type="radio" value="USER_ROLE" name="role">Pendientes
+                    <input type="radio" value="Pendientes" name="role" (click)="cambiarTipoPedido('pendientes')">Pendientes
                 </label>
                 <label class="btn boton-toggle der">
-                    <input type="radio" value="ADMIN_ROLE" name="role">Completados
+                    <input type="radio" value="Completados" name="role" (click)="cambiarTipoPedido('completados')">Completados
                 </label>
             </div>
             <div class="col-md-4">
             </div>
         </div>
     </div>
-    <div class="col-md-12 borde">
-        <div class="row borde">
-            <div class="col-md-3">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 text-center">
                 <app-dropdown [sombra]="true" [titulo]="'Seleccionar cliente'"></app-dropdown>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <app-dropdown [sombra]="true" [titulo]="'Seleccionar pedido'"></app-dropdown>
             </div>
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
+                <table class="table table-borderless tabla animate__animated animate__fadeInUp animate__faster" style="display: block;">
+                    <tr class="header">
+                        <th class="nombre">Nombre</th>
+                        <th class="precio">Precio</th>
+                        <th class="cantidad">Cantidad</th>
+                        <th class="pedido">Pedido</th>
+                    </tr>
+                    <tr class="fila">
+                        <td class="nombre" align="center">Hola</td>
+                        <td class="precio" align="center">asda</td>
+                        <td class="cantidad" align="center">3</td>
+                        <td class="pedido" align="center">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                               Pedido
+                            </label>
+                        </td>
+                    </tr>
 
-                    </div>
-                    <div class="card-body"></div>
-                </div>
+                </table>
             </div>
         </div>
     </div>
 </div>
-

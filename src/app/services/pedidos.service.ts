@@ -26,7 +26,7 @@ export class PedidosService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')  
+                token: localStorage.getItem('token')
             })
         };
 
@@ -38,10 +38,21 @@ export class PedidosService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')  
+                token: localStorage.getItem('token')
             })
         };
 
         return this.http.get(`${this.url}/pedidos/${idVendedor}`, httpOptions);
+    }
+
+    getPedidosPorTipo(parametros: any) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json',
+                token: localStorage.getItem('token')
+            })
+        };
+
+        return this.http.get(`${this.url}/pedidos/portipo/${parametros.tipo}$idVendedor=${parametros.idVendedor}`, httpOptions);
     }
 }

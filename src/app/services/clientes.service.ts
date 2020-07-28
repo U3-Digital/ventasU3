@@ -16,13 +16,24 @@ export class ClientesService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-              'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
-        }
+        };
 
         return this.http.get(`${this.url}/cliente/${idVendedor}`, httpOptions);
     }
-        
+
+    getCliente(idCliente: string) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json',
+                token: localStorage.getItem('token')
+            })
+        };
+
+        return this.http.get(`${this.url}/clientes/${idCliente}`, httpOptions);
+    }
+
     newCliente(cliente: ClienteModel) {
         const body = {
             nombres: cliente.nombres,
@@ -32,19 +43,19 @@ export class ClientesService {
             adeuda: cliente.adeuda,
             compras: cliente.compras,
             vendedor: cliente.vendedor
-        }
+        };
 
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 
         return this.http.post(`${this.url}/cliente`, body, httpOptions);
     }
 
-    updateComprasAdeudaCliente (info: any) {
+    updateComprasAdeudaCliente(info: any) {
 
         const body = {
             comprasCliente: info.compras,
@@ -54,7 +65,7 @@ export class ClientesService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 
@@ -62,16 +73,16 @@ export class ClientesService {
 
     }
 
-    updateAdeudoCliente (info: any) {
+    updateAdeudoCliente(info: any) {
 
         const body = {
             adeudaCliente: info.adeuda
-        }
+        };
 
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 

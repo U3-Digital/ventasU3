@@ -84,6 +84,37 @@ app.get('/cliente/:idVendedor', verificaToken, (req, res) => {
         });
 });
 
+app.get('/clientes/:idCliente', verificaToken, (req, res) => {
+
+    const idCliente = req.params.idCliente;
+
+    Cliente.findById(idCliente, (err, clienteDB) => {
+
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!clienteDB) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: 'No se encontró un cliente con ese id'
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            clienteDB
+        });
+
+    });
+
+});
+
 
 // ========================================
 // Actualizar Clientes por ID

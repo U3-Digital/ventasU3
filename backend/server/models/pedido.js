@@ -7,7 +7,7 @@ let date = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
 let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
 
 var pedidoSchema = new Schema({
-    fechaPedido: { type: String, default: `${date}T${time}` },
+    fechaPedido: { type: Date, default: Date.now() },
     idClientePedido: { type: Schema.Types.ObjectId, ref: 'Cliente', required: [true, 'El id del cliente es necesario'] },
     idVendedorPedido: { type: Schema.Types.ObjectId, ref: 'Usuario', required: [true, 'El id del vendedor es necesario'] },
     idCatalogoPedido: { type: Schema.Types.ObjectId, ref: 'Catalogo', required: [true, 'El id del catalogo es necesario'] },

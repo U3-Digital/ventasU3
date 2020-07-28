@@ -1,38 +1,74 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CatalogosService } from '../../../services/catalogos.service'; 
-import { CatalogoModel } from '../../../models/catalogo.model';
-import { ProductoService} from '../../../services/producto.service';
-import { ProductoModel } from '../../../models/producto.model';
+import { ClientesService } from 'src/app/services/clientes.service';
+import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',
   styleUrls: ['./pedidos.component.css']
 })
+
 export class PedidosComponent implements OnInit {
 
-    catalogos: CatalogoModel[] = [];
-    opciones: string[] = [];
-    productos: ProductoModel[] = [];
+    idVendedor: string;
 
-    constructor(private catalogoService: CatalogosService, private productoService: ProductoService) {
+    pedidos: any[] = [];
+    clientes: any[] = [];
+
+    tipoPedidoSeleccionado: string;
+    clienteSeleccionado: any;
+    pedidoSeleccionado: any;
+
+    constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
+
+        this.idVendedor = JSON.parse(localStorage.getItem('info-usuario')).id;
+
+        pedidosService.getPedidosPorVendedor(this.idVendedor).subscribe(
+            (respuesta: any) => {
+                respuesta.pedidos.forEach( (pedido: any ) => {
+                    this.pedidos.push(pedido);
+
+                    const idCliente = pedido.idClientePedido;
+
+                    this.clientesService.getCliente(idCliente).subscribe(
+                        (respuestaCliente) => {
+                            console.log(respuestaCliente);
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
+
+                });
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
     }
 
     ngOnInit() {
 
     }
 
-    recibirChildClicked($event) {
+    cambiarTipoPedido(tipo: string) {
+        this.tipoPedidoSeleccionado = tipo;
+        console.log(this.tipoPedidoSeleccionado);
+    }
+
+    getPedidosPorTipo(tipo: string) {
+
+        // this.pedidosService.getP
 
     }
 
-    isLast(index) {
-        if (index === this.opciones.length - 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // isLast(index) {
+    //     if (index === this.opciones.length - 1) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
 }
