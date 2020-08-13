@@ -115,6 +115,35 @@ app.get('/clientes/:idCliente', verificaToken, (req, res) => {
 
 });
 
+app.post('/clientes/multiple', verificaToken, (req, res) => {
+
+    const idClientes = req.body.idClientes;
+
+    Cliente.find({
+        '_id': { $in: idClientes }
+    }, (err, clientesDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!clientesDB) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: 'No se encontraron clientes con esos ids'
+                }
+            });
+        }
+        res.json({
+            ok: true,
+            clientesDB
+        });
+    });
+
+});
 
 // ========================================
 // Actualizar Clientes por ID

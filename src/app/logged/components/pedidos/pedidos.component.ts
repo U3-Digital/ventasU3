@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, QueryList, AfterViewInit, ViewChildren } from '@angular/core';
 
 import { ClientesService } from 'src/app/services/clientes.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
+import { CatalogosService } from 'src/app/services/catalogos.service';
 
 @Component({
   selector: 'app-pedidos',
@@ -9,44 +10,49 @@ import { PedidosService } from 'src/app/services/pedidos.service';
   styleUrls: ['./pedidos.component.css']
 })
 
-export class PedidosComponent implements OnInit {
+export class PedidosComponent implements OnInit, AfterViewInit {
 
     idVendedor: string;
 
+    catalogos: any[] = [];
+
     pedidos: any[] = [];
-    clientes: any[] = [];
+    pedidosSeleccionables: any[] = [];
+    opcionesPedidosSeleccionables: string[] = [];
+
+    clientes: string[] = [];
+    datosClientes: any[] = [];
 
     tipoPedidoSeleccionado: string;
+    pendienteCompletado = true;
     clienteSeleccionado: any;
     pedidoSeleccionado: any;
 
-    constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
+    productos: any[] = [];
+
+    selectedIndex = 0;
+    selectedClientIndex = 0;
+
+    @ViewChildren('celdasProductos', {}) celdasProductos: QueryList<any>;
+
+    constructor(private pedidosService: PedidosService, private clientesService: ClientesService,
+                private catalogosService: CatalogosService) {
 
         this.idVendedor = JSON.parse(localStorage.getItem('info-usuario')).id;
-        // pedidosService.getPedidosPorVendedor(this.idVendedor).subscribe(
-        //     (respuesta: any) => {
-        //         respuesta.pedidos.forEach( (pedido: any ) => {
-        //             this.pedidos.push(pedido);
-        //             console.log(this.pedidos);
-        //             const idCliente = pedido.idClientePedido;
-
-        //             this.clientesService.getCliente(idCliente).subscribe(
-        //                 (respuestaCliente) => {
-        //                     console.log(respuestaCliente);
-        //                 },
-        //                 (error) => {
-        //                     console.log(error);
-        //                 }
-        //             );
-
-        //         });
-        //     },
-        //     (error) => {
-        //         console.log(error);
-        //     }
-        // );
 
         this.getPedidosPorTipo('Pendiente');
+    }
+    ngAfterViewInit(): void {
+        this.celdasProductos.changes.subscribe(t => {
+            let i = 0;
+            this.productos.forEach((producto: any) => {
+                const bSwitch: any = document.getElementById(`switch${i}`);
+                if (producto.statusProducto === 'Pedido') {
+                    bSwitch.checked = true;
+                }
+                i++;
+            });
+        });
     }
 
     ngOnInit() {
@@ -54,8 +60,22 @@ export class PedidosComponent implements OnInit {
     }
 
     cambiarTipoPedido(tipo: string) {
+        this.pedidosSeleccionables = [];
+        this.opcionesPedidosSeleccionables = [];
+        this.pedidos = [];
+        this.clientes = [];
+        this.selectedClientIndex = -1;
+        this.productos = [];
+
         this.tipoPedidoSeleccionado = tipo;
-        console.log(this.tipoPedidoSeleccionado);
+
+        if (this.tipoPedidoSeleccionado === 'Pendiente') {
+            this.pendienteCompletado = true;
+        } else {
+            this.pendienteCompletado = false;
+        }
+
+        this.getPedidosPorTipo(tipo);
     }
 
     getPedidosPorTipo(tipo: string) {
@@ -67,7 +87,21 @@ export class PedidosComponent implements OnInit {
 
         this.pedidosService.getPedidosPorTipo(parametros).subscribe(
             (respuesta: any) => {
-                console.log(respuesta);
+                const idClientes: string[] = [];
+                respuesta.pedidos.forEach((pedido: any ) => {
+                    this.pedidos.push(pedido);
+                    idClientes.push(pedido.idClientePedido);
+                });
+                const idCatalogos: string[] = [];
+                respuesta.pedidos.forEach((pedido: any) => {
+                    idCatalogos.push(pedido.idCatalogoPedido);
+                });
+
+                this.getCatalogos(idCatalogos);
+                this.getClientes(idClientes);
+
+                console.log(idCatalogos);
+
             },
             (error: any) => {
                 console.log(error);
@@ -76,12 +110,93 @@ export class PedidosComponent implements OnInit {
 
     }
 
-    // isLast(index) {
-    //     if (index === this.opciones.length - 1) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    getClientes(ids: string[]) {
+        this.clientesService.getMultiplesClientes(ids).subscribe(
+            (respuesta: any) => {
+                respuesta.clientesDB.forEach((cliente: any) => {
+                    this.clientes.push(`${cliente.nombres.split(' ', 2)[0]} ${cliente.apellidos}`);
+                    this.datosClientes.push(cliente);
+                });
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    getCatalogos(idCatalogos: string[]) {
+        // console.log(idCatalogos);
+
+        this.catalogosService.getCatalogosPorId(idCatalogos).subscribe(
+            (respuesta: any) => {
+                respuesta.catalogosDB.forEach((catalogo: any) => {
+                    this.catalogos.push(catalogo);
+                });
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    getPedidosPorCliente(idCliente: string) {
+        let i = 0;
+        this.pedidos.forEach((pedido: any) => {
+            if (pedido.idClientePedido === idCliente) {
+
+                let catalogoPedido = '';
+
+                this.catalogos.forEach((catalogo: any) => {
+                    if (pedido.idCatalogoPedido === catalogo._id) {
+                        catalogoPedido = catalogo.nombre;
+                    }
+                });
+
+                this.opcionesPedidosSeleccionables.push(`${catalogoPedido} ${pedido.fechaPedido.split('T', 2)[0]}`);
+                this.pedidosSeleccionables.push(pedido);
+            }
+            i++;
+        });
+    }
+
+    onClienteSeleccionado($event: any) {
+        this.selectedIndex = -1;
+        this.opcionesPedidosSeleccionables = [];
+        this.productos = [];
+        this.pedidosSeleccionables = [];
+        this.getPedidosPorCliente($event._id);
+    }
+
+    onPedidoSeleccionado($event: any) {
+        // this.productos = [];
+        this.productos = $event.productosPedido;
+        this.pedidoSeleccionado = $event;
+        console.log(this.productos);
+    }
+
+    productoStatusChanged($event: any, index: number) {
+
+        const checked = $event.target.checked;
+        console.log(checked ? 'Pedido' : 'No pedido');
+
+        const parametros = {
+            idProducto: this.productos[index]._id,
+            idPedido: this.pedidoSeleccionado._id,
+            statusProducto: checked ? 'Pedido' : 'No pedido'
+        };
+
+        this.pedidosService.updateStatusProducto(parametros).subscribe(
+            (respuesta: any) => {
+                console.log(respuesta);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    button() {
+
+    }
 
 }

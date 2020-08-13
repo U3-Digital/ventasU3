@@ -2,6 +2,7 @@ const express = require('express');
 let { verificaToken } = require('../middlewares/autenticacion');
 let app = express();
 let Pedido = require('../models/pedido');
+const pedido = require('../models/pedido');
 
 app.post('/pedidos', verificaToken, (req, res) => {
 
@@ -81,8 +82,6 @@ app.post('/pedidos/portipo/:tipo', verificaToken, (req, res) => {
     let tipo = req.params.tipo;
     let idVendedor = req.body.idVendedor;
 
-    console.log(req.body);
-
     Pedido.find({ idVendedorPedido: idVendedor, status: tipo }).exec(
         (err, pedidos) => {
             if (err) {
@@ -107,6 +106,46 @@ app.post('/pedidos/portipo/:tipo', verificaToken, (req, res) => {
             });
         }
     );
+
+});
+
+app.put('/pedidos/producto', verificaToken, (req, res) => {
+    const idProducto = req.body.idProducto;
+    const idPedido = req.body.idPedido;
+    const status = req.body.statusProducto;
+
+    Pedido.findById(idPedido, (err, pedidoDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+
+
+        console.log(pedidoDB.productosPedido.id(idProducto));
+
+        if (pedidoDB.productosPedido.id(idProducto)) {
+            let producto = pedidoDB.productosPedido.id(idProducto);
+            producto.statusProducto = status;
+
+            pedidoDB.save((err, productoGuardado) => {
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        err
+                    });
+                }
+                res.json({
+                    ok: true,
+                    productoGuardado
+                });
+            });
+
+        }
+
+    });
 
 });
 

@@ -12,7 +12,7 @@ export class AgregarCatalogoComponent implements OnInit {
 
     @Output() catalogoClickedEvent = new EventEmitter<FormGroup>();
 
-    constructor(private formBuilder: FormBuilder) { 
+    constructor(private formBuilder: FormBuilder) {
         this.crearFormulario();
     }
 
@@ -26,16 +26,14 @@ export class AgregarCatalogoComponent implements OnInit {
     get gananciaNoValida() {
         return this.formaCatalogo.get('ganancia').invalid && this.formaCatalogo.get('ganancia').touched;
     }
-    crearFormulario () {
+    crearFormulario() {
         this.formaCatalogo = this.formBuilder.group({
             nombre: ['', [Validators.required]],
             ganancia: ['', [Validators.required]]
         });
     }
 
-    sendSubmit () {
-
+    sendSubmit() {
         this.catalogoClickedEvent.emit(this.formaCatalogo);
     }
- 
 }

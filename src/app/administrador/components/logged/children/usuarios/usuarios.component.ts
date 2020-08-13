@@ -63,7 +63,7 @@ export class UsuariosComponent implements OnInit {
         this.showModal = false;
     }
 
-    isLast(index) {
+    isLast(index: number) {
         if (index === this.usuarios.length - 1) {
             return true;
         } else {
@@ -71,7 +71,7 @@ export class UsuariosComponent implements OnInit {
         }
     }
 
-    editar(index) {
+    editar(index: number) {
         this.editando = true;
         this.setUsuarioActual(index);
 

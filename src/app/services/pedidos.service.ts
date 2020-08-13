@@ -10,6 +10,14 @@ export class PedidosService {
 
     private url = 'http://localhost:3000';
 
+    private httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            token: localStorage.getItem('token')
+        })
+    };
+
+
     constructor(private http: HttpClient) { }
 
     newPedido(pedido: PedidoModel) {
@@ -23,40 +31,31 @@ export class PedidosService {
             totalPedido: pedido.totalPedido
         };
 
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type':  'application/json',
-                token: localStorage.getItem('token')
-            })
-        };
-
-        return this.http.post(`${this.url}/pedidos`, body, httpOptions);
+        return this.http.post(`${this.url}/pedidos`, body, this.httpOptions);
 
     }
 
     getPedidosPorVendedor(idVendedor: string ) {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type':  'application/json',
-                token: localStorage.getItem('token')
-            })
-        };
-
-        return this.http.get(`${this.url}/pedidos/${idVendedor}`, httpOptions);
+        return this.http.get(`${this.url}/pedidos/${idVendedor}`, this.httpOptions);
     }
 
     getPedidosPorTipo(parametros: any) {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type':  'application/json',
-                token: localStorage.getItem('token')
-            })
-        };
-
         const body = {
             idVendedor: parametros.idVendedor
-        }
+        };
 
-        return this.http.post(`${this.url}/pedidos/portipo/${parametros.tipo}`, body, httpOptions);
+        return this.http.post(`${this.url}/pedidos/portipo/${parametros.tipo}`, body, this.httpOptions);
     }
+
+    updateStatusProducto(parametros: any) {
+        const body = {
+            idProducto: parametros.idProducto,
+            idPedido: parametros.idPedido,
+            statusProducto: parametros.statusProducto
+        };
+
+        return this.http.put(`${this.url}/pedidos/producto`, body, this.httpOptions);
+
+    }
+
 }

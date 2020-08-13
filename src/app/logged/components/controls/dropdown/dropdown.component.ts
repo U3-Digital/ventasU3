@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 @Component({
@@ -6,36 +6,43 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css']
 })
-export class DropdownComponent implements OnInit {
+export class DropdownComponent implements OnInit, OnChanges{
 
     @ViewChild('dropdownButton', {}) dropdownButton: ElementRef;
 
     @ViewChild('dropdownContent', {}) dropdownContent: ElementRef;
 
-    @Input() id:string;
+    @Input() selected: number;
+    @Input() id: string;
     @Input() opciones: string[];
     @Input() datos: any[];
     @Input() titulo: string;
     @Input() sombra: boolean;
 
+    tituloInicial: string;
+
     @Output() childClickedEvent = new EventEmitter<any>();
-    
+
     faChevronDown = faChevronDown;
     showing = false;
     clase = 'dropdown-content';
     claseShowing = 'dropdown-content show';
 
-    
+    constructor() {
 
-    constructor() {       
+    }
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.selected === -1) {
+            this.titulo = this.tituloInicial;
+        }
     }
 
     ngOnInit(): void {
-
+        this.tituloInicial = this.titulo;
     }
 
     sendChildClicked(index) {
-        let opcion = this.titulo = this.opciones[index];
+        this.titulo = this.opciones[index];
         this.childClickedEvent.emit(this.datos[index]);
     }
 

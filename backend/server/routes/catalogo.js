@@ -66,22 +66,43 @@ app.get('/catalogo/:id', verificaToken, (req, res) => {
 
 });
 
+app.post('/catalogos', verificaToken, (req, res) => {
 
+    const idCatalogos = req.body.idCatalogos;
+    Catalogo.find({
+        '_id': { $in: idCatalogos }
+    }, (err, catalogosDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
 
+        if (!catalogosDB) {
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            catalogosDB
+        });
+    });
 
-
-
+});
 // ========================================
 // Crear nuevo Catalogo
 // ========================================
 app.post('/catalogo', verificaToken, (req, res) => {
     // Regresar la nueva categoria
     // req.usuario._id
-    let body = req.body;
+    let catalogoBody = req.body.catalogo;
     let catalogo = new Catalogo({
-        nombre: body.nombre,
-        ganancia: body.ganancia,
-        usuario: req.usuario._id
+        nombre: catalogoBody.nombre,
+        ganancia: catalogoBody.ganancia,
+        idVendedor: req.body.idVendedor
     });
 
 

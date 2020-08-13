@@ -7,7 +7,7 @@
 
     <div class="col-md-12 text-center abajo">
         <app-agregar-cliente *ngIf="showForm('Cliente')" (clienteClickedEvent)="recibirClienteEvent($event)"></app-agregar-cliente>
-        <app-agregar-pedido *ngIf="showForm('Pedido')" (shouldShow)="recibirShowProduct($event)" (catalogo)="recibirCatalogo($event)" [productos]="productos" (onSubmitClicked)="recibirSubmitPedido($event)"></app-agregar-pedido>
+        <app-agregar-pedido *ngIf="showForm('Pedido')" (shouldShow)="recibirShowProduct($event)" (catalogo)="recibirCatalogo($event)" [productos]="productos" (submitClicked)="recibirSubmitPedido($event)"></app-agregar-pedido>
         <app-agregar-catalogo *ngIf="showForm('Catálogo')" (catalogoClickedEvent)="recibirCatalogoEvent($event)"></app-agregar-catalogo>
         <app-agregar-abonos *ngIf="showForm('Abono')" (submitClicked)="recibirAbonoSubmit($event)"></app-agregar-abonos>
     </div>

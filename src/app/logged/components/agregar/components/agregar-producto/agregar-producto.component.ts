@@ -19,10 +19,10 @@ export class AgregarProductoComponent implements OnInit {
 
     @Output() productoClickedEvent = new EventEmitter<ProductoModel>();
 
-    mensajeModal: string = '';
-    showModal: boolean = false;
+    mensajeModal = '';
+    showModal = false;
     icon = faExclamationTriangle;
-    tipoModal: string = 'error';
+    tipoModal = 'error';
 
     @ViewChild('codigoProducto', {}) cajaCodigoProducto: ElementRef;
     @ViewChild('nombreProducto', {}) cajaNombreProducto: ElementRef;
@@ -69,14 +69,14 @@ export class AgregarProductoComponent implements OnInit {
     submit() {
         this.showModal = false;
         if ((this.catalogo) && (this.formaProducto.valid === true)) {
-            
-            
-            let producto: ProductoModel = new ProductoModel();
+
+            const producto: ProductoModel = new ProductoModel();
             producto.idCatalogoProducto = this.catalogo;
             producto.codigoProducto = this.formaProducto.value.codigoProducto;
             producto.nombreProducto = this.formaProducto.value.nombreProducto;
             producto.cantidadProducto = this.formaProducto.value.cantidadProducto;
             producto.precioProducto = this.formaProducto.value.precioProducto;
+            producto.statusProducto = 'No pedido';
 
             this.vaciarCampos();
             this.productoClickedEvent.emit(producto);

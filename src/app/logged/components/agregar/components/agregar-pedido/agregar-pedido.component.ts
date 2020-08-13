@@ -29,18 +29,19 @@ export class AgregarPedidoComponent implements OnInit, DoCheck {
     opcionesCatalogos: any[] = [];
 
     @Input() productos: any[] = [];
-    @Output() onSubmitClicked = new EventEmitter<any>();
+    @Output() submitClicked = new EventEmitter<any>();
     isShowing: boolean;
 
     total = 0.0;
 
     catalogoActual: string;
     clienteActual: string;
-    constructor(private catalogoService: CatalogosService, private clienteService: ClientesService, private pedidosService: PedidosService ,private formBuilder: FormBuilder) {
+    constructor(private catalogoService: CatalogosService, private clienteService: ClientesService, 
+                private pedidosService: PedidosService, private formBuilder: FormBuilder) {
 
         this.catalogoService.getCatalogos().subscribe(
-            (respuesta) => {
-                respuesta['catalogos'].forEach(catalogo => {
+            (respuesta: any) => {
+                respuesta.catalogos.forEach(catalogo => {
                     this.catalogos.push(catalogo);
                     this.opcionesCatalogos.push(catalogo.nombre);
                     console.log(this.catalogos, this.opcionesCatalogos);
@@ -81,13 +82,13 @@ export class AgregarPedidoComponent implements OnInit, DoCheck {
 
     ngOnInit() {
     }
-    
+
     calcularTotal() {
         this.total = 0;
         this.productos.forEach(producto => {
-            let totalProducto = producto.precioProducto * producto.cantidadProducto;
+            const totalProducto = producto.precioProducto * producto.cantidadProducto;
             this.total += totalProducto;
-        })
+        });
 
         // this.formaPedido.value.total = this.total;
     }
@@ -96,7 +97,7 @@ export class AgregarPedidoComponent implements OnInit, DoCheck {
         this.shouldShow.emit(true);
         this.isShowing = true;
     }
-    
+
     recibirCliente($event) {
         this.clienteActual = $event._id;
         // this.formaPedido.value.idCliente = this.clienteActual;
@@ -124,7 +125,7 @@ export class AgregarPedidoComponent implements OnInit, DoCheck {
             // console.log(this.productos);
 
             if ((this.catalogoActual) && (this.clienteActual) && (this.productos.length > 0) && (this.total > 0)) {
-                let pedido = new PedidoModel();
+                const pedido = new PedidoModel();
                 pedido.idClientePedido = this.clienteActual;
                 pedido.idVendedorPedido = JSON.parse(localStorage.getItem('info-usuario')).id;
                 pedido.idCatalogoPedido = this.catalogoActual;
@@ -134,7 +135,7 @@ export class AgregarPedidoComponent implements OnInit, DoCheck {
                 this.pedidosService.newPedido(pedido).subscribe(
                     (respuesta) => {
                         console.log(respuesta);
-                        this.onSubmitClicked.emit({
+                        this.submitClicked.emit({
                             ok: true,
                             idCliente: this.clienteActual,
                             respuesta,
@@ -143,23 +144,23 @@ export class AgregarPedidoComponent implements OnInit, DoCheck {
                         this.total = 0;
                     },
                     (error) => {
-                        this.onSubmitClicked.emit({
-                            ok:false
+                        this.submitClicked.emit({
+                            ok: false
                         });
                         console.log(error);
                     }
                 );
             } else {
-                this.onSubmitClicked.emit({
+                this.submitClicked.emit({
                     ok: false
-                })
+                });
             }
-        
+
         // console.log(this.formaPedido.value);
         // console.log(this.formaPedido.valid);
     }
 
-    @HostListener('document:click', ['$event']) 
+    @HostListener('document:click', ['$event'])
     onDocumentClick(event: MouseEvent) {
 
         if ((event.target === document.getElementById('addProducto'))) {
@@ -169,5 +170,4 @@ export class AgregarPedidoComponent implements OnInit, DoCheck {
            }
         }
     }
-    
 }

@@ -9,37 +9,34 @@ export class CatalogosService {
 
     private url = 'http://localhost:3000';
 
-    constructor(private http: HttpClient) { 
+    httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          token: localStorage.getItem('token')
+        })
+    };
+
+    constructor(private http: HttpClient) {
 
     }
 
-    getCatalogos () {
-
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json',
-              'token': localStorage.getItem('token')
-            })
-          };
-
-        return this.http.get(`${this.url}/catalogo`, httpOptions);
+    getCatalogos() {
+        return this.http.get(`${this.url}/catalogo`, this.httpOptions);
     }
 
-    newCatalogo(catalogo: CatalogoModel) {
+    newCatalogo(parametros: any) {
         const body = {
-            ...catalogo
-        }
-
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json',
-              'token': localStorage.getItem('token')
-            })
+            idVendedor: parametros.idVendedor,
+            catalogo: parametros.catalogo
         };
 
-
-        return this.http.post(`${this.url}/catalogo`, body, httpOptions);
+        return this.http.post(`${this.url}/catalogo`, body, this.httpOptions);
     }
 
+
+    getCatalogosPorId(idCatalogos: string[]) {
+
+        return this.http.post(`${this.url}/catalogos`, {idCatalogos}, this.httpOptions);
+
+    }
 }
- 

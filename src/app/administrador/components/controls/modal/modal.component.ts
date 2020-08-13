@@ -11,7 +11,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 export class ModalComponent implements OnInit {
 
     closeIcon = faTimes;
-    @Input() icon: IconDefinition;
+    icon: IconDefinition;
 
     @Input() message: string;
     @Input() showing = false;
@@ -19,7 +19,13 @@ export class ModalComponent implements OnInit {
 
     @Output() ondismiss = new EventEmitter<any>();
 
-    constructor() { }
+    constructor() {
+        if (this.type === 'success') {
+            this.icon = faCheck;
+        } else {
+            this.icon = faExclamationTriangle;
+        }
+    }
 
     ngOnInit(): void {
     }

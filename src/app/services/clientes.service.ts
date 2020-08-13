@@ -34,6 +34,21 @@ export class ClientesService {
         return this.http.get(`${this.url}/clientes/${idCliente}`, httpOptions);
     }
 
+    getMultiplesClientes(idClientes: string[]) {
+        const body = {
+            idClientes
+        };
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json',
+                token: localStorage.getItem('token')
+            })
+        };
+
+        return this.http.post(`${this.url}/clientes/multiple`, body, httpOptions);
+    }
+
     newCliente(cliente: ClienteModel) {
         const body = {
             nombres: cliente.nombres,

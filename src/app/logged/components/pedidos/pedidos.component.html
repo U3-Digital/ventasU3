@@ -1,29 +1,25 @@
 <div class="row h-100 background" style="margin: auto;">
     <div class="col-md-12 text-center">
-        <div class="row m-4">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4 boton-container">
-                <label class="btn boton-toggle izq">
+        <div class="row m-4 justify-content-center">
+            <div class="col-md-8 boton-container">
+                <label class="btn boton-toggle izq" [ngClass]="pendienteCompletado? 'active' : ''">
                     <input type="radio" value="Pendiente" name="role" (click)="cambiarTipoPedido('Pendiente')">Pendientes
                 </label>
-                <label class="btn boton-toggle der">
+                <label class="btn boton-toggle der" [ngClass]="pendienteCompletado? '' : 'active'">
                     <input type="radio" value="Completado" name="role" (click)="cambiarTipoPedido('Completado')">Completados
                 </label>
-            </div>
-            <div class="col-md-4">
             </div>
         </div>
     </div>
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-3 text-center">
-                <app-dropdown [sombra]="true" [titulo]="'Seleccionar cliente'"></app-dropdown>
+            <div class="col-md-3 text-center" style="z-index: 2;">
+                <app-dropdown [sombra]="true" [titulo]="'Seleccionar cliente'" [datos]="datosClientes" [opciones]="clientes" (childClickedEvent)="onClienteSeleccionado($event)" [selected]="selectedClientIndex"></app-dropdown>
             </div>
             <div class="col-md-3 text-center">
-                <app-dropdown [sombra]="true" [titulo]="'Seleccionar pedido'"></app-dropdown>
+                <app-dropdown [sombra]="true" [titulo]="'Seleccionar pedido'" [datos]="pedidosSeleccionables" [opciones]="opcionesPedidosSeleccionables" (childClickedEvent)="onPedidoSeleccionado($event)" [selected]="selectedIndex"></app-dropdown>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="hey">
                 <table class="table table-borderless tabla animate__animated animate__fadeInUp animate__faster" style="display: block;">
                     <tr class="header">
                         <th class="nombre">Nombre</th>
@@ -31,19 +27,28 @@
                         <th class="cantidad">Cantidad</th>
                         <th class="pedido">Pedido</th>
                     </tr>
-                    <tr class="fila">
-                        <td class="nombre" align="center">Hola</td>
-                        <td class="precio" align="center">asda</td>
-                        <td class="cantidad" align="center">3</td>
+                    <tr #celdasProductos *ngFor="let producto of productos; let i = index;" class="fila">
+                        <td class="nombre" align="center">{{producto.nombreProducto}}</td>
+                        <td class="precio" align="center">${{producto.precioProducto}}</td>
+                        <td class="cantidad" align="center">{{producto.cantidadProducto}}</td>
                         <td class="pedido" align="center">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" [id]="'switch' + i" (change)="productoStatusChanged($event, i)">
+                                <label class="custom-control-label cosa" [for]="'switch' + i"></label>
+                            </div>
+                            <!-- <input class="form-check-input" type="checkbox" [value]="i" [id]="i" (change)="cajaSelected($event)">
                             <label class="form-check-label" for="defaultCheck1">
                                Pedido
-                            </label>
+                            </label> -->
                         </td>
                     </tr>
 
                 </table>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8 text-center">
+                <button class="btn button-aceptar" (click)="button()">Marcar pedido como completado</button>
             </div>
         </div>
     </div>

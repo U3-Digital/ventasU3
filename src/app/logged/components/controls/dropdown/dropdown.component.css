@@ -41,7 +41,7 @@
     border-radius: 0em 0em 1em 1em;
     text-align: center;
     opacity: 0;
-    z-index: 2;
+    z-index: 1;
     visibility: hidden;
     box-shadow: 0px 10px 64px 0px rgba(6, 16, 88, 0.3);
     transition-duration: 0.2s;

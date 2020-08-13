@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { faCheck} from '@fortawesome/free-solid-svg-icons'
+import { faCheck} from '@fortawesome/free-solid-svg-icons';
 import { CatalogosService } from 'src/app/services/catalogos.service';
 import { CatalogoModel } from 'src/app/models/catalogo.model';
 import { FormGroup } from '@angular/forms';
@@ -16,9 +16,9 @@ import { createHostListener } from '@angular/compiler/src/core';
 })
 export class AgregarComponent implements OnInit {
 
-    
+    idVendedor: string;
 
-    opciones: String[] = ['Pedido', 'Cliente', 'Catálogo', 'Abono'];
+    opciones: string[] = ['Pedido', 'Cliente', 'Catálogo', 'Abono'];
     childClicked: string;
     icon = faCheck;
 
@@ -28,12 +28,13 @@ export class AgregarComponent implements OnInit {
 
     catalogoSeleccionado: string;
 
-    showAddProduct: boolean = false;
+    showAddProduct = false;
 
     productos: ProductoModel[] = [];
 
-    constructor(private catalogoService: CatalogosService, private clientesService: ClientesService, private productosService: ProductoService) { 
-
+    constructor(private catalogoService: CatalogosService, private clientesService: ClientesService,
+                private productosService: ProductoService) {
+        this.idVendedor = JSON.parse(localStorage.getItem('info-usuario')).id;
     }
 
     ngOnInit() {
@@ -61,12 +62,11 @@ export class AgregarComponent implements OnInit {
     }
 
     recibirClienteEvent($event: FormGroup) {
-        
+
         this.showModal = false;
-        let vendedorId = JSON.parse(localStorage.getItem('info-usuario')).id;
 
         if ($event.valid === true) {
-            let cliente: ClienteModel = new ClienteModel();
+            const cliente: ClienteModel = new ClienteModel();
 
             cliente.nombres = $event.value.nombres;
             cliente.apellidos = $event.value.apellidos;
@@ -74,7 +74,7 @@ export class AgregarComponent implements OnInit {
             cliente.email = $event.value.email;
             cliente.adeuda = 0.0;
             cliente.compras = 0.0;
-            cliente.vendedor = vendedorId;
+            cliente.vendedor = this.idVendedor;
 
             this.clientesService.newCliente(cliente).subscribe(
                 (respuesta) => {
@@ -104,11 +104,16 @@ export class AgregarComponent implements OnInit {
 
         if ($event.valid === true) {
 
-            let catalogo: CatalogoModel = new CatalogoModel();
+            const catalogo: CatalogoModel = new CatalogoModel();
             catalogo.nombre = $event.value.nombre;
             catalogo.ganancia = $event.value.ganancia;
 
-            this.catalogoService.newCatalogo(catalogo).subscribe(
+            const parametros = {
+                idVendedor: this.idVendedor,
+                catalogo
+            };
+
+            this.catalogoService.newCatalogo(parametros).subscribe(
                 (respuesta) => {
                     this.icon = faCheck;
                     this.tipoModal = 'success';
@@ -130,30 +135,8 @@ export class AgregarComponent implements OnInit {
 
     }
 
-    recibirProductoEvent($event: FormGroup) {
-        this.showModal = false;
 
-        if ($event.valid === true) {
-
-            let producto: ProductoModel = new ProductoModel();
-            producto.codigoProducto = $event.value.codigoProducto;
-            producto.nombreProducto = $event.value.nombreProducto;
-            producto.precioProducto = $event.value.precioProducto;
-            producto.cantidadProducto = $event.value.cantidadProducto;
-            producto.idCatalogoProducto = $event.value.idCatalogoProducto;
-        
-            this.productosService.newProducto(producto).subscribe(
-                (respuesta) => {
-                    console.log(respuesta);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-        }
-    }
-
-    recibirSubmitPedido($event:any) {
+    recibirSubmitPedido($event: any) {
         this.showModal = false;
         if ($event.ok === true) {
             this.productos = [];
@@ -163,10 +146,10 @@ export class AgregarComponent implements OnInit {
                 idCliente: $event.idCliente,
                 compras: $event.total,
                 adeuda: $event.total
-            }
+            };
 
             this.clientesService.updateComprasAdeudaCliente(info)
-            .subscribe( 
+            .subscribe(
                 (respuesta) => {
 
                     this.showModal = true;
@@ -179,9 +162,7 @@ export class AgregarComponent implements OnInit {
                 (error) => {
                     console.log(error);
                 }
-            )
-
-            
+            );
 
         } else {
             this.showModal = true;
@@ -195,14 +176,14 @@ export class AgregarComponent implements OnInit {
     recibirAbonoSubmit($event) {
         this.showModal = false;
 
-            this.showModal = true;
-            this.tipoModal = $event.tipo;
-            if (this.tipoModal === 'error') {
-                this.icon = faExclamationTriangle;
-            } else {
-                this.icon = faCheck;
-            }
-            this.mensajeModal = $event.mensaje;
+        this.showModal = true;
+        this.tipoModal = $event.tipo;
+        if (this.tipoModal === 'error') {
+            this.icon = faExclamationTriangle;
+        } else {
+            this.icon = faCheck;
+        }
+        this.mensajeModal = $event.mensaje;
     }
 
     dialogDismiss($event) {
