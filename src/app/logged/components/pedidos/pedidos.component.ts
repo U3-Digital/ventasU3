@@ -23,29 +23,30 @@ export class PedidosComponent implements OnInit {
     constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
 
         this.idVendedor = JSON.parse(localStorage.getItem('info-usuario')).id;
+        // pedidosService.getPedidosPorVendedor(this.idVendedor).subscribe(
+        //     (respuesta: any) => {
+        //         respuesta.pedidos.forEach( (pedido: any ) => {
+        //             this.pedidos.push(pedido);
+        //             console.log(this.pedidos);
+        //             const idCliente = pedido.idClientePedido;
 
-        pedidosService.getPedidosPorVendedor(this.idVendedor).subscribe(
-            (respuesta: any) => {
-                respuesta.pedidos.forEach( (pedido: any ) => {
-                    this.pedidos.push(pedido);
+        //             this.clientesService.getCliente(idCliente).subscribe(
+        //                 (respuestaCliente) => {
+        //                     console.log(respuestaCliente);
+        //                 },
+        //                 (error) => {
+        //                     console.log(error);
+        //                 }
+        //             );
 
-                    const idCliente = pedido.idClientePedido;
+        //         });
+        //     },
+        //     (error) => {
+        //         console.log(error);
+        //     }
+        // );
 
-                    this.clientesService.getCliente(idCliente).subscribe(
-                        (respuestaCliente) => {
-                            console.log(respuestaCliente);
-                        },
-                        (error) => {
-                            console.log(error);
-                        }
-                    );
-
-                });
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+        this.getPedidosPorTipo('Pendiente');
     }
 
     ngOnInit() {
@@ -59,7 +60,19 @@ export class PedidosComponent implements OnInit {
 
     getPedidosPorTipo(tipo: string) {
 
-        // this.pedidosService.getP
+        const parametros = {
+            idVendedor: this.idVendedor,
+            tipo
+        };
+
+        this.pedidosService.getPedidosPorTipo(parametros).subscribe(
+            (respuesta: any) => {
+                console.log(respuesta);
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
 
     }
 

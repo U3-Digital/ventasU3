@@ -53,6 +53,10 @@ export class PedidosService {
             })
         };
 
-        return this.http.get(`${this.url}/pedidos/portipo/${parametros.tipo}$idVendedor=${parametros.idVendedor}`, httpOptions);
+        const body = {
+            idVendedor: parametros.idVendedor
+        }
+
+        return this.http.post(`${this.url}/pedidos/portipo/${parametros.tipo}`, body, httpOptions);
     }
 }

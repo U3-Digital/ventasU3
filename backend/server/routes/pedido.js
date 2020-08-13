@@ -76,10 +76,13 @@ app.get('/pedidos/:idVendedor', verificaToken, (req, res) => {
 
 });
 
-app.get('/pedidos/portipo/:tipo', verificaToken, (req, res) => {
+app.post('/pedidos/portipo/:tipo', verificaToken, (req, res) => {
 
     let tipo = req.params.tipo;
     let idVendedor = req.body.idVendedor;
+
+    console.log(req.body);
+
     Pedido.find({ idVendedorPedido: idVendedor, status: tipo }).exec(
         (err, pedidos) => {
             if (err) {
