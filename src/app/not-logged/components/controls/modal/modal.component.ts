@@ -13,7 +13,7 @@ export class ModalComponent implements OnInit {
     errorIcon = faExclamationTriangle;
 
     @Input() message: string;
-    @Input() showing: boolean = false;
+    @Input() showing = false;
 
     // @Input() onDismiss: ;
 

@@ -109,6 +109,49 @@ app.post('/pedidos/portipo/:tipo', verificaToken, (req, res) => {
 
 });
 
+app.put('/pedidos/completar', verificaToken, (req, res) => {
+
+    const idPedido = req.body.idPedido;
+    const statusPedido = req.body.statusPedido;
+
+    Pedido.findById(idPedido, (err, pedidoDB) => {
+
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!pedidoDB) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: 'No se encontró un pedido con ese id'
+                }
+            });
+        }
+
+        pedidoDB.status = statusPedido;
+
+        pedidoDB.save((err, pedidoGuardado) => {
+            if (err) {
+                res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                pedidoGuardado
+            });
+        });
+
+    });
+
+});
+
 app.put('/pedidos/producto', verificaToken, (req, res) => {
     const idProducto = req.body.idProducto;
     const idPedido = req.body.idPedido;

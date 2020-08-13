@@ -21,10 +21,11 @@ import { AgregarCatalogoComponent } from './components/agregar/components/agrega
 import { AgregarProductoComponent } from './components/agregar/components/agregar-producto/agregar-producto.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { AgregarAbonosComponent } from './components/agregar/components/agregar-abonos/agregar-abonos.component';
+import { CatalogosComponent } from './components/catalogos/catalogos.component';
 
 
 @NgModule({
-  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, PedidosComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent, ModalComponent, AgregarCatalogoComponent, AgregarProductoComponent, ClientesComponent, AgregarAbonosComponent],
+  declarations: [MainScreenComponent, BottomNavComponent, PerfilComponent, ResumenComponent, PedidosComponent, AgregarComponent, TopBarComponent, DropdownComponent, AgregarPedidoComponent, AgregarClienteComponent, ModalComponent, AgregarCatalogoComponent, AgregarProductoComponent, ClientesComponent, AgregarAbonosComponent, CatalogosComponent],
   imports: [
     CommonModule,
     LoggedRoutingModule,

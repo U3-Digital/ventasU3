@@ -33,6 +33,10 @@ export class PedidosComponent implements OnInit, AfterViewInit {
     selectedIndex = 0;
     selectedClientIndex = 0;
 
+    showingModal = false;
+    messageModal = '';
+    tipoModal = '';
+
     @ViewChildren('celdasProductos', {}) celdasProductos: QueryList<any>;
 
     constructor(private pedidosService: PedidosService, private clientesService: ClientesService,
@@ -64,6 +68,8 @@ export class PedidosComponent implements OnInit, AfterViewInit {
         this.opcionesPedidosSeleccionables = [];
         this.pedidos = [];
         this.clientes = [];
+        this.datosClientes = [];
+
         this.selectedClientIndex = -1;
         this.productos = [];
 
@@ -126,6 +132,7 @@ export class PedidosComponent implements OnInit, AfterViewInit {
 
     getCatalogos(idCatalogos: string[]) {
         // console.log(idCatalogos);
+        this.catalogos = [];
 
         this.catalogosService.getCatalogosPorId(idCatalogos).subscribe(
             (respuesta: any) => {
@@ -141,6 +148,7 @@ export class PedidosComponent implements OnInit, AfterViewInit {
 
     getPedidosPorCliente(idCliente: string) {
         let i = 0;
+
         this.pedidos.forEach((pedido: any) => {
             if (pedido.idClientePedido === idCliente) {
 
@@ -157,6 +165,8 @@ export class PedidosComponent implements OnInit, AfterViewInit {
             }
             i++;
         });
+
+        console.log(this.pedidosSeleccionables);
     }
 
     onClienteSeleccionado($event: any) {
@@ -164,6 +174,7 @@ export class PedidosComponent implements OnInit, AfterViewInit {
         this.opcionesPedidosSeleccionables = [];
         this.productos = [];
         this.pedidosSeleccionables = [];
+        console.log($event._id, 'id');
         this.getPedidosPorCliente($event._id);
     }
 
@@ -195,8 +206,36 @@ export class PedidosComponent implements OnInit, AfterViewInit {
         );
     }
 
-    button() {
+    completarPedido() {
 
+        if (this.pedidoSeleccionado) {
+            const parametros = {
+                idPedido: this.pedidoSeleccionado._id,
+                statusPedido: 'Completado'
+            };
+            this.pedidosService.updateStatusPedido(parametros).subscribe(
+                (respuesta: any) => {
+                    this.showingModal = true;
+                    this.messageModal = '¡Pedido completado!';
+                    this.tipoModal = 'success';
+
+                    this.selectedIndex = -1;
+                    this.cambiarTipoPedido('Pendiente');
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        } else {
+            this.showingModal = true;
+            this.messageModal = 'Seleccione un cliente y un pedido';
+            this.tipoModal = 'error';
+        }
+
+    }
+
+    dismissed() {
+        this.showingModal = false;
     }
 
 }

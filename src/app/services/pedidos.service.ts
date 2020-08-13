@@ -58,4 +58,13 @@ export class PedidosService {
 
     }
 
+    updateStatusPedido(parametros: any) {
+        const body = {
+            idPedido: parametros.idPedido,
+            statusPedido: parametros.statusPedido
+        };
+
+        return this.http.put(`${this.url}/pedidos/completar`, body, this.httpOptions);
+    }
+
 }

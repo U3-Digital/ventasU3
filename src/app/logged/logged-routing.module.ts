@@ -8,6 +8,7 @@ import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { AgregarComponent } from './components/agregar/agregar.component';
 import { AuthUserGuard } from '../guards/auth-user.guard';
 import { ClientesComponent } from './components/clientes/clientes.component';
+import { CatalogosComponent } from './components/catalogos/catalogos.component';
 
 const routes: Routes = [
 
@@ -23,7 +24,7 @@ const routes: Routes = [
             {
                 path: 'perfil',
                 component: PerfilComponent
-            }, 
+            },
             {
                 path: 'resumen',
                 component: ResumenComponent
@@ -39,6 +40,10 @@ const routes: Routes = [
             {
                 path: 'clientes',
                 component: ClientesComponent
+            },
+            {
+                path: 'catalogos',
+                component: CatalogosComponent
             }
         ]
     },

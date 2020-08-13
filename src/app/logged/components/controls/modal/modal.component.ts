@@ -1,5 +1,5 @@
 import { Component, OnInit, Input,  HostListener, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -13,7 +13,7 @@ export class ModalComponent implements OnInit {
     // errorIcon = faExclamationTriangle;
 
     @Input() message: string;
-    @Input() showing: boolean = false;
+    @Input() showing = false;
     @Input() icon: any;
     @Input() type: string;
 
@@ -21,13 +21,24 @@ export class ModalComponent implements OnInit {
     @ViewChild('close', {}) cerrar: ElementRef;
 
     @Output() onDismiss = new EventEmitter<any>();
- 
-    constructor() { 
+
+    constructor() {
         // console.log(this.cerrar);
         // this.cerrar.nativeElement.onclick = this.close();
     }
 
     ngOnInit(): void {
+        switch (this.type) {
+            case 'success':
+                this.icon = faCheck;
+                break;
+            case 'error':
+                this.icon = faExclamationTriangle;
+                break;
+            default:
+                this.icon = faExclamationTriangle;
+                break;
+        }
     }
 
     dismiss() {
@@ -35,15 +46,15 @@ export class ModalComponent implements OnInit {
 
     }
 
-    close () {
+    close() {
         this.onDismiss.emit('');
     }
 
-    // @HostListener('document:click', ['$event']) 
+    // @HostListener('document:click', ['$event'])
     // onDocumentClick(event: MouseEvent) {
-        
+
     //     if (event.target === this.modal.nativeElement) {
-            
+
     //     } else {
     //         this.showing = false;
     //     }
