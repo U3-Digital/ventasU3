@@ -1,52 +1,28 @@
-<div class="row h-100 text-center background animtated fadeInDown fast" style="margin: auto;">
-    <div class="col-md-12 text-center">
-        <br>
-        <h4 style="color: #061058">Seleccione una categoría</h4>
-        <br>
-        <div class="categorias-container justify-content-center align-items-center">
-            <div *ngFor="let categoria of Categorias; let i = index" [ngClass]="categoria.clase" (click)="setSeleccion(categoria.nombre)">
-                {{ categoria.nombre }}
+<div class="row h-100 background borde" style="margin: 0 auto;">
+    <div class="col-md-12 my-auto text-center borde">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn button-grupo first" (click)="changeTipo('ganancias')" [ngClass]="shouldBeActive('ganancias') ? 'active' : ''">Ganancias</button>
+                    <button class="btn button-grupo" (click)="changeTipo('pedidos')" [ngClass]="shouldBeActive('pedidos') ? 'active' : ''">Pedidos</button>
+                    <button class="btn button-grupo" (click)="changeTipo('adeudos')" [ngClass]="shouldBeActive('adeudos') ? 'active' : ''">Adeudos</button>
+                    <button class="btn button-grupo last" (click)="changeTipo('clientes')" [ngClass]="shouldBeActive('clientes') ? 'active' : ''">Clientes</button>
+                </div>
             </div>
         </div>
         <br>
-        <div class="card card-resumen">
-            <div class="card-header fondo">
-                <div class="btn-group btn-group-toggle abarca" data-toggle="buttons" role="group">
-                    <label class="btn btn-light">
-                              <input type="radio" name="options" id="option1"> Último mes
-                            </label>
-                    <label class="btn btn-light">
-                              <input type="radio" name="options" id="option2"> De: - A: -
-                            </label>
-                </div>
-            </div>
-            <div class="card-body card-columns">
-                <div class="hola">
-                    <canvas id="cosa" class="">{{ chart }}</canvas>
-                </div>
-                <div class="hola">
-                    <canvas id="cosa2" class="">{{ chart }}</canvas>
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center borde">
+                <div class="card card-resumen">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas id="cosa" class="">{{ chart }}</canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 </div>

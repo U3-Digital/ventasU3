@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { Chart } from 'chart.js';
 import { PedidosService } from 'src/app/services/pedidos.service';
+import { ClientesService } from 'src/app/services/clientes.service';
+import { timestamp } from 'rxjs/operators';
 @Component({
   selector: 'app-resumen',
   templateUrl: './resumen.component.html',
@@ -22,13 +24,30 @@ export class ResumenComponent implements OnInit {
     fechaInicial: string;
     fechaFinal: string;
 
-    constructor(private _categoriasService: CategoriasService, private pedidosService: PedidosService) { 
+    constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
+        this.pedidosService.getPedidosPorVendedor(this.idVendedor).subscribe(
+            (respuesta: any) => {
+                respuesta.pedidos.forEach((pedido: any) => {
+                    this.pedidos.push(pedido);
+                });
+                console.log(this.pedidos);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
 
+        this.clientesService.getClientes(this.idVendedor).subscribe(
+            (respuesta: any) => {
+                console.log(respuesta);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
     }
 
     ngOnInit() {
-        this.Categorias = this._categoriasService.getCategorias(); 
-
         Chart.defaults.global.elements.point.backgroundColor = '#0000AF';
 
     /*     this.chart2 = new Chart('cosa2', {
@@ -40,11 +59,9 @@ export class ResumenComponent implements OnInit {
                     data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
-                        
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 0)',
-                        
                     ],
                 }]
             },
@@ -64,85 +81,105 @@ export class ResumenComponent implements OnInit {
                         }
                     }]
                 }
-                
             }
            });
          */
         //    let exampleData = [1, 2, 3, 4, 5, 1];
 
-        
     }
 
-    getGanancias() {
+    changeTipo(tipo: string) {
 
-        let labels: string[] = [];
-        let data: number[] = [];
+        if (tipo !== this.categoriaSeleccionada) {
+            this.categoriaSeleccionada = tipo;
+        } else {
+            return;
+        }
 
-        this.pedidosService.getPedidosPorVendedor(this.idVendedor)
-        .subscribe(
-            (respuesta) => {
-                this.pedidos = respuesta['pedidos'];
-                this.pedidos.forEach(pedido => {
-                    labels.push(pedido.fechaPedido.split('T', 2)[0]);
-                    data.push(pedido.totalPedido);
-                    this.crearTabla(data, labels);
-                });
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+        switch (this.categoriaSeleccionada) {
+            case 'ganancias':
+                this.getGanancias();
+                break;
+            case 'pedidos':
+                this.getPedidos();
+                break;
+            case 'adeudos':
+                this.getAdeudos();
+                break;
+            case 'clientes':
+                this.getClientes();
+                break;
+            default:
+                console.log('error');
+                break;
+        }
+
+    }
+
+    shouldBeActive(tipo: string): boolean {
+        if (tipo === this.categoriaSeleccionada) {
+            return true;
+        }
+        return false;
+    }
+
+    getGanancias(fechas?: any) {
+        if (fechas) {
+
+        } else {
+            const pedidosUltimoMes = [];
+            this.pedidos.forEach((pedido: any) => {
+                const today = new Date(Date.now());
+                const mes = new Date(Date.now() - 2592000000);
+                const fechaPedido = new Date(pedido.fechaPedido);
+
+                if ((fechaPedido <= today && fechaPedido >= mes) && (pedido.status === 'Completado')) {
+                    pedidosUltimoMes.push(pedido);
+                }
+
+            });
+
+            console.log(pedidosUltimoMes);
+        }
     }
 
     getPedidos() {
-
+        console.log('pedidos');
     }
 
     getAdeudos() {
-
+        console.log('adeudos');
     }
 
     getClientes() {
+        console.log('clientes');
+    }
+
+    setSeleccion(nombre: string): void {
 
     }
 
-    setSeleccion (nombre: string): void {
-        this.categoriaSeleccionada = nombre;
-        console.log(this.categoriaSeleccionada);
+    setTiempo(ultimoMes: boolean) {
 
-        switch(this.categoriaSeleccionada) {
-            case 'Ganancias':
-                this.getGanancias();
-            break;
-        }
-
-    }
-
-    setTiempo (ultimoMes: boolean) {
-        if (ultimoMes === true) {
-            this.fechaFinal = this.getFechaHoy()
-        }
     }
 
     getFechaHoy(): string {
-        return "";
+        return '';
     }
 
     crearTabla(data: number[], labels: string[]): void {
         this.chart = new Chart('cosa', {
             type: 'line',
             data: {
-                labels: labels,
+                labels,
                 datasets: [{
                     label: 'Ventas',
-                    data: data,
+                    data,
                     backgroundColor: [
                         'rgba(3, 68, 255, 1)',
-                        
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 0)',
-                        
                     ],
                 }]
             },
@@ -150,23 +187,22 @@ export class ResumenComponent implements OnInit {
                 scales: {
                     xAxes: [{
                         gridLines: {
-                            color: "rgb(255, 255, 255)"
+                            color: 'rgb(255, 255, 255)'
                         }
                     }],
                     yAxes: [{
                         gridLines: {
-                            color: "rgb(255, 255, 255)"
+                            color: 'rgb(255, 255, 255)'
                         },
                         ticks: {
                             beginAtZero: true
                         }
                     }]
                 }
-                
             }
            });
 
-           this.chart.update();
+        this.chart.update();
     }
 
 }
