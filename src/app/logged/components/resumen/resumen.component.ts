@@ -4,6 +4,7 @@ import { Chart } from 'chart.js';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { ClientesService } from 'src/app/services/clientes.service';
 import { timestamp } from 'rxjs/operators';
+import { CatalogosService } from 'src/app/services/catalogos.service';
 @Component({
   selector: 'app-resumen',
   templateUrl: './resumen.component.html',
@@ -24,13 +25,32 @@ export class ResumenComponent implements OnInit {
     fechaInicial: string;
     fechaFinal: string;
 
-    constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
+    catalogos: any[] = [];
+
+    constructor(private pedidosService: PedidosService, private clientesService: ClientesService,
+                private catalogosService: CatalogosService) {
+
+        const idCatalogos = [];
+
         this.pedidosService.getPedidosPorVendedor(this.idVendedor).subscribe(
             (respuesta: any) => {
                 respuesta.pedidos.forEach((pedido: any) => {
+                    if (!idCatalogos.includes(pedido.idCatalogoPedido)) {
+                        idCatalogos.push(pedido.idCatalogoPedido);
+                    }
                     this.pedidos.push(pedido);
                 });
-                console.log(this.pedidos);
+                this.catalogosService.getCatalogosPorId(idCatalogos).subscribe(
+                    (respuestaCatalogos: any) => {
+                        respuestaCatalogos.catalogosDB.forEach((catalogo: any) => {
+                            this.catalogos.push(catalogo);
+                        });
+                        console.log(this.catalogos);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
             },
             (error) => {
                 console.log(error);
@@ -45,46 +65,13 @@ export class ResumenComponent implements OnInit {
                 console.log(error);
             }
         );
+
+        console.log(idCatalogos);
+
     }
 
     ngOnInit() {
         Chart.defaults.global.elements.point.backgroundColor = '#0000AF';
-
-    /*     this.chart2 = new Chart('cosa2', {
-            type: 'line',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 1)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 0)',
-                    ],
-                }]
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            color: "rgb(255, 255, 255)"
-                        }
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            color: "rgb(255, 255, 255)"
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-           });
-         */
-        //    let exampleData = [1, 2, 3, 4, 5, 1];
 
     }
 
@@ -96,23 +83,23 @@ export class ResumenComponent implements OnInit {
             return;
         }
 
-        switch (this.categoriaSeleccionada) {
-            case 'ganancias':
-                this.getGanancias();
-                break;
-            case 'pedidos':
-                this.getPedidos();
-                break;
-            case 'adeudos':
-                this.getAdeudos();
-                break;
-            case 'clientes':
-                this.getClientes();
-                break;
-            default:
-                console.log('error');
-                break;
-        }
+        // switch (this.categoriaSeleccionada) {
+        //     case 'ganancias':
+        //         this.getGanancias();
+        //         break;
+        //     case 'pedidos':
+        //         this.getPedidos();
+        //         break;
+        //     case 'adeudos':
+        //         this.getAdeudos();
+        //         break;
+        //     case 'clientes':
+        //         this.getClientes();
+        //         break;
+        //     default:
+        //         console.log('error');
+        //         break;
+        // }
 
     }
 
@@ -130,17 +117,114 @@ export class ResumenComponent implements OnInit {
             const pedidosUltimoMes = [];
             this.pedidos.forEach((pedido: any) => {
                 const today = new Date(Date.now());
-                const mes = new Date(Date.now() - 2592000000);
+                const mesPasado = new Date(Date.now() - 2592000000);
                 const fechaPedido = new Date(pedido.fechaPedido);
 
-                if ((fechaPedido <= today && fechaPedido >= mes) && (pedido.status === 'Completado')) {
+                if ((fechaPedido <= today && fechaPedido >= mesPasado) && (pedido.status === 'Completado')) {
                     pedidosUltimoMes.push(pedido);
                 }
 
             });
 
-            console.log(pedidosUltimoMes);
+            const diasDelMes = this.getDiasDeMesDondeHuboPedidos(pedidosUltimoMes);
+
+            const data = [];
+            diasDelMes.forEach((dia: string) => {
+                const totalesDelDia = [];
+
+                let i = 0;
+                pedidosUltimoMes.forEach((pedido: any) => {
+                    let totalPedido = 0;
+                    const fechaPedido = pedido.fechaPedido.split('T', 2)[0];
+                    if (dia === fechaPedido) {
+                        totalPedido = this.getTotalPedido(pedido, pedido.idCatalogoPedido);
+                    }
+                    totalesDelDia.push(totalPedido);
+                    i++;
+                });
+                const totalDia = this.sumaTotalesDelDia(totalesDelDia);
+                data.push(totalDia);
+
+            });
+
+            this.crearTabla(data, diasDelMes);
+            /*  const data = [];
+
+            const idCatalogos = [];
+
+            pedidosUltimoMes.forEach((pedido: any) => {
+                if (!idCatalogos.includes(pedido.idCatalogoPedido)) {
+                    idCatalogos.push(pedido.idCatalogoPedido);
+                }
+            });
+
+            const catalogos = [];
+
+            this.catalogosService.getCatalogosPorId(idCatalogos).subscribe(
+                (respuesta: any) => {
+                    respuesta.catalogosDB.forEach((catalogo: any) => {
+                        catalogos.push(catalogo);
+                    });
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+
+            const totales = [];
+
+            pedidosUltimoMes.forEach((pedido: any) => {
+                pedido.productosPedido.forEach((producto: any) => {
+                    if (producto.statusProducto === 'Pedido') {
+                        totales.push(producto.cantidadProducto * producto.precioProducto);
+                    }
+                });
+            });
+
+            console.log(totales);*/
         }
+    }
+
+    getDiasDeMesDondeHuboPedidos(pedidos: any[]) {
+
+        const dias = [];
+
+        pedidos.forEach((pedido: any) => {
+            if (!dias.includes(pedido.fechaPedido.split('T', 2)[0])) {
+                dias.push(pedido.fechaPedido.split('T', 2)[0]);
+            }
+        });
+        return dias;
+    }
+
+    getTotalPedido(pedido: any, idCatalogo: string) {
+
+        let ganancia = 0;
+
+        this.catalogos.forEach((catalogo: any) => {
+            if (catalogo._id === idCatalogo) {
+                ganancia = catalogo.ganancia;
+            }
+        });
+
+        let totalPedido = 0;
+        pedido.productosPedido.forEach((producto: any) => {
+            if (producto.statusProducto === 'Pedido') {
+                totalPedido += producto.precioProducto * producto.cantidadProducto;
+            }
+        });
+
+        totalPedido = (totalPedido * ganancia) / 100;
+
+        return totalPedido;
+    }
+
+    sumaTotalesDelDia(totales: number[]) {
+        let total = 0;
+        totales.forEach((t: number) => {
+            total += t;
+        });
+        return total;
     }
 
     getPedidos() {

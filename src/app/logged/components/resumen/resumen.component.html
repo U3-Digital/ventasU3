@@ -1,8 +1,8 @@
-<div class="row h-100 background borde" style="margin: 0 auto;">
-    <div class="col-md-12 my-auto text-center borde">
+<div class="row h-100 background borde" style="margin: auto;">
+    <div class="col-md-12 text-center borde mt-2">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="btn-group" role="group" aria-label="Basic example">
+                <div class="btn-group flex-wrap" role="group" aria-label="Botones">
                     <button class="btn button-grupo first" (click)="changeTipo('ganancias')" [ngClass]="shouldBeActive('ganancias') ? 'active' : ''">Ganancias</button>
                     <button class="btn button-grupo" (click)="changeTipo('pedidos')" [ngClass]="shouldBeActive('pedidos') ? 'active' : ''">Pedidos</button>
                     <button class="btn button-grupo" (click)="changeTipo('adeudos')" [ngClass]="shouldBeActive('adeudos') ? 'active' : ''">Adeudos</button>
@@ -13,11 +13,17 @@
         <br>
         <div class="row justify-content-center">
             <div class="col-md-6 text-center borde">
-                <div class="card card-resumen">
+                <div class="card card-resumen" *ngIf="shouldBeActive('ganancias')">
+                    <div class="card-header" style="background-color: rgba(0, 0, 0, 0); border-width: 0px">
+                        <div class="btn-group" role="group" aria-label="Cosas">
+                            <button class="btn btn-grupo first-other" (click)="getGanancias()">Último mes</button>
+                            <button class="btn btn-grupo last-other">Desde hace:</button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <canvas id="cosa" class="">{{ chart }}</canvas>
+                                <canvas id="cosa" class="borde" style="max-height: 19em;">{{ chart }}</canvas>
                             </div>
                         </div>
                     </div>

@@ -4,13 +4,13 @@
 }
 
 .background {
-    /* padding-top: 55px;
-    padding-bottom: 600px; */
+    padding-top: 55px;
+    padding-bottom: 600px;
     background: rgb(202, 217, 243);
     background: linear-gradient(0deg, rgba(202, 217, 243, 1) 0%, rgba(234, 242, 255, 1) 100%);
 }
 
-.borde { 
+.borde {
     border: 1px solid red;
 }
 
@@ -24,6 +24,27 @@
 
 .last {
     border-radius: 0em 2em 2em 0em !important;
+}
+
+.first-other {
+    border-radius: 2em 0em 0em 2em !important;
+}
+
+.last-other {
+    border-radius: 0em 2em 2em 0em !important;
+}
+
+@media(max-width: 420px) {
+    .button-grupo {
+        background-color: white;
+        width: 100%;
+    }
+    .first {
+        border-radius: 2em 2em 0em 0em !important;
+    }
+    .last {
+        border-radius: 0em 0em 2em 2em !important;
+    }
 }
 
 .active {
