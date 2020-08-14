@@ -34,11 +34,10 @@ export class PerfilComponent implements OnInit, AfterViewInit {
         this.fotoPerfil = this.usuario.img;
     }
 
-    ngOnInit() {    
+    ngOnInit() {
         this.crearFormulario();
         this.onChanges();
 
-        
     }
 
     ngAfterViewInit() {

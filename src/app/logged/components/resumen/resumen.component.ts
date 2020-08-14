@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoriasService } from 'src/app/services/categorias.service';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { ClientesService } from 'src/app/services/clientes.service';
-import { timestamp } from 'rxjs/operators';
 import { CatalogosService } from 'src/app/services/catalogos.service';
 @Component({
   selector: 'app-resumen',
   templateUrl: './resumen.component.html',
   styleUrls: ['./resumen.component.css']
 })
-export class ResumenComponent implements OnInit {
+export class ResumenComponent implements OnInit, AfterViewInit {
 
     Categorias: any = [];
 
@@ -26,6 +24,10 @@ export class ResumenComponent implements OnInit {
     fechaFinal: string;
 
     catalogos: any[] = [];
+
+    ultimoMesDesdeHace: boolean;
+
+    @ViewChild('cajaFechaDesde', {}) cajaFechaDesde: ElementRef;
 
     constructor(private pedidosService: PedidosService, private clientesService: ClientesService,
                 private catalogosService: CatalogosService) {
@@ -69,41 +71,54 @@ export class ResumenComponent implements OnInit {
         console.log(idCatalogos);
 
     }
-
-    ngOnInit() {
-        Chart.defaults.global.elements.point.backgroundColor = '#0000AF';
+    ngAfterViewInit(): void {
 
     }
 
-    changeTipo(tipo: string) {
+    ngOnInit() {
+        Chart.defaults.global.elements.point.backgroundColor = '#0000AF';
+    }
 
+    changeTipo(tipo: string) {
         if (tipo !== this.categoriaSeleccionada) {
             this.categoriaSeleccionada = tipo;
         } else {
             return;
         }
 
-        // switch (this.categoriaSeleccionada) {
-        //     case 'ganancias':
-        //         this.getGanancias();
-        //         break;
-        //     case 'pedidos':
-        //         this.getPedidos();
-        //         break;
-        //     case 'adeudos':
-        //         this.getAdeudos();
-        //         break;
-        //     case 'clientes':
-        //         this.getClientes();
-        //         break;
-        //     default:
-        //         console.log('error');
-        //         break;
-        // }
+        switch (this.categoriaSeleccionada) {
+            case 'ganancias':
+                const today = new Date(Date.now());
+                const year = today.getFullYear();
+                const month = today.getMonth() + 1;
+                const day = today.getDate();
+
+                let stringMonth: string;
+                let stringDay: string;
+
+                month < 10 ? stringMonth = `0${month}` : stringMonth = `${month}`;
+
+                day < 10 ? stringDay = `0${day}` : stringDay = `${day}`;
+
+                console.log(year, stringMonth, stringDay);
+                // console.log(year, month, day);
+                this.cajaFechaDesde.nativeElement.max = `${year}-${stringMonth}-${stringDay}`;
+                break;
+            case 'pedidos':
+                break;
+            case 'adeudos':
+                break;
+            case 'clientes':
+                break;
+            default:
+                console.log('error');
+                break;
+        }
 
     }
 
     shouldBeActive(tipo: string): boolean {
+
         if (tipo === this.categoriaSeleccionada) {
             return true;
         }
@@ -113,7 +128,47 @@ export class ResumenComponent implements OnInit {
     getGanancias(fechas?: any) {
         if (fechas) {
 
+            this.ultimoMesDesdeHace = false;
+
+            const pedidosDesdeFecha = [];
+
+            this.pedidos.forEach((pedido: any) => {
+                const fechaPedido = new Date(pedido.fechaPedido);
+                const today = new Date(Date.now());
+                const fechaDesde = new Date(fechas.target.value);
+
+                if ((fechaPedido <= today && fechaPedido >= fechaDesde) && (pedido.status === 'Completado')) {
+                    pedidosDesdeFecha.push(pedido);
+                }
+
+            });
+
+            const diasDesdeFecha = this.getDiasDeMesDondeHuboPedidos(pedidosDesdeFecha);
+
+            const data = [];
+            diasDesdeFecha.forEach((dia: string) => {
+                const totalesDelDia = [];
+
+                let i = 0;
+
+                pedidosDesdeFecha.forEach((pedido: any) => {
+                    let totalPedido = 0;
+                    const fechaPedido = pedido.fechaPedido.split('T', 2)[0];
+                    if (dia === fechaPedido) {
+                        totalPedido = this.getTotalPedido(pedido, pedido.idCatalogoPedido);
+                    }
+
+                    totalesDelDia.push(totalPedido);
+                    i++;
+                });
+                const totalDia = this.sumaTotalesDelDia(totalesDelDia);
+                data.push(totalDia);
+            });
+
+            this.crearTabla(data, diasDesdeFecha);
+
         } else {
+            this.ultimoMesDesdeHace = true;
             const pedidosUltimoMes = [];
             this.pedidos.forEach((pedido: any) => {
                 const today = new Date(Date.now());

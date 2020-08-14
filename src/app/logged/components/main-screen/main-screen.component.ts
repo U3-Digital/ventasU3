@@ -11,16 +11,14 @@ export class MainScreenComponent implements OnInit {
 
     Servicios: any = [];
 
-    constructor(private _serviciosService: ServicioService, private router: Router) {
-        
+    constructor(private serviciosService: ServicioService, private router: Router) {
      }
 
-    ngOnInit() {     
-        this.Servicios = this._serviciosService.getServicios();
-      
+    ngOnInit() {
+        this.Servicios = this.serviciosService.getServicios();
     }
 
-    redirect (ruta) {
+    redirect(ruta: string) {
         console.log(ruta);
         this.router.navigate([ruta]);
     }
