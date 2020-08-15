@@ -54,7 +54,6 @@
 }
 
 .card-resumen {
-    visibility: collapse;
     color: #061058;
     font-family: 'Poppins', sans-serif;
     display: block;
@@ -78,6 +77,10 @@
 .fondo {
     border-radius: 32px 32px 0 0;
     background-color: #0000AF;
+}
+
+.invisible {
+    visibility: hidden;
 }
 
 .visible {

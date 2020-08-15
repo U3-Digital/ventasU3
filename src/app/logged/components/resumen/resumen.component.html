@@ -11,9 +11,9 @@
             </div>
         </div>
         <br>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center"  [ngClass]="shouldBeActive('ganancias') ? 'visible' : 'invisible'">
             <div class="col-md-6 text-center borde">
-                <div class="card card-resumen" [ngClass]="shouldBeActive('ganancias') ? 'visible' : ''">
+                <div class="card card-resumen">
                     <div class="card-header" style="background-color: rgba(0, 0, 0, 0); border-width: 0px">
                         <div class="btn-group" role="group" aria-label="Cosas">
                             <button class="btn btn-grupo first-other" (click)="getGanancias()" [ngClass]="ultimoMesDesdeHace ? 'active': ''">Último mes</button>
@@ -27,6 +27,15 @@
                                 <canvas id="cosa" class="borde" style="max-height: 19em;">{{ chart }}</canvas>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center" [ngClass]="shouldBeActive('pedidos') ? 'visible': 'invisible'">
+            <div class="col-md-6 text-center borde">
+                <div class="card card-resumen">
+                    <div class="card-header" style="background-color: rgba(0, 0, 0, 0); border-width: 0px">
+                    
                     </div>
                 </div>
             </div>

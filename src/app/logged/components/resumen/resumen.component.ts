@@ -165,7 +165,7 @@ export class ResumenComponent implements OnInit, AfterViewInit {
                 data.push(totalDia);
             });
 
-            this.crearTabla(data, diasDesdeFecha);
+            this.crearTabla(data, diasDesdeFecha, 'Ganancias');
 
         } else {
             this.ultimoMesDesdeHace = true;
@@ -202,7 +202,7 @@ export class ResumenComponent implements OnInit, AfterViewInit {
 
             });
 
-            this.crearTabla(data, diasDelMes);
+            this.crearTabla(data, diasDelMes, 'Ganancias');
             /*  const data = [];
 
             const idCatalogos = [];
@@ -306,13 +306,13 @@ export class ResumenComponent implements OnInit, AfterViewInit {
         return '';
     }
 
-    crearTabla(data: number[], labels: string[]): void {
+    crearTabla(data: number[], labels: string[], datasetLabel: string): void {
         this.chart = new Chart('cosa', {
             type: 'line',
             data: {
                 labels,
                 datasets: [{
-                    label: 'Ventas',
+                    label: datasetLabel,
                     data,
                     backgroundColor: [
                         'rgba(3, 68, 255, 1)',
