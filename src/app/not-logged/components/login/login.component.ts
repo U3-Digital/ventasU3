@@ -74,13 +74,14 @@ export class LoginComponent implements OnInit {
     saveUserInfo(info: any) {
 
         const usuario = {
-            id : info._id,
-            email : info.email,
-            nombre : info.nombre,
-            role : info.role,
-            estado : info.estado,
-            google : info.google,
-            img : info.img
+            id: info._id,
+            email: info.email,
+            nombre: info.nombre,
+            telefono: info.telefono,
+            role: info.role,
+            estado: info.estado,
+            google: info.google,
+            img: info.img
         };
 
         localStorage.setItem('info-usuario', JSON.stringify(usuario));

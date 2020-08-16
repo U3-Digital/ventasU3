@@ -47,12 +47,11 @@
 }
 
 .foto-perfil {
-    max-width: 10em;
-    max-height: 10em;
+    width: 10em;
+    height: 10em;
     padding: .5em;
-    /* border: 1px solid red; */
     border-radius: 32px;
-    /* box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.10), 0 2px 10px 0 rgba(0, 0, 0, 0.10); */
+    cursor: pointer;
 }
 
 .invisible {
@@ -60,7 +59,7 @@
 }
 
 .visible {
-    display: block;
+    display: flex;
 }
 
 .boton {
@@ -110,4 +109,9 @@
     background-color: #B4B7CC;
     margin: 0;
     margin-left: 1em;
+}
+
+.modal-img {
+    border: none;
+    border-radius: 2em;
 }

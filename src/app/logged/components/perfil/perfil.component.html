@@ -1,17 +1,45 @@
 <div class="row h-100 background" style="margin: auto;">
+    <div #modal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-img">
+                <div class="modal-header" style="border: none;">
+                    <h5 class="modal-title" id="exampleModalLabel">Seleccione una foto de perfil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <img (click)="openFilePrompt()" style="width: 10em; height: 10em; border-radius: 2em; cursor: pointer;" [src]="srcPreview" [alt]="fotoPerfilAlt">
+                            <input #imgInput type="file" name="imgInput" id="imgInput" hidden (change)="previewImage($event)">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button class="btn boton" (click)="uploadImage()">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-modal [type]="typeModal" [message]="messageModal" [showing]="showingModal" (onDismiss)="onModalDismiss($event)"></app-modal>
     <div class="col-md-12 my-auto mt-5">
         <div class="card card-perfil mx-auto my-auto borde">
             <div class="card-header fondo text-center border-0">
-                <img [src]="fotoPerfil" class="foto-perfil animate__animated animate__zoomIn animate__faster" [alt]="fotoPerfilAlt">
+                <img [src]="fotoPerfil" (click)="openModal()" class="foto-perfil animate__animated animate__zoomIn animate__faster" [alt]="fotoPerfilAlt">
+                <button #toggleModal data-toggle="modal" data-target="#exampleModal" hidden>e</button>
             </div>
             <div class="card-body">
-                <form [formGroup]="formaPerfil" (ngSubmit)="guardar()" autocomplete="on">
+                <form [formGroup]="formaPerfil" (ngSubmit)="actualizarPerfil()">
                     <div class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-1s">
                         <div class="col-md-4 align-self-center">
                             Nombre
                         </div>
                         <div class="col-md-8">
-                            <input #nameInput autocomplete="username" type="text" class="form-control" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="nameInput" aria-describedby="name" [value]="nombre" formControlName="nombre" [readOnly]="!editando">
+                            <input #nameInput autocomplete="username" type="text" class="form-control" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="nameInput" aria-describedby="name" [readOnly]="!editando" formControlName="nombre">
                         </div>
                     </div>
                     <hr align="left" class="divider">
@@ -20,7 +48,7 @@
                             Correo electrónico
                         </div>
                         <div class="col-md-8">
-                            <input #emailInput type="email" class="form-control" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="email" aria-describedby="email" [value]="email" formControlName="email" [readOnly]="!editando">
+                            <input #emailInput type="email" class="form-control" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="email" aria-describedby="email" [readOnly]="!editando" formControlName="email">
                         </div>
                     </div>
                     <hr align="left" class="divider">
@@ -29,35 +57,35 @@
                             Teléfono
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" autocomplete="tel-national" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="telefono" aria-describedby="telefono" [value]="telefono" formControlName="telefono" [readOnly]="!editando">
+                            <input #telefonoInput type="text" class="form-control" autocomplete="tel-national" [ngClass]="editando ? 'cajaTexto' : 'cajaTextoPlano'" id="telefono" aria-describedby="telefono" [readOnly]="!editando" formControlName="telefono">
                         </div>
                     </div>
                     <hr align="left" class="divider">
-                    <div *ngIf="editando" class="row m-1 animate__animated animate__fadeInDown animate__faster">
+                    <div [ngClass]="editando ? 'visible' : 'invisible'" class="row m-1 animate__animated animate__fadeInDown animate__faster">
                         <div class="col-md-4 align-self-center">
                             Cambiar contraseña
                         </div>
                         <div class="col-md-8">
-                            <input type="password" autocomplete="new-password" class="form-control cajaTexto" id="password" aria-describedby="password" value="">
+                            <input #passwordInput type="password" autocomplete="new-password" class="form-control cajaTexto" id="password" aria-describedby="password">
                         </div>
                     </div>
-                    <hr *ngIf="editando" align="left" class="divider">
-                    <div *ngIf="editando" class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-2s">
+                    <hr [ngClass]="editando ? 'visible' : 'invisible'" align="left" class="divider">
+                    <div [ngClass]="editando ? 'visible' : 'invisible'" class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-2s">
                         <div class="col-md-4 align-self-center">
                             Confirmar contraseña
                         </div>
                         <div class="col-md-8">
-                            <input type="password" autocomplete="new-password" class="form-control cajaTexto" id="confirmPassword" aria-describedby="password" value="">
+                            <input #confirmPasswordInput type="password" autocomplete="new-password" class="form-control cajaTexto" id="confirmPassword" aria-describedby="password">
                         </div>
                     </div>
                     <br>
                     <div class="row m-1 animate__animated animate__fadeInDown animate__faster animate__delay-5s">
                         <div class="col-md-6"></div>
                         <div class="col-md-3">
-                            <button [swal]="['Oops!', 'This is not implemented yet :/', 'warning']" #botonGuardar class="btn boton btn-block" (click)="guardar()"><i class="fas fa-check" style="color: white"></i> Guardar</button>
+                            <button #botonGuardar class="btn boton btn-block"><i class="fas fa-check" style="color: white"></i> Guardar</button>
                         </div>
                         <div class="col-md-3">
-                            <button #botonEditar type="button" class="btn boton btn-block" (click)="editar()"><i class="fas fa-pencil-alt" style="color: white"></i> Editar</button>
+                            <button #botonEditar type="button" class="btn boton btn-block" (click)="toggleEdicion()"><i class="fas fa-pencil-alt" style="color: white"></i> Editar</button>
                         </div>
                     </div>
                 </form>

@@ -1,6 +1,6 @@
 <div #modal class="modal" [ngClass]="showing? 'showing': 'not-showing'">
     <div #modalContent id="modal-content" class="modal-content animate__animated animate__zoomIn animate__faster">
-        <fa-icon #close [icon]="closeIcon" class="close"></fa-icon>
+        <fa-icon (click)="closeModal()" #close [icon]="closeIcon" class="close"></fa-icon>
         <fa-icon #image [icon]="icon" class="image" [ngClass]="type"></fa-icon>
         <br>
         <br>

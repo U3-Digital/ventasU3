@@ -1,7 +1,8 @@
-<div class="row h-100 background borde sombra" style="margin: auto;">
-    <div class="col-md-12 text-center borde mt-2">
+<div class="row h-100 background sombra" style="margin: auto;">
+    <div class="col-md-12 text-center mt-2">
         <div class="row justify-content-center">
             <div class="col-md-6 animate__animated animate__zoomIn animate__faster">
+                <br>
                 <div class="btn-group flex-wrap" role="group" aria-label="Botones">
                     <button class="btn button-grupo first" (click)="changeTipo('ganancias')" [ngClass]="shouldBeActive('ganancias') ? 'active' : ''">Ganancias</button>
                     <button class="btn button-grupo" (click)="changeTipo('pedidos')" [ngClass]="shouldBeActive('pedidos') ? 'active' : ''">Pedidos</button>
@@ -11,34 +12,87 @@
             </div>
         </div>
         <br>
-        <div class="row justify-content-center"  [ngClass]="shouldBeActive('ganancias') ? 'visible' : 'invisible'">
-            <div class="col-md-6 text-center borde">
+        <div class="row justify-content-center" [ngClass]="shouldBeActive('ganancias') ? 'visible' : 'invisible'">
+            <div class="col-md-6 text-center">
                 <div class="card card-resumen">
                     <div class="card-header" style="background-color: rgba(0, 0, 0, 0); border-width: 0px">
                         <div class="btn-group" role="group" aria-label="Cosas">
                             <button class="btn btn-grupo first-other" (click)="getGanancias()" [ngClass]="ultimoMesDesdeHace ? 'active': ''">Último mes</button>
-                            <input #cajaFechaDesde class="btn btn-grupo last-other" type="date" (input)="getGanancias($event)">
-                            <!-- <button class="btn btn-grupo last-other" (click)="getGanancias('1')" [ngClass]="ultimoMesDesdeHace ? '' : 'active'">Desde hace:</button> -->
+                            <input #cajaFechaGanancias class="btn btn-grupo last-other" type="date" (input)="getGanancias($event)">
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <canvas id="cosa" class="borde" style="max-height: 19em;">{{ chart }}</canvas>
+                                <canvas id="ganancias" style="max-height: 19em;">{{ chart }}</canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center" [ngClass]="shouldBeActive('pedidos') ? 'visible': 'invisible'">
-            <div class="col-md-6 text-center borde">
+        <div class="row justify-content-center" [ngClass]="shouldBeActive('pedidos') ? 'visible' : 'invisible'">
+            <div class="col-md-6 text-center">
                 <div class="card card-resumen">
                     <div class="card-header" style="background-color: rgba(0, 0, 0, 0); border-width: 0px">
-                    
+                        <div class="btn-group" role="group" aria-label="Cosas">
+                            <button class="btn btn-grupo first-other" (click)="getPedidos()" [ngClass]="ultimoMesDesdeHace ? 'active': ''">Último mes</button>
+                            <input #cajaFechaPedidos class="btn btn-grupo last-other" type="date" (input)="getPedidos($event)">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas id="pedidos" style="max-height: 19em; ">{{ chart }}</canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center" [ngClass]="shouldBeActive('adeudos') ? 'visible' : 'invisible'">
+            <div class="col-md-6 text-center">
+                <div class="card card-resumen">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h5>Adeudos de clientes</h5>
+                                <ul class="list-group" style="max-height: 12em; overflow: auto;">
+                                    <li *ngFor="let cliente of clientes" class="list-group-item list-item">{{cliente.nombres.split(' ', 2)[0]}} {{cliente.apellidos}} - ${{cliente.adeuda}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" [ngClass]="shouldBeActive('clientes') ? 'visible' : 'invisible'">
+            <div class="col-md-4 text-center">
+                <div class="card card-resumen">
+                    <div class="card-header" style="background-color:  rgba(0, 0, 0, 0); border-width: 0px;">
+                        <h6>Clientes con más pedidos</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group" style="max-height: 12em; overflow: auto;">
+                            <li *ngFor="let cliente of clientesMasPedidos" class="list-group-item list-item">{{cliente.cliente.nombres.split(' ', 2)[0]}} {{cliente.cliente.apellidos}} - {{cliente.cuenta}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="card card-resumen">
+                    <div class="card-header" style="background-color: rgba(0, 0, 0, 0); border-width: 0px;">
+                        <h6>Clientes con más compras</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group" style="max-height: 12em; overflow: auto;">
+                            <li *ngFor="let cliente of clientesMasCompras" class="list-group-item list-item">{{cliente.nombres.split(' ', 2)[0]}} {{cliente.apellidos}} - ${{cliente.compras}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

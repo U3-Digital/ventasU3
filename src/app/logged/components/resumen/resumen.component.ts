@@ -24,10 +24,14 @@ export class ResumenComponent implements OnInit, AfterViewInit {
     fechaFinal: string;
 
     catalogos: any[] = [];
+    clientes: any[] = [];
+    clientesMasPedidos: any[] = [];
+    clientesMasCompras: any[] = [];
 
     ultimoMesDesdeHace: boolean;
 
-    @ViewChild('cajaFechaDesde', {}) cajaFechaDesde: ElementRef;
+    @ViewChild('cajaFechaGanancias', {}) cajaFechaGanancias: ElementRef;
+    @ViewChild('cajaFechaPedidos', {}) cajaFechaPedidos: ElementRef;
 
     constructor(private pedidosService: PedidosService, private clientesService: ClientesService,
                 private catalogosService: CatalogosService) {
@@ -61,7 +65,10 @@ export class ResumenComponent implements OnInit, AfterViewInit {
 
         this.clientesService.getClientes(this.idVendedor).subscribe(
             (respuesta: any) => {
-                console.log(respuesta);
+                respuesta.clientes.forEach((cliente: any) => {
+                    this.clientes.push(cliente);
+                });
+
             },
             (error) => {
                 console.log(error);
@@ -80,35 +87,44 @@ export class ResumenComponent implements OnInit, AfterViewInit {
     }
 
     changeTipo(tipo: string) {
+        this.ultimoMesDesdeHace = false;
+
         if (tipo !== this.categoriaSeleccionada) {
             this.categoriaSeleccionada = tipo;
         } else {
             return;
         }
+        const today = new Date(Date.now());
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
+
+        let stringMonth: string;
+        let stringDay: string;
+
+        month < 10 ? stringMonth = `0${month}` : stringMonth = `${month}`;
+
+        day < 10 ? stringDay = `0${day}` : stringDay = `${day}`;
 
         switch (this.categoriaSeleccionada) {
+
             case 'ganancias':
-                const today = new Date(Date.now());
-                const year = today.getFullYear();
-                const month = today.getMonth() + 1;
-                const day = today.getDate();
-
-                let stringMonth: string;
-                let stringDay: string;
-
-                month < 10 ? stringMonth = `0${month}` : stringMonth = `${month}`;
-
-                day < 10 ? stringDay = `0${day}` : stringDay = `${day}`;
 
                 console.log(year, stringMonth, stringDay);
                 // console.log(year, month, day);
-                this.cajaFechaDesde.nativeElement.max = `${year}-${stringMonth}-${stringDay}`;
+                this.cajaFechaGanancias.nativeElement.max = `${year}-${stringMonth}-${stringDay}`;
                 break;
             case 'pedidos':
+
+                console.log(year, stringMonth, stringDay);
+                // console.log(year, month, day);
+                this.cajaFechaPedidos.nativeElement.max = `${year}-${stringMonth}-${stringDay}`;
                 break;
             case 'adeudos':
+                this.getAdeudos();
                 break;
             case 'clientes':
+                this.getClientes();
                 break;
             default:
                 console.log('error');
@@ -125,8 +141,8 @@ export class ResumenComponent implements OnInit, AfterViewInit {
         return false;
     }
 
-    getGanancias(fechas?: any) {
-        if (fechas) {
+    getGanancias(fecha?: any) {
+        if (fecha) {
 
             this.ultimoMesDesdeHace = false;
 
@@ -135,7 +151,7 @@ export class ResumenComponent implements OnInit, AfterViewInit {
             this.pedidos.forEach((pedido: any) => {
                 const fechaPedido = new Date(pedido.fechaPedido);
                 const today = new Date(Date.now());
-                const fechaDesde = new Date(fechas.target.value);
+                const fechaDesde = new Date(fecha.target.value);
 
                 if ((fechaPedido <= today && fechaPedido >= fechaDesde) && (pedido.status === 'Completado')) {
                     pedidosDesdeFecha.push(pedido);
@@ -165,7 +181,7 @@ export class ResumenComponent implements OnInit, AfterViewInit {
                 data.push(totalDia);
             });
 
-            this.crearTabla(data, diasDesdeFecha, 'Ganancias');
+            this.crearTabla(data, diasDesdeFecha, 'Ganancias', 'ganancias');
 
         } else {
             this.ultimoMesDesdeHace = true;
@@ -202,41 +218,7 @@ export class ResumenComponent implements OnInit, AfterViewInit {
 
             });
 
-            this.crearTabla(data, diasDelMes, 'Ganancias');
-            /*  const data = [];
-
-            const idCatalogos = [];
-
-            pedidosUltimoMes.forEach((pedido: any) => {
-                if (!idCatalogos.includes(pedido.idCatalogoPedido)) {
-                    idCatalogos.push(pedido.idCatalogoPedido);
-                }
-            });
-
-            const catalogos = [];
-
-            this.catalogosService.getCatalogosPorId(idCatalogos).subscribe(
-                (respuesta: any) => {
-                    respuesta.catalogosDB.forEach((catalogo: any) => {
-                        catalogos.push(catalogo);
-                    });
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-
-            const totales = [];
-
-            pedidosUltimoMes.forEach((pedido: any) => {
-                pedido.productosPedido.forEach((producto: any) => {
-                    if (producto.statusProducto === 'Pedido') {
-                        totales.push(producto.cantidadProducto * producto.precioProducto);
-                    }
-                });
-            });
-
-            console.log(totales);*/
+            this.crearTabla(data, diasDelMes, 'Ganancias', 'ganancias');
         }
     }
 
@@ -282,32 +264,135 @@ export class ResumenComponent implements OnInit, AfterViewInit {
         return total;
     }
 
-    getPedidos() {
-        console.log('pedidos');
+    getPedidos(fecha?: any) {
+        if (fecha) {
+            this.ultimoMesDesdeHace = false;
+
+            const pedidosDesdeFecha = [];
+
+            this.pedidos.forEach((pedido: any) => {
+                const fechaPedido = new Date(pedido.fechaPedido);
+                const today = new Date(Date.now());
+                const fechaDesde = new Date(fecha.target.value);
+
+                if ((fechaPedido <= today && fechaPedido >= fechaDesde) && (pedido.status === 'Completado')) {
+                    pedidosDesdeFecha.push(pedido);
+                }
+
+            });
+
+            const diasDesdeFecha = this.getDiasDeMesDondeHuboPedidos(pedidosDesdeFecha);
+            const data = [];
+
+            diasDesdeFecha.forEach((dia: string) => {
+                    let cuantos = 0;
+                    pedidosDesdeFecha.forEach((pedido: any) => {
+                        const fechaPedido = pedido.fechaPedido.split('T', 2)[0];
+                        if (dia === fechaPedido) {
+                            cuantos++;
+                        }
+                    });
+                    data.push(cuantos);
+                });
+
+            this.crearTabla(data, diasDesdeFecha, 'No. de pedidos', 'pedidos');
+
+        } else {
+            this.ultimoMesDesdeHace = true;
+
+            const pedidosUltimoMes = [];
+
+            this.pedidos.forEach((pedido: any) => {
+                const today = new Date(Date.now());
+                const mesPasado = new Date(Date.now() - 2592000000);
+                const fechaPedido = new Date(pedido.fechaPedido);
+
+                if ((fechaPedido <= today && fechaPedido >= mesPasado) && (pedido.status === 'Completado')) {
+                    pedidosUltimoMes.push(pedido);
+                }
+            });
+
+            const diasDelMes = this.getDiasDeMesDondeHuboPedidos(pedidosUltimoMes);
+            const data = [];
+
+            diasDelMes.forEach((dia: string) => {
+                let cuantos = 0;
+                pedidosUltimoMes.forEach((pedido: any) => {
+                    const fechaPedido = pedido.fechaPedido.split('T', 2)[0];
+                    if (dia === fechaPedido) {
+                        cuantos++;
+                    }
+                });
+                data.push(cuantos);
+            });
+
+            this.crearTabla(data, diasDelMes, 'No. de pedidos', 'pedidos');
+
+        }
     }
 
     getAdeudos() {
-        console.log('adeudos');
+        this.clientes.sort((cliente1: any, cliente2: any) => {
+            if (cliente1.adeuda > cliente2.adeuda) {
+                return -1;
+            }
+
+            if (cliente1.adeuda < cliente2.adeuda) {
+                return 1;
+            }
+        });
+        console.log(this.clientes);
     }
 
     getClientes() {
-        console.log('clientes');
+        this.getClientesMasPedidos();
+        this.getClientesMasCompras();
     }
 
-    setSeleccion(nombre: string): void {
+    getClientesMasPedidos() {
+        this.clientesMasPedidos = [];
+        this.clientes.forEach((cliente: any) => {
+            let cuenta = 0;
+            this.pedidos.forEach((pedido: any) => {
+                if (cliente._id === pedido.idClientePedido) {
+                    cuenta++;
+                }
+            });
+            this.clientesMasPedidos.push({cliente, cuenta});
+        });
 
+        this.clientesMasPedidos.sort((cliente1: any, cliente2: any) => {
+            if (cliente1.cuenta > cliente2.cuenta) {
+                return -1;
+            }
+            if (cliente1.cuenta < cliente2.cuenta) {
+                return 1;
+            }
+        });
+
+        console.log(this.clientesMasPedidos);
     }
 
-    setTiempo(ultimoMes: boolean) {
+    getClientesMasCompras() {
+        this.clientesMasCompras = [];
+        this.clientes.forEach((cliente: any) => {
+            this.clientesMasCompras.push(cliente);
+        });
 
+        this.clientesMasCompras.sort((cliente1, cliente2) => {
+
+            if (cliente1.compras > cliente2.compras) {
+                return -1;
+            }
+
+            if (cliente1.compras < cliente2.compras) {
+                return 1;
+            }
+        });
     }
 
-    getFechaHoy(): string {
-        return '';
-    }
-
-    crearTabla(data: number[], labels: string[], datasetLabel: string): void {
-        this.chart = new Chart('cosa', {
+    crearTabla(data: number[], labels: string[], datasetLabel: string, idChart: string): void {
+        this.chart = new Chart(idChart, {
             type: 'line',
             data: {
                 labels,

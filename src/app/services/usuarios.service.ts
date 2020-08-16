@@ -10,18 +10,19 @@ export class UsuariosService {
 
     private url = 'http://localhost:3000';
 
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            token: localStorage.getItem('token')
+        })
+    };
+
     constructor(private http: HttpClient) { }
 
 
     getUsuarios() {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type':  'application/json',
-                token: localStorage.getItem('token')
-            })
-        };
 
-        return this.http.get(`${this.url}/usuario`, httpOptions);
+        return this.http.get(`${this.url}/usuario`, this.httpOptions);
     }
 
     newUsuario(usuario: UsuarioModel) {
@@ -40,7 +41,7 @@ export class UsuariosService {
             role: usuario.role
         };
 
-        return this.http.post(`${this.url}/usuario`, body, httpOptions);
+        return this.http.post(`${this.url}/usuario`, body, this.httpOptions);
 
     }
 
@@ -60,7 +61,7 @@ export class UsuariosService {
             role: campos.role
         };
 
-        return this.http.put(`${this.url}/usuarios/${campos._id}`, body, httpOptions);
+        return this.http.put(`${this.url}/usuarios/${campos._id}`, body, this.httpOptions);
 
     }
 
@@ -73,9 +74,23 @@ export class UsuariosService {
             })
         };
 
-        return this.http.delete(`${this.url}/usuario/${idUsuario}`,  httpOptions);
+        return this.http.delete(`${this.url}/usuario/${idUsuario}`,  this.httpOptions);
 
     }
 
+    updateSelfUsuario(parametros: any) {
+        const body = {
+            nombreUsuario: parametros.nombreUsuario,
+            emailUsuario: parametros.emailUsuario,
+            telefonoUsuario: parametros.telefonoUsuario,
+            passwordUsuario: parametros.passwordUsuario
+        };
+
+        return this.http.put(`${this.url}/usuario/self/${parametros.idUsuario}`, body, this.httpOptions);
+    }
+
+    getSelfUsuario(idUsuario: string) {
+        return this.http.get(`${this.url}/usuario/self/${idUsuario}`, this.httpOptions);
+    }
 
 }

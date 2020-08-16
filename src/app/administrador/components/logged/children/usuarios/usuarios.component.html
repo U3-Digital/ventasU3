@@ -3,7 +3,7 @@
     <app-modal [message]="mensaje" [showing]="showModal" [type]="tipoModal" (ondismiss)="dialogDismiss($event)"></app-modal>
 
 
-    <div class="col-md-12 mt-5">
+    <div (click)="cosa()" class="col-md-12 mt-5">
         <div class="card card-usuario">
             <div class="card-body">
                 <form [formGroup]="formaUsuario" (ngSubmit)="submit()">

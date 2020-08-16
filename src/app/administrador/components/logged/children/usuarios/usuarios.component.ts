@@ -245,6 +245,10 @@ export class UsuariosComponent implements OnInit {
 
     }
 
+    cosa() {
+        console.log(this.formaUsuario.value);
+    }
+
     get nombreNoValido() {
         return this.formaUsuario.get('nombre').invalid && this.formaUsuario.get('nombre').touched;
     }

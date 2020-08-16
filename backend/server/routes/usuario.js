@@ -44,6 +44,34 @@ app.get('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
 
 });
 
+app.get('/usuario/self/:id', verificaToken, function(req, res) {
+    const idUsuario = req.params.id;
+
+    Usuario.findById(idUsuario, (err, usuarioDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: 'No se encontró al usuario especificado'
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            usuarioDB
+        });
+    });
+
+});
+
 app.post('/usuario', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     let body = req.body;
@@ -92,6 +120,60 @@ app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) 
             usuario: usuarioDB
         });
 
+    });
+
+});
+
+app.put('/usuario/self/:id', verificaToken, function(req, res) {
+    const id = req.params.id;
+    const body = req.body;
+
+    Usuario.findById(id, (err, usuarioDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: 'No se encontró al usuario en la base de datos'
+                }
+            });
+        }
+
+        const nuevoEmail = body.emailUsuario;
+        const nuevoNombre = body.nombreUsuario;
+        const nuevoTelefono = body.telefonoUsuario;
+
+        usuarioDB.email = nuevoEmail;
+        usuarioDB.nombre = nuevoNombre;
+        usuarioDB.telefono = nuevoTelefono;
+
+        if (body.passwordUsuario) {
+            usuarioDB.password = bcrypt.hashSync(body.passwordUsuario, 10);
+        }
+
+        if (body.imgUsuario) {
+            usuarioDB.imgUsuario = body.imUsuario;
+        }
+
+        usuarioDB.save((err, usuarioGuardado) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                usuarioGuardado
+            });
+        });
     });
 
 });

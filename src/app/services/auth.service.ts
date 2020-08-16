@@ -10,23 +10,23 @@ import { UserModel } from '../models/user.model';
 })
 export class AuthService {
 
-    //url general
+    // url general
     private url = 'http://localhost:3000';
-    
+
     userToken: string;
 
-    constructor(private http: HttpClient) { 
+    constructor(private http: HttpClient) {
 
         this.leerToken();
 
     }
 
-    logout () {
+    logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('info-usuario');
     }
 
-    loginAdmin (admin: AdminModel) {
+    loginAdmin(admin: AdminModel) {
 
         const body = {
             ...admin
@@ -42,36 +42,36 @@ export class AuthService {
             `${this.url}/login`,
             body
         ).pipe(
-            map( (respuesta) => {
-                this.guardarToken(respuesta['token']);
+            map( (respuesta: any) => {
+                this.guardarToken(respuesta.token);
                 return respuesta;
             })
         );
     }
 
-    login (user: UserModel) {
+    login(user: UserModel) {
 
         const body = {
             ...user
-        }
+        };
 
         return this.http.post(
             `${this.url}/login`,
             body
         ).pipe(
-            map( (respuesta) => {
-                this.guardarToken(respuesta['token']);
+            map( (respuesta: any) => {
+                this.guardarToken(respuesta.token);
                 return respuesta;
             })
         );
     }
 
-    private guardarToken (idToken: string) {
+    private guardarToken(idToken: string) {
         this.userToken = idToken;
         localStorage.setItem('token', idToken);
     }
 
-    private leerToken (): string {
+    private leerToken(): string {
         if (localStorage.getItem('token')) {
             this.userToken = localStorage.getItem('token');
         } else {
@@ -81,7 +81,7 @@ export class AuthService {
         return this.userToken;
     }
 
-    isAuthenticated (): boolean {
+    isAuthenticated(): boolean {
         return this.userToken.length > 20;
     }
 }
