@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
 
@@ -7,6 +8,21 @@ const Usuario = require('../models/usuario');
 const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
 
 const app = express();
+
+const multer = require('multer');
+const usuario = require('../models/usuario');
+
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, "./uploads/");
+    },
+    filename: (req, file, callback) => {
+        callback(null, `${Date.now()}.${file.originalname.split('.').pop()}`);
+    }
+});
+
+
+const upload = multer({ storage });
 
 
 app.get('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
@@ -275,6 +291,75 @@ app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, re
 
 });
 
+app.post('/usuario/self/photo', verificaToken, upload.single('profilePicture'), function(req, res) {
 
+    const idUsuario = req.body.id;
+
+    Usuario.findById(idUsuario, (err, usuarioDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: 'No se encontró al usuario con la ruta especificada'
+                }
+            });
+        }
+
+        if (usuarioDB.img === 'uploads/default.jpg') {
+            usuarioDB.img = req.file.path;
+            usuarioDB.save((err, usuarioGuardado) => {
+
+                if (err) {
+                    res.status(400).json({
+                        ok: false,
+                        err
+                    });
+                }
+
+                res.json({
+                    ok: true,
+                    usuarioGuardado
+                });
+
+            });
+        } else {
+            borrarImg(usuarioDB.img);
+            usuarioDB.img = req.file.path;
+            usuarioDB.save((err, usuarioGuardado) => {
+
+                if (err) {
+                    res.status(400).json({
+                        ok: false,
+                        err
+                    });
+                }
+
+                res.json({
+                    ok: true,
+                    usuarioGuardado
+                });
+
+            });
+        }
+
+
+    });
+
+});
+
+function borrarImg(path) {
+    fs.unlink(path, (error) => {
+        if (error) {
+            console.log(error);
+        }
+    });
+}
 //exportamos el archivo app
 module.exports = app;

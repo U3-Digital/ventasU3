@@ -11,6 +11,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class TopBarComponent implements OnInit {
 
+    ruta = 'http://localhost:3000/';
+
     logoutIcon = faSignOutAlt;
 
     nombre: string;
@@ -24,7 +26,7 @@ export class TopBarComponent implements OnInit {
         this.usuariosService.getSelfUsuario(this.idUsuario).subscribe(
             (respuesta: any) => {
                 this.nombre = respuesta.usuarioDB.nombre;
-                this.fotoPerfil = respuesta.usuarioDB.img;
+                this.fotoPerfil = `${this.ruta}${respuesta.usuarioDB.img}`;
             },
             (error) => {
                 console.log(error);

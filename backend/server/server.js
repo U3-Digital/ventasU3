@@ -16,9 +16,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-
+app.use('/uploads', express.static('uploads'));
 //habilitar el acceso a la carpeta public
 app.use(express.static(path.resolve(__dirname, '../public')));
+
 
 // Add headers
 app.use(function(req, res, next) {

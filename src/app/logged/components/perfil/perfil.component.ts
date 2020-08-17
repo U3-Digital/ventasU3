@@ -2,12 +2,18 @@ import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angula
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
+class ImageSnippet {
+    constructor(public src: string, public file: File) {}
+}
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit, AfterViewInit {
+
+    ruta = 'http://localhost:3000/';
 
     fotoPerfil: any;
     fotoPerfilAlt = 'Foto de perfil';
@@ -37,6 +43,8 @@ export class PerfilComponent implements OnInit, AfterViewInit {
 
     srcPreview: any;
 
+    selectedFile: ImageSnippet;
+
     @ViewChild('modal', {}) modal: ElementRef;
 
     constructor(private formBuilder: FormBuilder, private usuariosService: UsuariosService) {
@@ -64,8 +72,8 @@ export class PerfilComponent implements OnInit, AfterViewInit {
         this.usuariosService.getSelfUsuario(this.idUsuario).subscribe(
             (respuesta: any) => {
                 const usuario = respuesta.usuarioDB;
-                this.fotoPerfil = usuario.img;
-                this.srcPreview = usuario.img;
+                this.fotoPerfil = `${this.ruta}${usuario.img}`;
+                this.srcPreview = `${this.ruta}${usuario.img}`;
 
                 this.nameInput.nativeElement.value = usuario.nombre;
                 this.emailInput.nativeElement.value = usuario.email;
@@ -201,11 +209,32 @@ export class PerfilComponent implements OnInit, AfterViewInit {
 
     }
 
-    uploadImage() {
+    uploadImage(imgInput: any) {
+        console.log('object');
         if (this.srcPreview === this.fotoPerfil) {
             console.log('no');
         } else {
-            console.log('si');
+            const file: File = imgInput.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', (event: any) => {
+                this.selectedFile = new ImageSnippet(event.target.result, file);
+
+                const parametros = {
+                    imagen: this.selectedFile.file,
+                    idUsuario: this.idUsuario
+                };
+
+                this.usuariosService.uploadProfilePic(parametros).subscribe(
+                    (respuesta: any) => {
+                        console.log(respuesta);
+                        window.location.reload();
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+            });
+            reader.readAsDataURL(file);
         }
     }
 

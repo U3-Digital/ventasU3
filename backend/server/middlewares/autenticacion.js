@@ -10,7 +10,7 @@ let verificaToken = (req, res, next) => {
             return res.status(401).json({
                 ok: false,
                 err: {
-                    message: 'Token no válido'
+                    message: 'Token no válido crack'
                 }
             });
         }

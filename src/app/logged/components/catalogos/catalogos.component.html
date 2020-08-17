@@ -1,1 +1,15 @@
-<p>catalogos works!</p>
+<div class="row h-100 background" style="margin: auto;">
+    <div class="col-md-12 text-center sombra">
+        <app-dropdown [titulo]="'Seleccione catálogo'" [sombra]="true" [opciones]="opcionesCatalogos" [datos]="catalogos" (childClickedEvent)="onCatalogoSeleccionado($event)"></app-dropdown>
+        <div class="card card-catalogos mx-auto">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Nombre del catálogo: {{nombreCatalogo}}</p>
+                        <p>Porcentaje de ganancia: {{gananciaCatalogo}}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

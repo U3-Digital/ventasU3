@@ -93,4 +93,19 @@ export class UsuariosService {
         return this.http.get(`${this.url}/usuario/self/${idUsuario}`, this.httpOptions);
     }
 
+    uploadProfilePic(parametros: any) {
+        const formData = new FormData();
+
+        formData.append('profilePicture', parametros.imagen);
+        formData.append('id', parametros.idUsuario);
+
+        const httpO = {
+            headers: new HttpHeaders({
+                token: localStorage.getItem('token')
+            })
+        };
+
+        return this.http.post(`${this.url}/usuario/self/photo`, formData, httpO);
+    }
+
 }

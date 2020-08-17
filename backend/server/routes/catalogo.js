@@ -30,6 +30,36 @@ app.get('/catalogo', verificaToken, (req, res) => {
         });
 });
 
+app.get('/catalogos/usuario/:id', verificaToken, (req, res) => {
+    const idUsuario = req.params.id;
+
+    Catalogo.find({ idVendedor: idUsuario }).exec(
+        (err, catalogos) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            if (!catalogos) {
+                return res.status(404).json({
+                    ok: false,
+                    error: {
+                        message: 'No se encontraron catálogos con el id especificado'
+                    }
+                });
+            }
+
+            res.json({
+                ok: true,
+                catalogos
+            });
+        }
+    );
+
+});
+
 // ========================================
 // Mostrar Catalogo por ID
 // ========================================

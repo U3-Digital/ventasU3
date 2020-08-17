@@ -31,7 +31,7 @@ let usuarioSchema = new Schema({
     },
     img: {
         type: String,
-        default: '../../../assets/img/default.jpg'
+        default: 'uploads/default.jpg'
     },
     role: {
         type: String,

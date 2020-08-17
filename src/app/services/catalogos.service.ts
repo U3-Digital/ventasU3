@@ -39,4 +39,8 @@ export class CatalogosService {
         return this.http.post(`${this.url}/catalogos`, {idCatalogos}, this.httpOptions);
 
     }
+
+    getCatalogosPorVendedor(idUsuario: string) {
+        return this.http.get(`${this.url}/catalogos/usuario/${idUsuario}`, this.httpOptions);
+    }
 }
