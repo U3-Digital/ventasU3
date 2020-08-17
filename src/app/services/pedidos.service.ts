@@ -8,7 +8,7 @@ import { PedidoModel } from 'src/app/models/pedido.model';
 })
 export class PedidosService {
 
-    private url = 'http://u3digital.com.mx/ventas/controlPanel/';
+    private url = 'http://u3schoolapp.herokuapp.com/';
 
     private httpOptions = {
         headers: new HttpHeaders({

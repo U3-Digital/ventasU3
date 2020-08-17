@@ -8,7 +8,7 @@ import { ClienteModel } from 'src/app/models/cliente.model';
 })
 export class ClientesService {
 
-    private url = 'http://u3digital.com.mx/ventas/controlPanel/';
+    private url = 'http://u3schoolapp.herokuapp.com/';
 
     constructor(private http: HttpClient) { }
 
