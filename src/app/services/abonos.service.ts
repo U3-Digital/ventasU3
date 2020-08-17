@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AbonosService {
 
-    private url = 'http://localhost:3000';
+    private url = 'http://u3digital.com.mx/ventas/controlPanel/';
 
     constructor(private http: HttpClient) { }
 
@@ -21,7 +21,7 @@ export class AbonosService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')  
+                token: localStorage.getItem('token')
             })
         };
 

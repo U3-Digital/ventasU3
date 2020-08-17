@@ -7,16 +7,16 @@ import { ProductoModel } from '../models/producto.model';
 })
 export class ProductoService {
 
-    private url = 'http://localhost:3000';
+    private url = 'http://u3digital.com.mx/ventas/controlPanel/';
 
     constructor(private http: HttpClient) { }
 
-    getProductos (idCatalogo: string) {
+    getProductos(idCatalogo: string) {
 
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 
@@ -29,14 +29,14 @@ export class ProductoService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json',
-                'token': localStorage.getItem('token')
+                token: localStorage.getItem('token')
             })
         };
 
         return this.http.get(`${this.url}/productospendientes/${idCatalogo}`, httpOptions);
     }
 
-    newProducto (producto: ProductoModel) {
+    newProducto(producto: ProductoModel) {
 
         const body = {
             codigo: producto.codigoProducto,
@@ -49,7 +49,7 @@ export class ProductoService {
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json',
-              'token': localStorage.getItem('token')
+              token: localStorage.getItem('token')
             })
         };
 

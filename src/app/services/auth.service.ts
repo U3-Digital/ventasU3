@@ -11,7 +11,7 @@ import { UserModel } from '../models/user.model';
 export class AuthService {
 
     // url general
-    private url = 'http://localhost:3000';
+    private url = 'http://u3digital.com.mx/ventas/controlPanel/';
 
     userToken: string;
 

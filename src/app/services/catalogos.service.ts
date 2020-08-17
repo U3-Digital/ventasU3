@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CatalogoModel } from '../models/catalogo.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatalogosService {
 
-    private url = 'http://localhost:3000';
+    private url = 'http://u3digital.com.mx/ventas/controlPanel/';
 
     httpOptions = {
         headers: new HttpHeaders({

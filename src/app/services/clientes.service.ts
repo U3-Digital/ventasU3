@@ -8,7 +8,7 @@ import { ClienteModel } from 'src/app/models/cliente.model';
 })
 export class ClientesService {
 
-    private url = 'http://localhost:3000';
+    private url = 'http://u3digital.com.mx/ventas/controlPanel/';
 
     constructor(private http: HttpClient) { }
 
