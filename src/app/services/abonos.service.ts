@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AbonosService {
 
-    private url = 'http://u3schoolapp.herokuapp.com/';
+    private url = 'https://u3schoolapp.herokuapp.com';
 
     constructor(private http: HttpClient) { }
 

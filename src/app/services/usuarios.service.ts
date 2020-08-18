@@ -8,7 +8,7 @@ import { UsuarioModel } from 'src/app/models/usuario.model';
 })
 export class UsuariosService {
 
-    private url = 'http://u3schoolapp.herokuapp.com/';
+    private url = 'https://u3schoolapp.herokuapp.com';
 
     httpOptions = {
         headers: new HttpHeaders({

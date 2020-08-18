@@ -80,6 +80,8 @@ export class AdminLoginComponent implements OnInit {
         this.tipoModal = 'error';
     }
 
+    
+
     saveUserInfo (info: any) {
         
         let usuario = {

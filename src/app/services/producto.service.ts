@@ -7,7 +7,7 @@ import { ProductoModel } from '../models/producto.model';
 })
 export class ProductoService {
 
-    private url = 'http://u3schoolapp.herokuapp.com/';
+    private url = 'https://u3schoolapp.herokuapp.com';
 
     constructor(private http: HttpClient) { }
 

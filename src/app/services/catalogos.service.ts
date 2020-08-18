@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CatalogosService {
 
-    private url = 'http://u3schoolapp.herokuapp.com/';
+    private url = 'https://u3schoolapp.herokuapp.com';
 
     httpOptions = {
         headers: new HttpHeaders({

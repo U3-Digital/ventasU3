@@ -1,5 +1,5 @@
 <div class="row h-100 background" style="margin: auto;">
-    <app-modal (onDismiss)="dissmiss($event)" [type]="tipoModal" [message]="'El correo o la contraseña son incorrectos'" [showing]="showModal"></app-modal>
+    <app-modal (onDismiss)="dissmiss($event)" [type]="tipoModal" [message]="'El correo o la contraseña son incorrectos'" [showing]="showModal" (ondismiss)="dissmiss($event)"></app-modal>
     <div class="card card-login mx-auto my-auto animate__animated animate__fadeIn animate__faster">
         <div class="card-header fondo text-center border-0">
             <h2 class="title">Ingresar</h2>

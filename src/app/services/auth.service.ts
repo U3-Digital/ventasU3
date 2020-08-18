@@ -11,7 +11,7 @@ import { UserModel } from '../models/user.model';
 export class AuthService {
 
     // url general
-    private url = 'http://u3schoolapp.herokuapp.com/';
+    private url = 'https://u3schoolapp.herokuapp.com';
 
     userToken: string;
 
